@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEB3B"
+    android:orientation="vertical"
+    tools:context=".LogInActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/SignUpTitle"
+        android:textColor="#130A0A"
+        android:textSize="40sp"
+        app:fontFamily="@font/abril_fatface" />
+
+    <EditText
+        android:id="@+id/username_signup_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:ems="10"
+        android:hint="@string/LoginUsernameHint"
+        android:inputType="textEmailAddress"
+        android:importantForAutofill="no"/>
+
+    <EditText
+        android:id="@+id/password_signup_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15sp"
+        android:ems="10"
+        android:hint="@string/LoginPasswordHint"
+        android:importantForAutofill="no"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/driver_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:background="#FF9800"
+        android:includeFontPadding="false"
+        android:text="@string/rider_sign_up"
+        android:textColor="#030000"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/rider_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="#FF5722"
+        android:text="@string/driver_sign_up"
+        android:textSize="20sp" />
+
+
+</LinearLayout>

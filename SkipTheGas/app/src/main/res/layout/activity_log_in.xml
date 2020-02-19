@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEB3B"
+    android:orientation="vertical"
+    tools:context=".LogInActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/LoginTitle"
+        android:textColor="#130A0A"
+        android:textSize="40sp"
+        app:fontFamily="@font/abril_fatface" />
+
+    <EditText
+        android:id="@+id/username_login_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="140dp"
+        android:ems="10"
+        android:hint="@string/LoginUsernameHint"
+        android:inputType="textEmailAddress"
+        android:importantForAutofill="no"/>
+
+    <EditText
+        android:id="@+id/password_login_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/LoginPasswordHint"
+        android:inputType="textPassword"
+        android:importantForAutofill="no" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF9800"
+        android:includeFontPadding="false"
+        android:text="@string/login_button"
+        android:textColor="#030000"
+        android:textSize="20sp" />
+
+
+</LinearLayout>
