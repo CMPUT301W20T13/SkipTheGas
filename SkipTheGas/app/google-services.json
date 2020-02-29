@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "479563711507",
+    "firebase_url": "https://skipthegas-4ea38.firebaseio.com",
+    "project_id": "skipthegas-4ea38",
+    "storage_bucket": "skipthegas-4ea38.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479563711507:android:4b6d1aad07cace98b0abe6",
+        "android_client_info": {
+          "package_name": "com.example.skipthegas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479563711507-iu83td5ovomc3e73g8purahh3oe40f6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5mITQINytfmbyyXNZatZ9fckGKL4hv7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479563711507-iu83td5ovomc3e73g8purahh3oe40f6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
