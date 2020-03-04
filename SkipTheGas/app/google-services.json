@@ -15,13 +15,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "479563711507-efftul1226h9j0gaqbgp398ia4k1hjmi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.skipthegas",
+            "certificate_hash": "ec2e5095bff1d858d9da6ba63990ecaa651dc2b6"
+          }
+        },
+        {
           "client_id": "479563711507-iu83td5ovomc3e73g8purahh3oe40f6m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB5mITQINytfmbyyXNZatZ9fckGKL4hv7Q"
+          "current_key": "AIzaSyAGiJ_RF6WYuNseiaTE4AyL2uudsn035Z0"
         }
       ],
       "services": {
