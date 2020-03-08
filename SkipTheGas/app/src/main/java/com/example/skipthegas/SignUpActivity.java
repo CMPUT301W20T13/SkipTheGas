@@ -65,11 +65,6 @@ public class SignUpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         fireDatabase = FirebaseFirestore.getInstance();
 
-//        if (firebaseAuth.getCurrentUser() != null) {
-//            startActivity(new Intent(getApplicationContext(), RidersActivity.class));
-//            finish();
-//        }
-
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,8 +91,8 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
-
-                // Register the user
+                registerButton.setEnabled(false);
+                
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -144,15 +139,17 @@ public class SignUpActivity extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d("Message", "Data addition failure: unable to create info" + e.getMessage());
+                                    Log.d("Message", "Data addition failure: unable to create info" + e.toString());
                                 }
                             });
 
                             // Direct user to Rider's screen
-//                            startActivity(new Intent(getApplicationContext(), RidersActivity.class));
+                            startActivity(new Intent(getApplicationContext(), SelectModeActivity.class));
                             progressBar.setVisibility(View.GONE);
+                            finish();
                         } else { // Fail to create user
                             Toast.makeText(SignUpActivity.this, "Unable to create user.", Toast.LENGTH_SHORT).show();
+                            registerButton.setEnabled(true);
                             progressBar.setVisibility(View.GONE);
                         }
                     }

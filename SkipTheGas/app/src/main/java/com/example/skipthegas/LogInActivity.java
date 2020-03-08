@@ -72,6 +72,7 @@ public class LogInActivity extends AppCompatActivity {
                     return;
                 }
 
+                loginButton.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
 
                 firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -79,10 +80,15 @@ public class LogInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(LogInActivity.this, "Login success", Toast.LENGTH_SHORT).show();
-//                            startActivity(new Intent(getApplicationContext(),RidersActivity.class));
+                            loginEmailField.setText("");
+                            passwordField.setText("");
+                            startActivity(new Intent(getApplicationContext(),SelectModeActivity.class));
+                            loginButton.setEnabled(true);
                             progressBar.setVisibility(View.GONE);
+                            finish();
                         } else {
                             Toast.makeText(LogInActivity.this, "Your email or password is incorrect", Toast.LENGTH_SHORT).show();
+                            loginButton.setEnabled(true);
                             progressBar.setVisibility(View.GONE);
                         }
                     }
@@ -105,17 +111,21 @@ public class LogInActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // Extract email address
                                 String mail = emailField.getText().toString();
-                                firebaseAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Toast.makeText(LogInActivity.this, "Email is send", Toast.LENGTH_SHORT).show();
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(LogInActivity.this, "Unable to send the email"+e.getMessage(), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
+                                if (mail.length()>0){
+                                    firebaseAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(LogInActivity.this, "Email is send", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(LogInActivity.this, "Unable to send the email"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                } else {
+                                    Toast.makeText(LogInActivity.this, "Enter your email", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
                 passwordResetDialog.create().show();

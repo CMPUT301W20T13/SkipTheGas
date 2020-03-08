@@ -27,16 +27,6 @@
         android:importantForAutofill="no"/>
 
     <EditText
-        android:id="@+id/password_register_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/register_password_hint"
-        android:importantForAutofill="no"
-        android:inputType="textPassword" />
-
-    <EditText
         android:id="@+id/email_register_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,6 +35,16 @@
         android:hint="@string/register_email_hint"
         android:inputType="textEmailAddress"
         android:importantForAutofill="no" />
+
+    <EditText
+        android:id="@+id/password_register_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/register_password_hint"
+        android:importantForAutofill="no"
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/phone_register_field"

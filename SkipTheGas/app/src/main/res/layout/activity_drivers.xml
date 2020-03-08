@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DriversActivity">
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/driver_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/driver_float_action_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="200dp"
+        app:menu_colorNormal="#F44336"
+        app:menu_colorPressed="#FF9800"
+        app:menu_fab_label=""
+        app:menu_openDirection="up"
+        app:menu_showShadow="true"
+        tools:ignore="RelativeOverlap">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/logout_option"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_exit_to_app_black_24dp"
+            app:menu_colorNormal="#F44336"
+            app:menu_colorPressed="#FF9800"
+            app:fab_label="@string/logout"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/edit_view_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_user_profile_black_24dp"
+            app:menu_colorNormal="#F44336"
+            app:menu_colorPressed="#FF9800"
+            app:fab_label="User profile"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/search_request"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_directions_car_black_24dp"
+            app:menu_colorNormal="#F44336"
+            app:menu_colorPressed="#FF9800"
+            app:fab_label="Browse request"
+            app:fab_size="mini" />
+    </com.github.clans.fab.FloatingActionMenu>
+
+    <Button
+        android:id="@+id/switch_mode"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/driver_float_action_menu"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="#3F51B5"
+        android:text="rider\nmode" />
+
+</RelativeLayout>
