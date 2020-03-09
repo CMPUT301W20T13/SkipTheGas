@@ -21,6 +21,18 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity android:name=".RiderProfileActivity"></activity>
+        <activity android:name=".DriverProfileActivity"></activity>
+        <activity android:name=".RideConfirmedActivity"></activity>
+        <activity android:name=".RequestRideActivity"></activity>
+        <activity android:name=".YourRideRequestActivity"></activity>
+        <activity android:name=".TripFeedBackActivity"></activity>
+        <activity android:name=".PaymentActivity"></activity>
+        <activity android:name=".PayAcceptedActivity"></activity>
+        <activity android:name=".ActiveRequestsActivity"></activity>
+        <activity android:name=".DriverProfileEditable"></activity>
+        <activity android:name=".RiderProfileEditable"></activity>
+
 
         <activity android:name=".MainActivity">
             <intent-filter>
