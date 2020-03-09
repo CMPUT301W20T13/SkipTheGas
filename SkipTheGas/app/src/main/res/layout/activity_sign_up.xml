@@ -27,16 +27,6 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/password_register_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/register_password_hint"
-        android:importantForAutofill="no"
-        android:inputType="textPassword" />
-
-    <EditText
         android:id="@+id/email_register_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,6 +37,16 @@
         android:inputType="textEmailAddress" />
 
     <EditText
+        android:id="@+id/password_register_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/register_password_hint"
+        android:importantForAutofill="no"
+        android:inputType="textPassword" />
+
+    <EditText
         android:id="@+id/phone_register_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,6 +55,14 @@
         android:hint="@string/register_phone_hint"
         android:importantForAutofill="no"
         android:inputType="phone" />
+
+    <Switch
+        android:id="@+id/register_driver_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you a Driver?"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/register_button"
