@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFEB3B"
+    android:background="#F1F1EF"
     android:orientation="vertical"
     tools:context=".LogInActivity">
 
@@ -23,8 +23,8 @@
         android:layout_marginTop="140dp"
         android:ems="10"
         android:hint="@string/LoginEmailHint"
-        android:inputType="textEmailAddress"
-        android:importantForAutofill="no"/>
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/password_login_field"
@@ -32,8 +32,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/LoginPasswordHint"
-        android:inputType="textPassword"
-        android:importantForAutofill="no" />
+        android:importantForAutofill="no"
+        android:inputType="textPassword" />
 
     <TextView
         android:id="@+id/password_reset"
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="#FF9800"
+        android:background="@drawable/roundedbutton"
         android:includeFontPadding="false"
         android:text="@string/login_button"
         android:textColor="#030000"
