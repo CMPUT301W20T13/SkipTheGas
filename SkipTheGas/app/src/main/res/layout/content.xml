@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:text="Rider"
-        android:textSize="12sp">
-      </TextView>
+        android:textSize="12sp"
+        tools:ignore="HardcodedText"/>
 
 
     <TextView
@@ -24,7 +24,7 @@
         android:padding="20dp"
         android:text="Start Location"
         android:textSize="12sp"
-></TextView>
+        tools:ignore="HardcodedText"/>
 
     <TextView
         android:id="@+id/end_loc_text"
@@ -33,7 +33,7 @@
         android:padding="20dp"
         android:text="End Location"
         android:textSize="12sp"
-></TextView>
+        tools:ignore="HardcodedText"/>
 
 
     <TextView
@@ -43,6 +43,6 @@
         android:padding="20dp"
         android:text="Price (QR)"
         android:textSize="12sp"
-></TextView>
+        tools:ignore="HardcodedText"/>
 
 </LinearLayout>
