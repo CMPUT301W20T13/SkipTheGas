@@ -19,4 +19,9 @@
     <string name="title_activity_riders">Map</string>
     <string name="title_activity_drivers">Map</string>
     <string name="logout">Log out</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
