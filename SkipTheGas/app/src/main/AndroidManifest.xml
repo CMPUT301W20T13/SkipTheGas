@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SelectionActivity"></activity>
+        <activity android:name=".VerifyActivity"></activity>
+        <activity android:name=".SelectionActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -45,7 +46,7 @@
         <activity android:name=".RiderProfileActivity" />
         <activity android:name=".DriverProfileActivity" />
         <activity android:name=".RideConfirmedActivity" />
-        <activity android:name=".RiderActivity"/>
+        <activity android:name=".RiderActivity" />
         <activity android:name=".RequestRideActivity" />
         <activity android:name=".YourRideRequestActivity" />
         <activity android:name=".TripFeedBackActivity" />
