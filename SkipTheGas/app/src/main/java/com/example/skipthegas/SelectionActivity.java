@@ -20,6 +20,14 @@ public class SelectionActivity extends AppCompatActivity {
         riderSelectButton = findViewById(R.id.rider_select_button);
         driverSelectButton = findViewById(R.id.driver_select_button);
 
+        riderSelectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent riderIntent = new Intent(getApplicationContext(), RiderActivity.class);
+                startActivity(riderIntent);
+            }
+        });
+
         driverSelectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -45,6 +45,7 @@
         <activity android:name=".RiderProfileActivity" />
         <activity android:name=".DriverProfileActivity" />
         <activity android:name=".RideConfirmedActivity" />
+        <activity android:name=".RiderActivity"/>
         <activity android:name=".RequestRideActivity" />
         <activity android:name=".YourRideRequestActivity" />
         <activity android:name=".TripFeedBackActivity" />
