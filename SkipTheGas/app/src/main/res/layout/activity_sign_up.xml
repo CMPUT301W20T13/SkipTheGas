@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFEB3B"
+    android:background="#FDFDF8"
     android:orientation="vertical"
     tools:context=".SignUpActivity">
 
@@ -14,7 +14,7 @@
         android:gravity="center"
         android:text="@string/SignUpTitle"
         android:textColor="#130A0A"
-        android:textSize="40sp" />
+        android:textSize="36sp" />
 
     <EditText
         android:id="@+id/username_register_field"
@@ -23,8 +23,18 @@
         android:layout_marginTop="140dp"
         android:ems="10"
         android:hint="@string/register_username_hint"
-        android:inputType="textPersonName"
-        android:importantForAutofill="no"/>
+        android:importantForAutofill="no"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/email_register_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="@string/register_email_hint"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/password_register_field"
@@ -37,31 +47,29 @@
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/email_register_field"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:ems="10"
-        android:hint="@string/register_email_hint"
-        android:inputType="textEmailAddress"
-        android:importantForAutofill="no" />
-
-    <EditText
         android:id="@+id/phone_register_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:ems="10"
         android:hint="@string/register_phone_hint"
-        android:inputType="phone"
-        android:importantForAutofill="no" />
+        android:importantForAutofill="no"
+        android:inputType="phone" />
+
+    <Switch
+        android:id="@+id/register_driver_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Are you a Driver?"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/register_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="#FF9800"
+        android:background="@drawable/roundedbutton2"
         android:includeFontPadding="false"
         android:text="@string/register_button"
         android:textColor="#030000"
