@@ -34,7 +34,7 @@ public class DriverRequestFragment extends Fragment {
     ArrayList<Ride> rideDataList;
 
     private int p;
-    private Ride rides;
+    public Ride rides;
 
 
     @Nullable
