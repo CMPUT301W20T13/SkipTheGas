@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/rider_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Rider"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText"/>
+
+
+    <TextView
+        android:id="@+id/start_loc_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Start Location"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText"/>
+
+    <TextView
+        android:id="@+id/end_loc_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="End Location"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText"/>
+
+
+    <TextView
+        android:id="@+id/price_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Price (QR)"
+        android:textSize="12sp"
+        tools:ignore="HardcodedText"/>
+
+</LinearLayout>
