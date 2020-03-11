@@ -38,6 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.annotation.Nullable;
@@ -107,23 +108,39 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
                 Log.i(TAG,"Request posted by user " + userId);
 
-                String msg1 = "Estimated ride time:";
-                String msg2 = "Estimated ride fare";
+                String msg1 = "Estimated ride distance: ";
+                String msg2 = "Estimated ride time: ";
+                String msg3 = "Estimated ride fare: ";
 
                 if (locPointsList.size() < 2){
 
                     Toast.makeText(RiderActivity.this, "At least 2 points needed", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    GeoPoint origin = new GeoPoint(locPointsList.get(0).latitude, locPointsList.get(0).longitude);
+                    GeoPoint destination = new GeoPoint(locPointsList.get(1).latitude, locPointsList.get(1).longitude);
+                    double ride_dist = distance(locPointsList.get(0).latitude, locPointsList.get(0).longitude,
+                            locPointsList.get(1).latitude, locPointsList.get(1).longitude);
+                    DecimalFormat twoDecPoints = new DecimalFormat("#.##");
+                    String rounded_dist = twoDecPoints.format(ride_dist);
+
+                    //estimated ride time is calculated using a speed of 50 km/h for the time being
+                    double ride_time = (ride_dist/50)*60;
+                    String rounded_time = twoDecPoints.format(ride_time);
+
+                    //estimated ride fare is calculated using a rate of $0.81 per km
+                    double ride_fare = ride_dist*0.81;
+                    String rounded_fare = twoDecPoints.format(ride_fare);
+
                     new AlertDialog.Builder(RiderActivity.this)
                             .setTitle("Requested Ride Details")
-                            .setMessage(msg1 + "\n" + msg2)
+                            .setMessage(msg1 + rounded_dist + " kilometers" + "\n"
+                                    + msg2 + rounded_time + " minutes" + "\n"
+                                    + msg3 + "$" + rounded_fare)
                             .setNegativeButton("Cancel",null)
                             .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    GeoPoint origin = new GeoPoint(locPointsList.get(0).latitude, locPointsList.get(0).longitude);
-                                    GeoPoint destination = new GeoPoint(locPointsList.get(1).latitude, locPointsList.get(1).longitude);
                                     HashMap<String, Object> reqData = new HashMap<>();
                                     reqData.put("origin",origin);
                                     reqData.put("destination",destination);
@@ -253,6 +270,27 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                 mMap.setMyLocationEnabled(true);
             }
         }
+    }
+
+    // Function calculates the distance between the origin and the destination using the latitude and longitude of the 2 locations
+    private double distance(double origin_lat, double origin_lon, double dest_lat, double dest_lon) {
+        double theta = origin_lon - dest_lon;
+        double distCalc = Math.sin(DegToRad(origin_lat)) * Math.sin(DegToRad(dest_lat))
+                + Math.cos(DegToRad(origin_lat)) * Math.cos(DegToRad(dest_lat)) * Math.cos(DegToRad(theta));
+        distCalc = Math.acos(distCalc);
+        distCalc = RadToDeg(distCalc);
+        distCalc = distCalc * 60 * 1.1515 * 1.609344;
+        return distCalc;
+    }
+
+    // Function converts decimal degrees to radians
+    private double DegToRad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    // Function converts radians to decimal degrees
+    private double RadToDeg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 
     public void logout(){
