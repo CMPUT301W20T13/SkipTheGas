@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="app_name">Skip The Gas</string>
+    <string name="menu_login">Log In</string>
+    <string name="menu_signup">Sign Up</string>
+    <string name="Title">Welcome!</string>
+    <string name="SignUpTitle">Sign up for account</string>
+    <string name="LoginTitle">Login your account</string>
+    <string name="LoginEmailHint">User E-mail</string>
+    <string name="LoginPasswordHint">Password</string>
+    <string name="welcome_message">Do you have an account? please choose LogIn option in the menu to log in.  Or sign up for an account to join us</string>
+    <string name="login_button">Log In</string>
+    <string name="register_button">Register</string>
+    <string name="register_username_hint">Username(required)</string>
+    <string name="register_password_hint">Password(required)</string>
+    <string name="register_email_hint">Email(required)</string>
+    <string name="register_phone_hint">Phone number(reqiured)</string>
+    <string name="password_reset">Forgot your password? Click here to reset it.</string>
+    <string name="title_activity_riders">Map</string>
+    <string name="title_activity_drivers">Map</string>
+    <string name="logout">Log out</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_maps">Map</string>
+</resources>
