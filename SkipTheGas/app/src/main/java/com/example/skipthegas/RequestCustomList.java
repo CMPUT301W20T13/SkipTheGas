@@ -42,7 +42,7 @@ public class RequestCustomList extends ArrayAdapter<Request> {
         TextView riderDestination = view.findViewById(R.id.rider_destination);
 
         riderName.setText(request.getRiderName());
-        riderNumber.setText(request.getRiderNumber());
+        riderNumber.setText(request.getRiderPhone());
 
         String locationString = "" + request.getRiderCurrentLocation().latitude +", " +request.getRiderCurrentLocation().longitude;
 
