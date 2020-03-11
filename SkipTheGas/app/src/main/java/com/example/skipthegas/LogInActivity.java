@@ -73,6 +73,7 @@ public class LogInActivity extends AppCompatActivity {
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
+                loginButton.setEnabled(false);
 
                 firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -82,7 +83,8 @@ public class LogInActivity extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(), SelectionActivity.class));
                             progressBar.setVisibility(View.GONE);
                         } else {
-                            Toast.makeText(LogInActivity.this, "Your email or password is incorrect", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogInActivity.this, "Your email or password is incorrect "+task.getException(), Toast.LENGTH_SHORT).show();
+                            loginButton.setEnabled(true);
                             progressBar.setVisibility(View.GONE);
                         }
                     }

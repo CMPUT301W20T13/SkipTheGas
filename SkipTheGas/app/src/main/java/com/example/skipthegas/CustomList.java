@@ -1,5 +1,6 @@
 package com.example.skipthegas;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +17,13 @@ public class CustomList extends ArrayAdapter<Ride> {
     private ArrayList<Ride> rides;
     private Context context;
 
-    public CustomList(Context context, ArrayList<Ride> rides){
+    CustomList(Context context, ArrayList<Ride> rides){
         super(context, 0, rides);
         this.rides = rides;
         this.context = context;
     }
 
+    @SuppressLint("SetTextI18n")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent){
