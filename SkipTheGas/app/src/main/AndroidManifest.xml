@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.skipthegas">
-<<<<<<< HEAD
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-=======
-
->>>>>>> brighton
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -20,7 +16,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
         <activity android:name=".VerifyActivity"></activity>
         <activity android:name=".SelectionActivity" />
         <!--
@@ -38,8 +33,6 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-=======
->>>>>>> brighton
         <activity android:name=".LogInActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -50,7 +43,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-<<<<<<< HEAD
         <activity android:name=".RiderProfileActivity" />
         <activity android:name=".DriverProfileActivity" />
         <activity android:name=".RideConfirmedActivity" />
@@ -66,21 +58,6 @@
         <activity
             android:name=".DriverDrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-=======
-        <activity android:name=".RiderProfileActivity"></activity>
-        <activity android:name=".DriverProfileActivity"></activity>
-        <activity android:name=".RideConfirmedActivity"></activity>
-        <activity android:name=".RequestRideActivity"></activity>
-        <activity android:name=".YourRideRequestActivity"></activity>
-        <activity android:name=".TripFeedBackActivity"></activity>
-        <activity android:name=".PaymentActivity"></activity>
-        <activity android:name=".PayAcceptedActivity"></activity>
-        <activity android:name=".ActiveRequestsActivity"></activity>
-        <activity android:name=".DriverProfileEditable"></activity>
-        <activity android:name=".RiderProfileEditable"></activity>
-
-
->>>>>>> brighton
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
