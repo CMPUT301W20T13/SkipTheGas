@@ -27,10 +27,18 @@ public class LogInActivity extends AppCompatActivity {
     EditText loginEmailField;
     EditText passwordField;
     Button loginButton;
+<<<<<<< HEAD
     TextView passwordReset;
     ProgressBar progressBar;
 
     FirebaseAuth firebaseAuth;
+=======
+    Button goToProfile;
+    TextView passwordReset;
+    ProgressBar progressBar;
+    FirebaseAuth firebaseAuth;
+    String userType = "Driver";
+>>>>>>> brighton
 
 
     @Override
@@ -71,6 +79,19 @@ public class LogInActivity extends AppCompatActivity {
                     Toast.makeText(LogInActivity.this,"Password is too short", Toast.LENGTH_SHORT).show();
                     return;
                 }
+<<<<<<< HEAD
+=======
+                else{
+                    if (userType == "Rider") {
+                        Intent intent = new Intent(view.getContext(), RiderProfileActivity.class);
+                        startActivity(intent);
+                    }
+                    else if (userType == "Driver"){
+                        Intent intent = new Intent(view.getContext(), DriverProfileActivity.class);
+                        startActivity(intent);
+                    }
+                }
+>>>>>>> brighton
 
                 progressBar.setVisibility(View.VISIBLE);
 
@@ -79,7 +100,11 @@ public class LogInActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(LogInActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD
                             startActivity(new Intent(getApplicationContext(), SelectionActivity.class));
+=======
+//                            startActivity(new Intent(getApplicationContext(),RidersActivity.class));
+>>>>>>> brighton
                             progressBar.setVisibility(View.GONE);
                         } else {
                             Toast.makeText(LogInActivity.this, "Your email or password is incorrect", Toast.LENGTH_SHORT).show();
@@ -108,7 +133,11 @@ public class LogInActivity extends AppCompatActivity {
                                 firebaseAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+<<<<<<< HEAD
                                         Toast.makeText(LogInActivity.this, "Email is send", Toast.LENGTH_SHORT).show();
+=======
+                                        Toast.makeText(LogInActivity.this, "Email is sent", Toast.LENGTH_SHORT).show();
+>>>>>>> brighton
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
@@ -121,5 +150,9 @@ public class LogInActivity extends AppCompatActivity {
                 passwordResetDialog.create().show();
             }
         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> brighton
     }
 }

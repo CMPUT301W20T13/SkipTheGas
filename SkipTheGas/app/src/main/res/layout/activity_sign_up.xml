@@ -27,24 +27,43 @@
         android:inputType="textPersonName" />
 
     <EditText
+<<<<<<< HEAD
         android:id="@+id/email_register_field"
+=======
+        android:id="@+id/password_register_field"
+>>>>>>> brighton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:ems="10"
+<<<<<<< HEAD
         android:hint="@string/register_email_hint"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/password_register_field"
+=======
+        android:hint="@string/register_password_hint"
+        android:importantForAutofill="no"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/email_register_field"
+>>>>>>> brighton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:ems="10"
+<<<<<<< HEAD
         android:hint="@string/register_password_hint"
         android:importantForAutofill="no"
         android:inputType="textPassword" />
+=======
+        android:hint="@string/register_email_hint"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress" />
+>>>>>>> brighton
 
     <EditText
         android:id="@+id/phone_register_field"
@@ -56,6 +75,7 @@
         android:importantForAutofill="no"
         android:inputType="phone" />
 
+<<<<<<< HEAD
     <Switch
         android:id="@+id/register_driver_checkbox"
         android:layout_width="match_parent"
@@ -64,6 +84,8 @@
         android:textSize="20sp"
         tools:ignore="HardcodedText" />
 
+=======
+>>>>>>> brighton
     <Button
         android:id="@+id/register_button"
         android:layout_width="match_parent"
