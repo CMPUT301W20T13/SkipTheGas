@@ -128,8 +128,8 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                     double ride_time = (ride_dist/50)*60;
                     String rounded_time = twoDecPoints.format(ride_time);
 
-                    //estimated ride fare is calculated using a rate of $0.81 per km
-                    double ride_fare = ride_dist*0.81;
+                    //estimated ride fare is calculated using a rate of $0.81 per km on top of a minimum fare of $5.25
+                    double ride_fare = 5.25 + (ride_dist*0.81);
                     String rounded_fare = twoDecPoints.format(ride_fare);
 
                     new AlertDialog.Builder(RiderActivity.this)
@@ -144,6 +144,9 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                                     HashMap<String, Object> reqData = new HashMap<>();
                                     reqData.put("origin",origin);
                                     reqData.put("destination",destination);
+                                    reqData.put("est_distance",rounded_dist);
+                                    reqData.put("est_time",rounded_time);
+                                    reqData.put("est_fare",rounded_time);
 
                                     reqData.put("rider",userId);
                                     reqData.put("rider_phone",phone);
