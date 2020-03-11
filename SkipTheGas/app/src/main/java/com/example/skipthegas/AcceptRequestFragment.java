@@ -17,6 +17,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 
+/**
+ * This is a class which displays a fragment prompting a driver to accept a ride request
+ */
 public class AcceptRequestFragment extends DialogFragment {
     private TextView userNameTextView;
     private TextView startLocationTextView;

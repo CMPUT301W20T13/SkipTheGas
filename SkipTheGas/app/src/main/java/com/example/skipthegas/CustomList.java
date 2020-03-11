@@ -13,6 +13,9 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * This is a class which implements a custom list used with the Ride object to store ride data
+ */
 public class CustomList extends ArrayAdapter<Ride> {
     private ArrayList<Ride> rides;
     private Context context;

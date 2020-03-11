@@ -9,6 +9,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * This is a class which governs the "your ride request" screen, where riders can view details
+ * regarding the ride request they have submitted
+ */
 public class YourRideRequestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,10 @@ public class YourRideRequestActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This displays to the screen that a ride has been cancelled if the user selects "ok" on the
+     * cancel ride fragment
+     */
     public void onOkPressed(){
         Toast.makeText(this, "Ride Canceled", Toast.LENGTH_SHORT).show();
     }

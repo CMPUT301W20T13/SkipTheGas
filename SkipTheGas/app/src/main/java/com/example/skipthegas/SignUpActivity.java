@@ -25,7 +25,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 
-
+/**
+ * This is a class that governs the sign up screen of the app
+ */
 public class SignUpActivity extends AppCompatActivity {
 
     EditText usernameField;
@@ -68,6 +70,20 @@ public class SignUpActivity extends AppCompatActivity {
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * This performs validation checks on a user's entered sign up information
+             * @param username
+             *      This is the user's entered email address
+             * @param password
+             *      This is the user's entered password
+             * @param email
+             *      This is this user's entered email
+             * @param phone
+             *      This is the user's entered phone number
+             * @retur
+             *      Either an error is returned, or the user is brought back to the login page if
+             *      validation was successful
+             */
             public void onClick(View view) {
                 final String username = usernameField.getText().toString();
                 final String password = passwordField.getText().toString();
@@ -96,6 +112,9 @@ public class SignUpActivity extends AppCompatActivity {
                 // Register the user
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
+                    /**
+                     * This registers the user in the firebase as a new user for the app
+                     */
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) { // Create user success

@@ -13,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * This is a class which implements a fragment prompting the user to verify cancellation of a ride
+ */
 public class CancelFragment extends DialogFragment {
     public interface OnFragmentInteractionListener {
         void onOkPressed();

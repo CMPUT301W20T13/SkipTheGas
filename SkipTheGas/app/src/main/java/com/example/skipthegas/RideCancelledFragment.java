@@ -12,6 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+
+/**
+ * This is a class which implements a fragment displaying to a driver that a ride has been cancelled
+ * by the rider who originally requested it
+ */
 public class RideCancelledFragment extends DialogFragment {
     public interface OnFragmentInteractionListener {
         void onOkPressed();

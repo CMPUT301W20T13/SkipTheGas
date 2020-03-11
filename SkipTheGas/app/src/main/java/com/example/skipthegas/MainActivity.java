@@ -7,6 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+ * This is the main class which is launched when initially starting the app.
+ * It contains the welcome screen, which prompts the user to either Log In or Sign Up.
+ */
 public class MainActivity extends AppCompatActivity {
 
     Button logInBtn;
@@ -22,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         logInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * This will bring the user to the login screen
+             */
             public void onClick(View view) {
                 Intent logInIntent = new Intent(getApplicationContext(), LogInActivity.class);
 
@@ -31,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * This will bring the user to the sign in screen
+             */
             public void onClick(View view) {
                 Intent signUpIntent = new Intent(getApplicationContext(), SignUpActivity.class);
 
