@@ -12,6 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * This is a class which implements a fragment displaying a driver's profile
+ */
 public class DriverProfileFragment extends DialogFragment {
     public interface OnFragmentInteractionListener {
         void onOkPressed();

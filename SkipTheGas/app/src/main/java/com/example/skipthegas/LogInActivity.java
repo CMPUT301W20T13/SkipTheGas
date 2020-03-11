@@ -22,6 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * This is a class which allows the user to log into the app
+ */
 public class LogInActivity extends AppCompatActivity {
 
     EditText loginEmailField;
@@ -55,6 +58,9 @@ public class LogInActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
+            /**
+             * This checks for valid login in formation and allows the user to enter if validated
+             */
             public void onClick(View view) {
                 String email = loginEmailField.getText().toString();
                 String password = passwordField.getText().toString();
@@ -77,6 +83,9 @@ public class LogInActivity extends AppCompatActivity {
 
                 firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
+                    /**
+                     * This brings the user to the corresponding profile screen if validation was successful
+                     */
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(LogInActivity.this, "Login success", Toast.LENGTH_SHORT).show();

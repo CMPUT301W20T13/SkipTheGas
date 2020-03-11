@@ -18,6 +18,9 @@ import java.util.Date;
 
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
+/**
+ * This is a class that governs the "browse active requests" screen
+ */
 public class ActiveRequestsActivity extends AppCompatActivity {
     ListView ridesList;
     ArrayAdapter<Ride> rideAdapter;
@@ -57,6 +60,12 @@ public class ActiveRequestsActivity extends AppCompatActivity {
         Log.v("Ride Info", ridesList.toString());
 
     }
+
+    /**
+     * This returns the user back to their profile on a button click
+     * @param view
+     *      Changes view from the requests screen to the profile screen
+     */
     public void returnToProfile(View view) {
         Intent intent = new Intent(this, DriverProfileActivity.class);
         startActivity(intent);
