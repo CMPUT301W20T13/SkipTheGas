@@ -27,6 +27,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+
+/**
+ *  Driver's map activity fragment, driver can view maps from this fragment
+ */
 public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
 
     private GoogleMap mMap;
@@ -44,14 +48,17 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
-         View view =  inflater.inflate(R.layout.fragment_driver_map, null, false);
+        View view =  inflater.inflate(R.layout.fragment_driver_map, null, false);
 
         initMap();
 
         return view;
     }
 
+
+    /**
+     * initialize maps
+     */
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.driver_map);
         assert mapFragment != null;
@@ -59,6 +66,11 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
         mapView = mapFragment.getView();
     }
 
+    /**
+     * On Maps Activity
+     * Set my location to true
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -82,6 +94,10 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
 
     }
 
+
+    /**
+     * Get devices current location.
+     */
     private void getDeviceLocation() {
         Log.d(TAG, "getDeviceLocation: getting the devices location");
 
@@ -112,10 +128,23 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
 
 
     // Move Camera tp current location
+
+    /**
+     * Move Camera to current location
+     * @param latLng
+     * @param zoom
+     */
     private void moveCamera(LatLng latLng, float zoom) {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
+
+    /**
+     * Get device permission to get current location
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {

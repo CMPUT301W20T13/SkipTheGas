@@ -35,6 +35,7 @@ public class AcceptRequestFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        userNameTextView = getActivity().findViewById(R.id.accept_fragment_rider_name);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             String userName = bundle.getString("user_name");
