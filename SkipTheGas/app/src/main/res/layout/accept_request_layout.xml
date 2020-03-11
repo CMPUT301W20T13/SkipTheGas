@@ -13,7 +13,8 @@
         android:text="Accept Request?"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView39"
@@ -56,42 +57,42 @@
         app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
     <TextView
-        android:id="@+id/textView45"
+        android:id="@+id/accept_fragment_rider_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
-        android:text="Grersch"
+        android:hint="User Name"
         app:layout_constraintStart_toEndOf="@+id/textView39"
         app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
     <TextView
-        android:id="@+id/textView46"
+        android:id="@+id/accept_fragment_start_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="University of Alberta"
+        android:hint="Start Location"
         app:layout_constraintStart_toEndOf="@+id/textView42"
         app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
     <TextView
-        android:id="@+id/textView47"
+        android:id="@+id/accept_fragment_end_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="Dairy Queen"
+        android:hint="End Location"
         app:layout_constraintStart_toEndOf="@+id/textView43"
         app:layout_constraintTop_toBottomOf="@+id/textView42" />
 
     <TextView
-        android:id="@+id/textView48"
+        android:id="@+id/accept_fragment_estimate_fare"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="108QR"
+        android:hint="Estimate Price"
         app:layout_constraintStart_toEndOf="@+id/textView44"
         app:layout_constraintTop_toBottomOf="@+id/textView43" />
 </androidx.constraintlayout.widget.ConstraintLayout>
