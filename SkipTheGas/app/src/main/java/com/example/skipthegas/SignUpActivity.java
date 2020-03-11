@@ -151,10 +151,13 @@ public class SignUpActivity extends AppCompatActivity {
                             // Direct user to Rider's screen
 //                            startActivity(new Intent(getApplicationContext(), RidersActivity.class));
                             progressBar.setVisibility(View.GONE);
+<<<<<<< HEAD
 
                             // start new activity after click on the button and sign up successfully.
                             Intent verifyPageIntent = new Intent(getApplicationContext(), VerifyActivity.class);
                             startActivity(verifyPageIntent);
+=======
+>>>>>>> brighton
                         } else { // Fail to create user
                             Toast.makeText(SignUpActivity.this, "Unable to create user.", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
