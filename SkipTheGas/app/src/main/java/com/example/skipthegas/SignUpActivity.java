@@ -65,10 +65,6 @@ public class SignUpActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         fireDatabase = FirebaseFirestore.getInstance();
 
-//        if (firebaseAuth.getCurrentUser() != null) {
-//            startActivity(new Intent(getApplicationContext(), RidersActivity.class));
-//            finish();
-//        }
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, "Phone number is required", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+                registerButton.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
 
                 // Register the user
@@ -126,9 +122,10 @@ public class SignUpActivity extends AppCompatActivity {
                             // Get the unique userID
                             userID = firebaseAuth.getCurrentUser().getUid();
 
-                            DocumentReference documentReference = fireDatabase.collection("users").document(userID);
+                            DocumentReference documentReference = fireDatabase.collection("users").document(email);
 
                             HashMap<String,Object> users = new HashMap<>();
+                            users.put("userId",userID);
                             users.put("username",username);
                             users.put("email",email);
                             users.put("phone",phone);
@@ -155,9 +152,11 @@ public class SignUpActivity extends AppCompatActivity {
                             // start new activity after click on the button and sign up successfully.
                             Intent verifyPageIntent = new Intent(getApplicationContext(), VerifyActivity.class);
                             startActivity(verifyPageIntent);
+                            registerButton.setEnabled(true);
                         } else { // Fail to create user
                             Toast.makeText(SignUpActivity.this, "Unable to create user.", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
+                            registerButton.setEnabled(true);
                         }
                     }
                 });

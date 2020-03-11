@@ -87,10 +87,10 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
         // Retrieve user information from cloud store
         assert firebaseUser != null;
-        userId = firebaseUser.getUid();
+        email = firebaseUser.getEmail();
         firebaseFirestore
                 .collection("users")
-                .document(userId)
+                .document(email)
                 .addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -108,8 +108,8 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
                 Log.i(TAG,"Request posted by user " + userId);
 
-                String msg1 = "Estimated ride time:";
-                String msg2 = "Estimated ride fare";
+                String msg1 = "Estimated ride distance:";
+                String msg2 = "Estimated ride time:";
                 String msg3 = "Estimated ride fare: ";
 
                 if (locPointsList.size() < 2){
@@ -119,6 +119,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                 } else {
                     GeoPoint origin = new GeoPoint(locPointsList.get(0).latitude, locPointsList.get(0).longitude);
                     GeoPoint destination = new GeoPoint(locPointsList.get(1).latitude, locPointsList.get(1).longitude);
+
                     double ride_dist = distance(locPointsList.get(0).latitude, locPointsList.get(0).longitude,
                             locPointsList.get(1).latitude, locPointsList.get(1).longitude);
                     DecimalFormat twoDecPoints = new DecimalFormat("#.##");
@@ -142,32 +143,31 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     HashMap<String, Object> reqData = new HashMap<>();
-                                    reqData.put("origin",origin);
-                                    reqData.put("destination",destination);
+                                    reqData.put("ride_origin",origin);
+                                    reqData.put("ride_destination",destination);
                                     reqData.put("est_distance",rounded_dist);
                                     reqData.put("est_time",rounded_time);
-                                    reqData.put("est_fare",rounded_time);
-
-                                    reqData.put("rider",userId);
+                                    reqData.put("est_fare",rounded_fare);
                                     reqData.put("rider_phone",phone);
                                     reqData.put("rider_email",email);
                                     reqData.put("rider_name",username);
+                                    reqData.put("is_compete",false);
+                                    reqData.put("is_accepted",false);
 
                                     firebaseFirestore
-                                            .collection("users")
-                                            .document(userId)
-                                            .collection("requests")
+                                            .collection("all_requests")
                                             .add(reqData)
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                 @Override
                                                 public void onSuccess(DocumentReference documentReference) {
-                                                    Log.d(TAG,"Addition success");
+                                                    Log.i(TAG,"post success");
+                                                    Toast.makeText(RiderActivity.this, "request posted", Toast.LENGTH_SHORT).show();
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    Log.d(TAG,"Addition failed");
+                                                    Log.i(TAG,"post failed "+e.getMessage());
                                                 }
                                             });
                                     clearMap();
