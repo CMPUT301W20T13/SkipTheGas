@@ -68,9 +68,9 @@ public class DriverRequestFragment extends Fragment {
         rideAdapter = new CustomList(getActivity(), rideDataList);
 
 
-        for (int i=0;i<riders.length;i++){
-            rideDataList.add(new Ride(riders[i], drivers[i], startLocs[i], endLocs[i], dates[i], prices[i]));
-        }
+//        for (int i=0;i<riders.length;i++){
+//            rideDataList.add(new Ride(riders[i], drivers[i], startLocs[i], endLocs[i], dates[i], prices[i]));
+//        }
 
         rideAdapter = new CustomList(getActivity(), rideDataList);
         ridesList.setAdapter(rideAdapter);
@@ -82,7 +82,7 @@ public class DriverRequestFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 rides = rideAdapter.getItem(position);
-                String userName = rides.getRider();
+                String userName = rides.getRiderName();
                 Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
                 bundle.putString("user_name", userName);
                 AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
