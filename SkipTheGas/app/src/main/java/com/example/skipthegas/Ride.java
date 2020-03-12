@@ -1,46 +1,105 @@
 package com.example.skipthegas;
 
-import java.util.Date;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.GeoPoint;
 
-/**
- * This is a class which describes the Ride object
- */
+
 public class Ride {
-    private String rider;
-    private String driver;
-    private String startLocation;
-    private String endLocation;
-    private Date date;
-    private Integer price;
+    private GeoPoint origin;
+    private GeoPoint destination;
+    private String originAddress;
+    private String destinationAddress;
+    private String riderName;
+    private String riderPhone;
+    private String riderEmail;
+    private String driverName;
+    private String driverPhone;
+    private String driverEmail;
+    private String dist;
+    private String time;
+    private String fare;
+    private boolean accepted;
+    private boolean completed;
 
-    /**
-     * This is a constructor for the Ride object
-     * @param rider
-     *      The rider associated with a ride; the person who submitted the ride request
-     * @param driver
-     *      The driver associated with a ride; the person who accepted the ride request
-     * @param startLocation
-     *      The starting location of the scheduled ride
-     * @param endLocation
-     *      The end location of the scheduled ride
-     * @param date
-     *      The time of day at which the ride is to commence
-     * @param price
-     *      The estimated price (in QR bucks) for the rider to pay the driver for the ride
-     */
-    Ride(String rider, String driver, String startLocation, String endLocation, Date date, Integer price){
-        this.rider = rider;
-        this.driver = driver;
-        this.startLocation = startLocation;
-        this.endLocation = endLocation;
-        this.date = date;
-        this.price = price;
+    Ride(String riderName, String riderPhone, String riderEmail, GeoPoint origin,
+         GeoPoint destination, String dist, String time, String fare,
+         String driverName, String driverPhone, String driverEmail, boolean accepted, boolean completed,
+         String originAddress, String destinationAddress) {
+        this.riderName = riderName;
+        this.riderPhone = riderPhone;
+        this.riderEmail = riderEmail;
+        this.origin = origin;
+        this.destination = destination;
+        this.dist = dist;
+        this.time = time;
+        this.fare = fare;
+        this.driverName = driverName;
+        this.driverPhone = driverPhone;
+        this.driverEmail = driverEmail;
+        this.accepted = accepted;
+        this.completed = completed;
+        this.originAddress = originAddress;
+        this.destinationAddress = destinationAddress;
     }
 
-    String getRider() {return this.rider;}
-    String getDriver() {return this.driver;}
-    String getStartLocation() {return this.startLocation;}
-    String getEndLocation() {return this.endLocation;}
-    Date getDate() {return this.date;}
-    Integer getPrice() {return this.price;}
+    String getRiderName() {
+        return this.riderName;
+    }
+
+    String getRiderPhone() {
+        return this.riderPhone;
+    }
+
+    String getRiderEmail() {
+        return this.riderEmail;
+    }
+
+    String getDriverName() {
+        return this.driverName;
+    }
+
+    String getDriverPhone() {
+        return this.driverPhone;
+    }
+
+    String getDriverEmail() {
+        return this.driverEmail;
+    }
+
+    GeoPoint getOrigin() {
+        return this.origin;
+    }
+
+    GeoPoint getDestination() {
+        return this.destination;
+    }
+
+    String getDist() {
+        return this.dist;
+    }
+
+    String getTime() {
+        return this.time;
+    }
+
+    String getFare() {
+        return this.fare;
+    }
+
+    Boolean getAccepted() {
+        return this.accepted;
+    }
+
+    Boolean getCompleted() {
+        return this.completed;
+    }
+
+    String getOriginAddress() {
+        return this.originAddress;
+    }
+
+    String getDestinationAddress() {
+        return this.destinationAddress;
+    }
 }
