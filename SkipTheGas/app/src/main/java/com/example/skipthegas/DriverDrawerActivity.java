@@ -13,7 +13,9 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
-
+/**
+ * This is a class that implements the drawer style menu for the driver
+ */
 public class DriverDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout driverDrawer;
 

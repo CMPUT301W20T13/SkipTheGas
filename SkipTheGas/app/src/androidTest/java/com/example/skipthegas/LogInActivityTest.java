@@ -47,7 +47,7 @@ public class LogInActivityTest {
      * Sign in to the application with correct information
      */
     @Test
-    public void signUpSuccess(){
+    public void logInSuccess(){
         solo.assertCurrentActivity("Wrong Activity", LogInActivity.class);
         solo.enterText((EditText)solo.getView(R.id.email_login_field), "brightonius@gmail.com");
         solo.enterText((EditText)solo.getView(R.id.password_login_field), "testpass");
@@ -59,7 +59,7 @@ public class LogInActivityTest {
      * Attempt to sign in to the application with incorrect information
      */
     @Test
-    public void signUpFail(){
+    public void logInFail(){
         solo.assertCurrentActivity("Wrong Activity", LogInActivity.class);
         solo.enterText((EditText)solo.getView(R.id.email_login_field), "k3v1n@chili.bureau");
         solo.enterText((EditText)solo.getView(R.id.password_login_field), "chilistain42069");

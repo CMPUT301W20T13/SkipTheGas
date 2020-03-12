@@ -32,6 +32,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * This is a class that displays the active requests of the driver
+ */
 public class DriverRequestFragment extends Fragment {
     //
 //    ListView requestList;

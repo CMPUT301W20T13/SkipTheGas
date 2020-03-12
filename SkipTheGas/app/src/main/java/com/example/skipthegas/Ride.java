@@ -3,8 +3,9 @@ package com.example.skipthegas;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
-
-
+/**
+ * This is a class that stores and contains getter methods for all attributes of a request
+ */
 public class Ride {
     private GeoPoint origin;
     private GeoPoint destination;
