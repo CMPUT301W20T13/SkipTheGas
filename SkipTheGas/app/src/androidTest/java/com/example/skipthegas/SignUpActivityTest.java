@@ -34,26 +34,26 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-public class SignUpActivityTest {
-}
-
 @RunWith(AndroidJUnit4.class)
-public class LogInActivityTest {
+public class SignUpActivityTest {
     private Solo solo;
 
     @Rule
-    public ActivityTestRule<LogInActivity> rule =
-            new ActivityTestRule<>(LogInActivity.class, true, true);
+    public ActivityTestRule<SignUpActivity> rule =
+            new ActivityTestRule<>(SignUpActivity.class, true, true);
+
     /**
-     * Runs before all tests and creates solo instance
+     * setUp test is one of the first tests that are run
+     * Creates q solo instance
      * @throws Exception
      */
     @Before
     public void setUp() throws Exception{
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
     }
+
     /**
-     * Gets the activity
+     * This test gets and starts the activity
      * @throws Exception
      */
     @Test
@@ -62,11 +62,11 @@ public class LogInActivityTest {
     }
 
     /**
-     * Sign in to the application with correct information
+     * This test checks to see if the user sign up was successful
      */
     @Test
     public void signUpSuccess(){
-        solo.assertCurrentActivity("Wrong Activity", LogInActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
         solo.enterText((EditText)solo.getView(R.id.email_login_field), "brightonius@gmail.com");
         solo.enterText((EditText)solo.getView(R.id.password_login_field), "testpass");
         solo.clickOnButton("Log In");
@@ -93,4 +93,5 @@ public class LogInActivityTest {
     public void tearDown() throws Exception{
         solo.finishOpenedActivities();
     }
+
 }
