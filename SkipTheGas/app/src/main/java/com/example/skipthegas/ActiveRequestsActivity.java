@@ -51,9 +51,9 @@ public class ActiveRequestsActivity extends AppCompatActivity {
         rideAdapter = new ArrayAdapter<>(this, R.layout.content, rideDataList);
 
 
-        for (int i=0;i<riders.length;i++){
-            rideDataList.add(new Ride(riders[i], drivers[i], startLocs[i], endLocs[i], dates[i], prices[i]));
-        }
+//        for (int i=0;i<riders.length;i++){
+//            rideDataList.add(new Ride(riders[i], drivers[i], startLocs[i], endLocs[i], dates[i], prices[i]));
+//        }
 
         rideAdapter = new CustomList(this, rideDataList);
         ridesList.setAdapter(rideAdapter);

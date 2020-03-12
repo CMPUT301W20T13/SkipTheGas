@@ -141,7 +141,9 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                     //estimated ride fare is calculated using a rate of $0.81 per km on top of a minimum fare of $5.25
                     double ride_fare = 5.25 + (ride_dist*0.81);
                     String rounded_fare = twoDecPoints.format(ride_fare);
-
+                    Ride ride = new Ride(username, phone, email, origin, destination, rounded_dist,
+                            rounded_time, rounded_fare, null, null,
+                            null, false, false, originAddress, destinationAddress);
                     new AlertDialog.Builder(RiderActivity.this)
                             .setTitle("Requested Ride Details")
                             .setMessage(msg1 + rounded_dist + " kilometers" + "\n"
@@ -152,16 +154,21 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     HashMap<String, Object> reqData = new HashMap<>();
+                                    reqData.put("rider_name",username);
+                                    reqData.put("rider_phone",phone);
+                                    reqData.put("rider_email",email);
                                     reqData.put("ride_origin",origin);
                                     reqData.put("ride_destination",destination);
                                     reqData.put("est_distance",rounded_dist);
                                     reqData.put("est_time",rounded_time);
                                     reqData.put("est_fare",rounded_fare);
-                                    reqData.put("rider_phone",phone);
-                                    reqData.put("rider_email",email);
-                                    reqData.put("rider_name",username);
+                                    reqData.put("driver_name", null);
+                                    reqData.put("driver_phone", null);
+                                    reqData.put("driver_email", null);
                                     reqData.put("is_compete",false);
                                     reqData.put("is_accepted",false);
+                                    reqData.put("origin_address", originAddress);
+                                    reqData.put("destination_address", destinationAddress);
 
                                     firebaseFirestore
                                             .collection("all_requests")
