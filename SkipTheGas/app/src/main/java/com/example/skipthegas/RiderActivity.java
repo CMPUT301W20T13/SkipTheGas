@@ -11,6 +11,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,9 +40,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+
 import javax.annotation.Nullable;
 
 
@@ -119,6 +125,9 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                 } else {
                     GeoPoint origin = new GeoPoint(locPointsList.get(0).latitude, locPointsList.get(0).longitude);
                     GeoPoint destination = new GeoPoint(locPointsList.get(1).latitude, locPointsList.get(1).longitude);
+
+                    String originAddress = getGeoAddress(origin);
+                    String destinationAddress = getGeoAddress(destination);
 
                     double ride_dist = distance(locPointsList.get(0).latitude, locPointsList.get(0).longitude,
                             locPointsList.get(1).latitude, locPointsList.get(1).longitude);
@@ -294,6 +303,23 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
     // Function converts radians to decimal degrees
     private double RadToDeg(double rad) {
         return (rad * 180.0 / Math.PI);
+    }
+
+    public String getGeoAddress(GeoPoint geoPoint) {
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(this, Locale.getDefault());
+        double lat = geoPoint.getLatitude();
+        double lng = geoPoint.getLongitude();
+        String returnAddress = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, lng, 1);
+            String add = addresses.get(0).getAddressLine(0);
+            returnAddress = add;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return returnAddress;
     }
 
     public void logout(){

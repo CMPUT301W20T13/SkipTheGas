@@ -44,12 +44,12 @@ public class RequestCustomList extends ArrayAdapter<Request> {
         riderName.setText(request.getRiderName());
         riderNumber.setText(request.getRiderPhone());
 
-        String locationString = "" + request.getRiderCurrentLocation().latitude +", " +request.getRiderCurrentLocation().longitude;
+        //String locationString = "" + request.getOrigin().latitude +", " +request.getRiderCurrentLocation().longitude;
 
-        String destinationString = "" + request.getRiderDestination().latitude +", " +request.getRiderDestination().longitude;
+        //String destinationString = "" + request.getRiderDestination().latitude +", " +request.getRiderDestination().longitude;
 
-        riderCurrentLocation.setText(locationString);
-        riderDestination.setText(destinationString);
+        //riderCurrentLocation.setText(locationString);
+        //riderDestination.setText(destinationString);
 
         return view;
     }
