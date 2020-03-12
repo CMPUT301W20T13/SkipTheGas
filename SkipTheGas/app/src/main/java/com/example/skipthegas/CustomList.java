@@ -42,12 +42,12 @@ public class CustomList extends ArrayAdapter<Ride> {
         //TextView rideDate = view.findViewById(R.id.date_text);
         TextView ridePrice = view.findViewById(R.id.price_text);
 
-        riderName.setText(ride.getRider());
+        riderName.setText(ride.getRiderName());
         //driverName.setText(ride.getDriver());
-        startLoc.setText(ride.getStartLocation());
-        endLoc.setText(ride.getEndLocation());
+        startLoc.setText(ride.getOriginAddress());
+        endLoc.setText(ride.getDestinationAddress());
         //rideDate.setText(ride.getDate().toString());
-        ridePrice.setText(ride.getPrice().toString());
+        ridePrice.setText(ride.getFare());
 
         return view;
     }
