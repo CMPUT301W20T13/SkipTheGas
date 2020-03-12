@@ -43,8 +43,8 @@ public class SignUpActivityTest {
             new ActivityTestRule<>(SignUpActivity.class, true, true);
 
     /**
-     * setUp test is one of the first tests that are run
-     * Creates q solo instance
+     * Test checks the setUp of the activity
+     * Creates solo instance
      * @throws Exception
      */
     @Before
@@ -63,26 +63,82 @@ public class SignUpActivityTest {
 
     /**
      * This test checks to see if the user sign up was successful
+     * Once user hits the "Register" button in this activity,
+     * the program should redirect them to the VerifyActivity
      */
     @Test
     public void signUpSuccess(){
         solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
-        solo.enterText((EditText)solo.getView(R.id.email_login_field), "brightonius@gmail.com");
-        solo.enterText((EditText)solo.getView(R.id.password_login_field), "testpass");
-        solo.clickOnButton("Log In");
-        solo.assertCurrentActivity("Wrong Activity", DriverProfileActivity.class);
+        solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "nandu201098@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
+        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
+        solo.clickOnButton("Register");
+        solo.assertCurrentActivity("Wrong Activity", VerifyActivity.class);
     }
 
     /**
-     * Attempt to sign in to the application with incorrect information
+     * This test checks the password field during Sign up
+     * If the value entered is too short, a toast should be posted
      */
     @Test
-    public void signUpFail(){
-        solo.assertCurrentActivity("Wrong Activity", LogInActivity.class);
-        solo.enterText((EditText)solo.getView(R.id.email_login_field), "k3v1n@chili.bureau");
-        solo.enterText((EditText)solo.getView(R.id.password_login_field), "chilistain42069");
-        solo.clickOnButton("Log In");
-        solo.assertCurrentActivity("Wrong Activity", LogInActivity.class);
+    public void pwTooShort(){
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+        solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "nandu201098@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.password_register_field), "123");
+        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
+        solo.clickOnButton("Register");
+        solo.waitForText("Password is too short");
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+    }
+
+    /**
+     * This test checks the username field during Sign up
+     * If the value entered is non-existent, a toast should be posted
+     */
+    @Test
+    public void signUpFail1(){
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+        solo.enterText((EditText)solo.getView(R.id.username_register_field), "");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "nandu201098@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
+        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
+        solo.clickOnButton("Register");
+        solo.waitForText("Username is required");
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+    }
+
+    /**
+     * This test checks the email field during Sign up
+     * If the value entered is non-existent, a toast should be posted
+     */
+    @Test
+    public void signUpFail2(){
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+        solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "");
+        solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
+        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
+        solo.clickOnButton("Register");
+        solo.waitForText("Email is required");
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+    }
+
+    /**
+     * This test checks the phone number field during Sign up
+     * If the value entered is non-existent, a toast should be posted
+     */
+    @Test
+    public void signUpFail3(){
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+        solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "nandu201098@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
+        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "");
+        solo.clickOnButton("Register");
+        solo.waitForText("Phone number is required");
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
     }
 
     /**
