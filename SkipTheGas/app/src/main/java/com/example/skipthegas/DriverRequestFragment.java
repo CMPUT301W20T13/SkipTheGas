@@ -21,7 +21,9 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Date;
-
+/**
+ * This is a class that displays the active requests of the driver
+ */
 public class DriverRequestFragment extends Fragment {
     //
 //    ListView requestList;

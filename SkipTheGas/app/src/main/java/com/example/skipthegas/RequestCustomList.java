@@ -11,8 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-
-
+/**
+ * This is a class that contains a list implementation of requests
+ */
 public class RequestCustomList extends ArrayAdapter<Request> {
 
     private ArrayList<Request> requests;
