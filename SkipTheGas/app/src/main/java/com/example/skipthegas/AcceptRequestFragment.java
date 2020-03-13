@@ -3,6 +3,7 @@ package com.example.skipthegas;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,13 +37,14 @@ public class AcceptRequestFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         userNameTextView = getActivity().findViewById(R.id.accept_fragment_rider_name);
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             String userName = bundle.getString("user_name");
             userNameTextView.setText(userName);
         }
-//        else {
-//            Toast.makeText(getActivity(), "Bundle is null", Toast.LENGTH_SHORT).show();
+////        else {
+////            Toast.makeText(getActivity(), "Bundle is null", Toast.LENGTH_SHORT).show();
 //        }
 
 
