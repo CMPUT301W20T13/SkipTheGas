@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,7 +17,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/driver_request_search_bar" />
 
     <TextView
         android:id="@+id/textView40"
@@ -28,7 +29,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/textView38"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/driver_request_search_bar" />
 
     <TextView
         android:id="@+id/textView41"
@@ -40,7 +41,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/textView40"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/driver_request_search_bar" />
 
     <TextView
         android:id="@+id/qr_estimate"
@@ -52,7 +53,7 @@
         android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/textView40"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar" />
+        app:layout_constraintTop_toBottomOf="@+id/driver_request_search_bar" />
 
     <TextView
         android:id="@+id/textView8"
@@ -80,7 +81,7 @@
         android:onClick="returnToProfile"/>
 
     <SearchView
-        android:id="@+id/search_bar"
+        android:id="@+id/driver_request_search_bar"
         android:layout_width="404dp"
         android:layout_height="38dp"
         android:layout_marginTop="8dp"
