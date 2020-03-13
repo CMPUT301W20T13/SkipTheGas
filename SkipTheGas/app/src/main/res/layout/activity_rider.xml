@@ -5,6 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RiderActivity">
+    <RelativeLayout
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:elevation="5dp"
+        android:layout_margin="5dp"
+        tools:ignore="UnusedAttribute">
+
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search_blk"
+            android:layout_margin="10dp"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/search_locaiton" />
+        <EditText
+            android:id="@+id/search_input"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/search_icon"
+            android:hint="@string/search_location_hint"
+            android:imeOptions="actionSearch"
+            tools:ignore="LabelFor"
+            android:autofillHints=""
+            android:inputType="text" />
+
+    </RelativeLayout>
 
     <fragment
         android:id="@+id/rider_map"

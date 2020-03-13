@@ -15,12 +15,17 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -51,6 +56,7 @@ import javax.annotation.Nullable;
 
 
 public class RiderActivity extends FragmentActivity implements OnMapReadyCallback {
+
     GoogleMap mMap;
     FloatingActionMenu floatingActionMenu;
     FloatingActionButton postReqBtn,editProfBtn,logoutBtn;
@@ -65,6 +71,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
     String username;
     String phone;
     String email;
+    EditText mSearchTxt;
 
 
     @Override
@@ -121,6 +128,10 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                 if (locPointsList.size() < 2){
 
                     Toast.makeText(RiderActivity.this, "At least 2 points needed", Toast.LENGTH_SHORT).show();
+
+                } else if (locPointsList.size() > 2){
+
+                    Toast.makeText(RiderActivity.this, "Too many points", Toast.LENGTH_SHORT).show();
 
                 } else {
                     GeoPoint origin = new GeoPoint(locPointsList.get(0).latitude, locPointsList.get(0).longitude);
@@ -277,6 +288,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                 mMap.addMarker(markerOptions);
             }
         });
+        this.initSearch();
 
     }
 
@@ -338,5 +350,55 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
     public void clearMap(){
         locPointsList.clear();
         mMap.clear();
+    }
+
+    public void initSearch(){
+        Log.d(TAG,"Initializing search ...");
+        mSearchTxt = findViewById(R.id.search_input);
+        mSearchTxt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (
+                        actionId == EditorInfo.IME_ACTION_SEARCH
+                        || actionId == EditorInfo.IME_ACTION_DONE
+                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
+                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER)
+                {
+                    geoLocate();
+                    mSearchTxt.setText("");
+                }
+                return false;
+            }
+        });
+    }
+
+    public void geoLocate(){
+        Log.i(TAG,"locating...");
+        String searchString = mSearchTxt.getText().toString();
+        Geocoder geocoder = new Geocoder(RiderActivity.this);
+        List<Address> addressList = new ArrayList<>();
+        try {
+
+            addressList = geocoder.getFromLocationName(searchString,1);
+
+        } catch (Exception e) {
+
+            Log.d(TAG,"Error occurred " + e.getMessage());
+            e.printStackTrace();
+
+        }
+
+        if (addressList.size()>0) {
+
+            Address address = addressList.get(0);
+            Toast.makeText(this, "Found a location", Toast.LENGTH_SHORT).show();
+            Log.d("Address","Found a location " + address.toString());
+
+        } else {
+
+            Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show();
+            Log.d(TAG,"Location not found");
+
+        }
     }
 }

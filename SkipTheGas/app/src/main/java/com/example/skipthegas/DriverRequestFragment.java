@@ -1,5 +1,6 @@
 package com.example.skipthegas;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -100,7 +101,9 @@ public class DriverRequestFragment extends Fragment {
                         rideDataList.clear();
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             String requestID = doc.getId();
+
                             boolean accepted = (boolean) doc.getData().get("is_accepted");
+
                             if (!accepted) {
                                 String riderName = (String) doc.getData().get("rider_name");
                                 String riderPhone = (String) doc.getData().get("rider_phone");
@@ -121,6 +124,7 @@ public class DriverRequestFragment extends Fragment {
                                 rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress));
                             }
                         }
+                        Log.i("# of request ",Integer.toString(rideDataList.size()));
                         rideAdapter.notifyDataSetChanged();
                     }
                 });
@@ -131,12 +135,12 @@ public class DriverRequestFragment extends Fragment {
 
 
 
-        String []riders ={"Grersch", "Test2"};
-        String []drivers ={"", ""};
-        String []startLocs ={"University of Alberta", "SUB"};
-        String []endLocs ={"Dairy Queen", "SouthGate"};
-        Date[]dates ={new Date(2020, 3, 7), new Date(2020, 3, 10)};
-        Integer []prices ={131, 99};
+//        String []riders ={"Grersch", "Test2"};
+//        String []drivers ={"", ""};
+//        String []startLocs ={"University of Alberta", "SUB"};
+//        String []endLocs ={"Dairy Queen", "SouthGate"};
+//        Date[]dates ={new Date(2020, 3, 7), new Date(2020, 3, 10)};
+//        Integer []prices ={131, 99};
 
 //        rideDataList = new ArrayList<>();
 //
@@ -151,18 +155,24 @@ public class DriverRequestFragment extends Fragment {
 //        ridesList.setAdapter(rideAdapter);
         Log.v("Ride Info", ridesList.toString());
 
+        @SuppressLint("CutPasteId")
         final ListView openFragment = getActivity().findViewById(R.id.request_list);
         openFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 rides = rideAdapter.getItem(position);
+                assert  (rides!=null);
                 String userName = rides.getRiderName();
                 Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
                 bundle.putString("user_name", userName);
                 AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
                 acceptRequestFragment.setArguments(bundle);
-                new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
+
+                if (getFragmentManager() != null) {
+                    new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
+                }
+
             }
         });
 
