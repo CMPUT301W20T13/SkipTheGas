@@ -153,9 +153,9 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                             null, false, false, originAddress, destinationAddress, null);
                     new AlertDialog.Builder(RiderActivity.this)
                             .setTitle("Requested Ride Details")
-                            .setMessage(msg1 + rounded_dist + " kilometers" + "\n"
-                                    + msg2 + rounded_time + " minutes" + "\n"
-                                    + msg3 + "$" + rounded_fare)
+                            .setMessage(msg1 + rounded_dist + " km" + "\n"
+                                    + msg2 + rounded_time + " min" + "\n"
+                                    + msg3 + rounded_fare + "QR bucks")
                             .setNegativeButton("Cancel",null)
                             .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                 @Override
