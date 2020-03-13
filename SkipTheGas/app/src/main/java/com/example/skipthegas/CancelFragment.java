@@ -35,7 +35,7 @@ public class CancelFragment extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getActivity(), "Cancelled Ride", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(view.getContext(), RequestRideActivity.class);
+                        Intent intent = new Intent(view.getContext(), RiderProfileActivity.class);
                         startActivity(intent);
                     }
                 }).create();
