@@ -149,10 +149,17 @@ public class DriverRequestFragment extends Fragment {
                 String start = rides.getOriginAddress();
                 String end = rides.getDestinationAddress();
                 String fare = rides.getFare();
+                String request_ID = rides.getRequestID();
                 //Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
                 bundle.putString("user_name", userName);
+                bundle.putString("driver_email", driverEmail);
+                bundle.putString("driver_phone", driverPhone);
+                bundle.putString("driver_name", driverName);
+                bundle.putString("request_ID", request_ID);
+
+
                 acceptRequestFragment.setArguments(bundle);
                 acceptRequestFragment.show(getFragmentManager(), "Accept Request");
 //                new AlertDialog.Builder(getActivity())
