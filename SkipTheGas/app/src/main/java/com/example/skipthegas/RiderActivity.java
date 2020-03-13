@@ -15,12 +15,17 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -66,6 +71,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
     String phone;
     String email;
 
+    EditText mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +96,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         logoutBtn = findViewById(R.id.logout_option);
         clearMapBtn = findViewById(R.id.clear_button);
         switchModeBtn = findViewById(R.id.switch_mode);
+        mSearchView = findViewById(R.id.search_input);
 
         // Retrieve user information from cloud store
         assert firebaseUser != null;
@@ -266,7 +273,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                     markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
                 } else {
                     // add the second marker to the map and a line between them
-                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
                     if (locPointsList.size() == 2){
                         line = mMap.addPolyline(new PolylineOptions()
                                 .add(locPointsList.get(0), locPointsList.get(1))
@@ -278,6 +285,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
             }
         });
 
+        this.initSearch();
     }
 
     @SuppressLint("MissingPermission")
@@ -312,6 +320,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         return (rad * 180.0 / Math.PI);
     }
 
+    // Function get address from geoPoint
     public String getGeoAddress(GeoPoint geoPoint) {
         Geocoder geocoder;
         List<Address> addresses;
@@ -338,5 +347,69 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
     public void clearMap(){
         locPointsList.clear();
         mMap.clear();
+    }
+
+    public void initSearch(){
+        Log.i(TAG,"Initializing search ...");
+        mSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                        actionId == EditorInfo.IME_ACTION_DONE ||
+                        keyEvent.getAction() == KeyEvent.ACTION_DOWN ||
+                        keyEvent.getAction() == KeyEvent.KEYCODE_ENTER) { // KEYCODE_ENTER is the event when you press enter key
+                     geoLocate();
+                     mSearchView.setText("");
+                }
+                return true;
+            }
+        });
+    }
+
+    public void geoLocate(){
+        Log.d(TAG,"Geo-locating ...");
+        String searchStr = mSearchView.getText().toString();
+        Geocoder geocoder = new Geocoder(RiderActivity.this);
+        List<Address> addresses = new ArrayList<>();
+
+        try {
+            addresses = geocoder.getFromLocationName(searchStr,1);
+        } catch (Exception e) {
+            Log.d(TAG,"Error in locating");
+            e.printStackTrace();
+        }
+
+        if (addresses.size()!=0) {
+            Toast.makeText(this, "found a location", Toast.LENGTH_SHORT).show();
+            Log.i(TAG,"Location found");
+
+            if (locPointsList.size()==2) {
+                locPointsList.clear();
+            }
+            Address address = addresses.get(0);
+            LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());
+            locPointsList.add(latLng);
+            MarkerOptions markerOptions = new MarkerOptions();
+            markerOptions.position(latLng);
+            if (locPointsList.size()==1) {
+                // add the first marker to the map
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            } else {
+                // add the second marker to the map
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW));
+                if (locPointsList.size() == 2) {
+                    line = mMap.addPolyline(new PolylineOptions()
+                            .add(locPointsList.get(0), locPointsList.get(1))
+                            .width(10)
+                            .color(Color.BLUE));
+                }
+            }
+            mMap.addMarker(markerOptions);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+
+        } else {
+            Toast.makeText(this, "location not found", Toast.LENGTH_SHORT).show();
+            Log.i(TAG,"Location not found");
+        }
     }
 }
