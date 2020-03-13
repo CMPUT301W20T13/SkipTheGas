@@ -18,6 +18,10 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Objects;
 
 
@@ -31,6 +35,15 @@ public class AcceptRequestFragment extends DialogFragment {
     private TextView estimatePriceTextView;
 
     private String userName;
+    private String driver_phone;
+    private String driver_email;
+    private String driver_name;
+    private String request_ID;
+    private boolean accepted;
+    FirebaseFirestore firebaseFirestore;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+
 
 
     public interface OnFragmentInteractionListener {
@@ -48,6 +61,10 @@ public class AcceptRequestFragment extends DialogFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             String tempUserName = bundle.getString("user_name");
+            driver_email = bundle.getString("driver_email");
+            driver_name = bundle.getString("driver_name");
+            driver_phone = bundle.getString("driver_phone");
+            request_ID = bundle.getString("request_ID");
             userName = tempUserName;
             Toast.makeText(getContext(), "Fragment Message: "+ tempUserName, Toast.LENGTH_SHORT).show();
             userNameTextView.setText(tempUserName);
@@ -76,7 +93,15 @@ public class AcceptRequestFragment extends DialogFragment {
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        //accepts the chosen request by the driver, updates firebase
                         Toast.makeText(getActivity(), "Added New Request", Toast.LENGTH_SHORT).show();
+                        accepted = true;
+                        firebaseFirestore = FirebaseFirestore.getInstance();
+                        firebaseFirestore.collection("all_requests").document(request_ID).update("driver_email", driver_email);
+                        firebaseFirestore.collection("all_requests").document(request_ID).update("driver_name", driver_name);
+                        firebaseFirestore.collection("all_requests").document(request_ID).update("driver_phone", driver_phone);
+                        firebaseFirestore.collection("all_requests").document(request_ID).update("is_accepted", accepted);
+                        
                     }
                 }).create();
     }
