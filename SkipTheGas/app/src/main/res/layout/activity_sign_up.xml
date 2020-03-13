@@ -56,13 +56,13 @@
         android:importantForAutofill="no"
         android:inputType="phone" />
 
-    <Switch
-        android:id="@+id/register_driver_checkbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Are you a Driver?"
-        android:textSize="20sp"
-        tools:ignore="HardcodedText" />
+<!--    <Switch-->
+<!--        android:id="@+id/register_driver_checkbox"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Are you a Driver?"-->
+<!--        android:textSize="20sp"-->
+<!--        tools:ignore="HardcodedText" />-->
 
     <Button
         android:id="@+id/register_button"

@@ -184,8 +184,8 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
                 Log.i(TAG,"Request posted by user " + userId);
 
-                String msg1 = "Estimated ride distance:";
-                String msg2 = "Estimated ride time:";
+                String msg1 = "Estimated ride distance: ";
+                String msg2 = "Estimated ride time: ";
                 String msg3 = "Estimated ride fare: ";
 
                 if (locPointsList.size() < 2){
@@ -218,7 +218,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                             .setTitle("Requested Ride Details")
                             .setMessage(msg1 + rounded_dist + " km" + "\n"
                                     + msg2 + rounded_time + " min" + "\n"
-                                    + msg3 + rounded_fare + "QR bucks")
+                                    + msg3 + rounded_fare + " QR bucks")
                             .setNegativeButton("Cancel",null)
                             .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                 @Override
