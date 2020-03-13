@@ -1,5 +1,7 @@
 package com.example.skipthegas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -159,11 +161,23 @@ public class DriverRequestFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 rides = rideAdapter.getItem(position);
                 String userName = rides.getRiderName();
-                Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
+                String start = rides.getOriginAddress();
+                String end = rides.getDestinationAddress();
+                String fare = rides.getFare();
+                //Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
                 bundle.putString("user_name", userName);
                 AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
                 acceptRequestFragment.setArguments(bundle);
-                new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Request Information")
+                        .setMessage("Uername: " + userName + "\n\n" + "Start Location:" + start + "\n\nEnd Location: " + end + "\n\nEstimated Fare: " + fare )
+                        .setNegativeButton("Cancel",null)
+                        .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        }).create().show();
+                //new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
             }
         });
 
