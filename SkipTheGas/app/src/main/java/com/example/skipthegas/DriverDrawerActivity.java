@@ -53,8 +53,10 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
 //                startActivity(activeRequestIntent);
                 break;
             case R.id.nav_profile:
-                Intent driverProfileIntent = new Intent(this, DriverProfileActivity.class);
-                startActivity(driverProfileIntent);
+                getSupportFragmentManager().beginTransaction().replace(R.id.driver_fragment_container, new DriverDrawerProfileFragment()).commit();
+
+//                Intent driverProfileIntent = new Intent(this, DriverProfileActivity.class);
+//                startActivity(driverProfileIntent);
                 break;
         }
 

@@ -155,6 +155,7 @@ public class DriverRequestFragment extends Fragment {
         openFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                p = position;
                 Bundle bundle = new Bundle();
                 rides = rideAdapter.getItem(position);
                 String userName = rides.getRiderName();
@@ -196,9 +197,9 @@ public class DriverRequestFragment extends Fragment {
 
     }
 
-//    public String getUserName() {
-//        rides = rideAdapter.getItem(p);
-//        return rides.getRider();
-//    }
+    public String getUserName() {
+        rides = rideAdapter.getItem(p);
+        return rides.getRiderName();
+    }
 
 }
