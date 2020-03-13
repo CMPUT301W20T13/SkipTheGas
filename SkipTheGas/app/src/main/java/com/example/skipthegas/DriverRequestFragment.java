@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,9 +54,9 @@ public class DriverRequestFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
 
-    String driverName;
-    String driverPhone;
-    String driverEmail;
+    private String driverName;
+    private String driverPhone;
+    private String driverEmail;
 
     private int p;
     public Ride rides;
@@ -142,27 +144,30 @@ public class DriverRequestFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 p = position;
-                Bundle bundle = new Bundle();
                 rides = rideAdapter.getItem(position);
                 String userName = rides.getRiderName();
                 String start = rides.getOriginAddress();
                 String end = rides.getDestinationAddress();
                 String fare = rides.getFare();
                 //Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
-                bundle.putString("user_name", userName);
+                Bundle bundle = new Bundle();
                 AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
+                bundle.putString("user_name", userName);
                 acceptRequestFragment.setArguments(bundle);
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Request Information")
-                        .setMessage("Username: " + userName + "\n\n" + "Start Location:" + start + "\n\nEnd Location: " + end + "\n\nEstimated Fare: " + fare )
-                        .setNegativeButton("Cancel",null)
-                        .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
+                acceptRequestFragment.show(getFragmentManager(), "Accept Request");
+//                new AlertDialog.Builder(getActivity())
+//                        .setTitle("Request Information")
+//                        .setMessage("Uername: " + userName + "\n\n" + "Start Location:" + start + "\n\nEnd Location: " + end + "\n\nEstimated Fare: " + fare )
+//                        .setNegativeButton("Cancel",null)
+//                        .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                Toast.makeText(getContext(), "Try" + driverName + "!!!", Toast.LENGTH_SHORT).show();
+//
+//
+//                            }
+//                        }).create().show();
 
-                            }
-                        }).create().show();
-                //new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
             }
         });
 

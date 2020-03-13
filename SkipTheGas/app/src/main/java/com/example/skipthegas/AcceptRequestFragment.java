@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+
+import java.util.Objects;
 
 
 /**
@@ -27,6 +30,8 @@ public class AcceptRequestFragment extends DialogFragment {
     private TextView endLocationTextView;
     private TextView estimatePriceTextView;
 
+    private String userName;
+
 
     public interface OnFragmentInteractionListener {
         void onOkPressed();
@@ -36,22 +41,26 @@ public class AcceptRequestFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        userNameTextView = getActivity().findViewById(R.id.accept_fragment_rider_name);
+        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.accept_request_layout, container, false);
+        userNameTextView = (TextView) view.findViewById(R.id.accept_fragment_rider_name);
 
-        Bundle bundle = this.getArguments();
+        Bundle bundle = getArguments();
         if (bundle != null) {
-            String userName = bundle.getString("user_name");
-            userNameTextView.setText(userName);
+            String tempUserName = bundle.getString("user_name");
+            userName = tempUserName;
+            Toast.makeText(getContext(), "Fragment Message: "+ tempUserName, Toast.LENGTH_SHORT).show();
+            userNameTextView.setText(tempUserName);
         }
-////        else {
-////            Toast.makeText(getActivity(), "Bundle is null", Toast.LENGTH_SHORT).show();
-//        }
-
+        else {
+            Toast.makeText(getActivity(), "Bundle is null", Toast.LENGTH_SHORT).show();
+        }
+//        userNameTextView.setText();
 
 //        DriverRequestFragment driverRequestFragment = (DriverRequestFragment) getActivity();
 //        String userName = driverRequestFragment.getUserName();
 
-        return inflater.inflate(R.layout.accept_request_layout, container, false);
+        return view;
     }
 
     @NonNull
