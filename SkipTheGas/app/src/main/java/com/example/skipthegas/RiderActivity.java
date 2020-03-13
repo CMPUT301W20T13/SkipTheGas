@@ -153,9 +153,9 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                             null, false, false, originAddress, destinationAddress, null);
                     new AlertDialog.Builder(RiderActivity.this)
                             .setTitle("Requested Ride Details")
-                            .setMessage(msg1 + rounded_dist + " kilometers" + "\n"
-                                    + msg2 + rounded_time + " minutes" + "\n"
-                                    + msg3 + "$" + rounded_fare)
+                            .setMessage(msg1 + rounded_dist + " km" + "\n"
+                                    + msg2 + rounded_time + " min" + "\n"
+                                    + msg3 + rounded_fare + "QR bucks")
                             .setNegativeButton("Cancel",null)
                             .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                 @Override
@@ -262,7 +262,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
-                if (locPointsList.size()==2){
+                if (locPointsList.size()>=2){
                     clearMap();
                 }
                 locPointsList.add(latLng);
@@ -391,8 +391,8 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
             Toast.makeText(this, "found a location", Toast.LENGTH_SHORT).show();
             Log.i(TAG,"Location found");
 
-            if (locPointsList.size()==2) {
-                locPointsList.clear();
+            if (locPointsList.size()>=2) {
+                clearMap();
             }
             Address address = addresses.get(0);
             LatLng latLng = new LatLng(address.getLatitude(),address.getLongitude());

@@ -101,11 +101,20 @@ public class SignUpActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(SignUpActivity.this, "Email is required", Toast.LENGTH_SHORT).show();
                     return;
+                } else if (!emailValidation(email)) {
+                    Toast.makeText(SignUpActivity.this, "Email is invalid", Toast.LENGTH_SHORT).show();
+                    registerEmailField.setText("");
+                    return;
                 }
                 if (TextUtils.isEmpty(phone)) {
                     Toast.makeText(SignUpActivity.this, "Phone number is required", Toast.LENGTH_SHORT).show();
                     return;
+                } else if (!phoneNumValidation(phone)) {
+                    Toast.makeText(SignUpActivity.this, "Phone number is invalid", Toast.LENGTH_SHORT).show();
+                    phoneNumField.setText("");
+                    return;
                 }
+
                 registerButton.setEnabled(false);
                 progressBar.setVisibility(View.VISIBLE);
 
@@ -183,6 +192,28 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    /*
+     * Function checks if the email entered in the registerEmailField is valid
+     * Uses regex for validation
+     * regex expression referenced from :
+     * https://www.tutorialspoint.com/validate-email-address-in-java
+     */
+    static boolean emailValidation(String email) {
+        String regexForEmail = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regexForEmail);
+    }
+
+    /*
+     * Function checks if the phone number entered in the phoneNumField is valid
+     * Uses regex for validation
+     * regex expression referenced from :
+     * https://www.journaldev.com/641/regular-expression-phone-number-validation-in-java
+     */
+    static boolean phoneNumValidation(String phoneNumber) {
+        String regexForPhone = "\\d{10}";
+        return phoneNumber.matches(regexForPhone);
     }
 
 }
