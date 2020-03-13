@@ -120,12 +120,14 @@ public class DriverRequestFragment extends Fragment {
                                 String originAddress = (String) doc.getData().get("origin_address");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
 
-                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress));
+                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress, requestID));
                             }
                         }
                         rideAdapter.notifyDataSetChanged();
                     }
                 });
+
+
 //        final ListView openFragment = getActivity().findViewById(R.id.request_list);
 //        openFragment.setOnItemClickListener((adapterView, v, i, L)->{
 //            new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
@@ -133,24 +135,6 @@ public class DriverRequestFragment extends Fragment {
 
 
 
-        String []riders ={"Grersch", "Test2"};
-        String []drivers ={"", ""};
-        String []startLocs ={"University of Alberta", "SUB"};
-        String []endLocs ={"Dairy Queen", "SouthGate"};
-        Date[]dates ={new Date(2020, 3, 7), new Date(2020, 3, 10)};
-        Integer []prices ={131, 99};
-
-//        rideDataList = new ArrayList<>();
-//
-//        rideAdapter = new CustomList(getActivity(), rideDataList);
-
-
-//        for (int i=0;i<riders.length;i++){
-//            rideDataList.add(new Ride(riders[i], drivers[i], startLocs[i], endLocs[i], dates[i], prices[i]));
-//        }
-
-//        rideAdapter = new CustomList(getActivity(), rideDataList);
-//        ridesList.setAdapter(rideAdapter);
         Log.v("Ride Info", ridesList.toString());
 
         final ListView openFragment = getActivity().findViewById(R.id.request_list);
@@ -175,6 +159,7 @@ public class DriverRequestFragment extends Fragment {
                         .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
                             }
                         }).create().show();
                 //new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
@@ -209,11 +194,6 @@ public class DriverRequestFragment extends Fragment {
 //        requestList.setAdapter(requestAdapter);
 
 
-    }
-
-    public String getUserName() {
-        rides = rideAdapter.getItem(p);
-        return rides.getRiderName();
     }
 
 }

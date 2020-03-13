@@ -143,7 +143,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                     String rounded_fare = twoDecPoints.format(ride_fare);
                     Ride ride = new Ride(username, phone, email, origin, destination, rounded_dist,
                             rounded_time, rounded_fare, null, null,
-                            null, false, false, originAddress, destinationAddress);
+                            null, false, false, originAddress, destinationAddress, null);
                     new AlertDialog.Builder(RiderActivity.this)
                             .setTitle("Requested Ride Details")
                             .setMessage(msg1 + rounded_dist + " kilometers" + "\n"
@@ -312,6 +312,13 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         return (rad * 180.0 / Math.PI);
     }
 
+    // convert GeoPoint which is LatLng to address in real life
+    /**
+     * convert GeoPoint which is LatLng to address in real life
+     * @param geoPoint
+     * @return
+     * the address
+     */
     public String getGeoAddress(GeoPoint geoPoint) {
         Geocoder geocoder;
         List<Address> addresses;
