@@ -154,7 +154,7 @@ public class DriverRequestFragment extends Fragment {
                 acceptRequestFragment.setArguments(bundle);
                 new AlertDialog.Builder(getActivity())
                         .setTitle("Request Information")
-                        .setMessage("Uername: " + userName + "\n\n" + "Start Location:" + start + "\n\nEnd Location: " + end + "\n\nEstimated Fare: " + fare )
+                        .setMessage("Username: " + userName + "\n\n" + "Start Location:" + start + "\n\nEnd Location: " + end + "\n\nEstimated Fare: " + fare )
                         .setNegativeButton("Cancel",null)
                         .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                             @Override
