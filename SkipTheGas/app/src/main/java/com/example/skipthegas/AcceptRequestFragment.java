@@ -101,7 +101,7 @@ public class AcceptRequestFragment extends DialogFragment {
                         firebaseFirestore.collection("all_requests").document(request_ID).update("driver_name", driver_name);
                         firebaseFirestore.collection("all_requests").document(request_ID).update("driver_phone", driver_phone);
                         firebaseFirestore.collection("all_requests").document(request_ID).update("is_accepted", accepted);
-                        
+
                     }
                 }).create();
     }
