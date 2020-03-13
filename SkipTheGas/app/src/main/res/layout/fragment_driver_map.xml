@@ -28,28 +28,6 @@
             android:text="Good Morning, Driver"
             tools:ignore="HardcodedText" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_below="@+id/driver_map_text_view">
-
-            <Button
-                android:id="@+id/driver_start_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="START"/>
-
-            <Button
-                android:id="@+id/end_trip_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="END" />
-
-        </LinearLayout>
-
     </RelativeLayout>
 
 

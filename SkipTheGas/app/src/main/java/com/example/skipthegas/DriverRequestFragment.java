@@ -1,5 +1,7 @@
 package com.example.skipthegas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,9 +20,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
+
 /**
  * This is a class that displays the active requests of the driver
  */
@@ -34,6 +47,14 @@ public class DriverRequestFragment extends Fragment {
     ListView ridesList;
     ArrayAdapter<Ride> rideAdapter;
     ArrayList<Ride> rideDataList;
+
+    FirebaseFirestore firebaseFirestore;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+
+    String driverName;
+    String driverPhone;
+    String driverEmail;
 
     private int p;
     public Ride rides;
@@ -50,13 +71,67 @@ public class DriverRequestFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        driverEmail = firebaseUser.getEmail();
+        firebaseFirestore
+                .collection("users")
+                .document(Objects.requireNonNull(driverEmail))
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        driverName = documentSnapshot.getString("username");
+                        driverPhone = documentSnapshot.getString("phone");
+                    }
+                });
 
+        ridesList = getActivity().findViewById(R.id.request_list);
+
+        rideDataList = new ArrayList<>();
+
+        rideAdapter = new CustomList(getActivity(), rideDataList);
+
+        ridesList.setAdapter(rideAdapter);
+
+        firebaseFirestore
+                .collection("all_requests")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        rideDataList.clear();
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            String requestID = doc.getId();
+                            boolean accepted = (boolean) doc.getData().get("is_accepted");
+                            if (!accepted) {
+                                String riderName = (String) doc.getData().get("rider_name");
+                                String riderPhone = (String) doc.getData().get("rider_phone");
+                                String riderEmail = (String) doc.getData().get("rider_email");
+                                GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
+                                GeoPoint destination = (GeoPoint) doc.getData().get("ride_destination");
+                                String dist = (String) doc.getData().get("est_distance");
+                                String time = (String) doc.getData().get("est_time");
+                                String fare = (String) doc.getData().get("est_fare");
+                                String driverName = (String) doc.getData().get("driver_name");
+                                String driverPhone = (String) doc.getData().get("driver_phone");
+                                String driverEmail = (String) doc.getData().get("driver_email");
+//                                boolean accepted = (boolean) doc.getData().get("is_accepted");
+                                boolean completed = (boolean) doc.getData().get("is_compete");
+                                String originAddress = (String) doc.getData().get("origin_address");
+                                String destinationAddress = (String) doc.getData().get("destination_address");
+
+                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress));
+                            }
+                        }
+                        rideAdapter.notifyDataSetChanged();
+                    }
+                });
 //        final ListView openFragment = getActivity().findViewById(R.id.request_list);
 //        openFragment.setOnItemClickListener((adapterView, v, i, L)->{
 //            new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
 //        });
 
-        ridesList = getActivity().findViewById(R.id.request_list);
+
 
         String []riders ={"Grersch", "Test2"};
         String []drivers ={"", ""};
@@ -65,31 +140,44 @@ public class DriverRequestFragment extends Fragment {
         Date[]dates ={new Date(2020, 3, 7), new Date(2020, 3, 10)};
         Integer []prices ={131, 99};
 
-        rideDataList = new ArrayList<>();
-
-        rideAdapter = new CustomList(getActivity(), rideDataList);
+//        rideDataList = new ArrayList<>();
+//
+//        rideAdapter = new CustomList(getActivity(), rideDataList);
 
 
 //        for (int i=0;i<riders.length;i++){
 //            rideDataList.add(new Ride(riders[i], drivers[i], startLocs[i], endLocs[i], dates[i], prices[i]));
 //        }
 
-        rideAdapter = new CustomList(getActivity(), rideDataList);
-        ridesList.setAdapter(rideAdapter);
+//        rideAdapter = new CustomList(getActivity(), rideDataList);
+//        ridesList.setAdapter(rideAdapter);
         Log.v("Ride Info", ridesList.toString());
 
         final ListView openFragment = getActivity().findViewById(R.id.request_list);
         openFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                p = position;
                 Bundle bundle = new Bundle();
                 rides = rideAdapter.getItem(position);
                 String userName = rides.getRiderName();
-                Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
+                String start = rides.getOriginAddress();
+                String end = rides.getDestinationAddress();
+                String fare = rides.getFare();
+                //Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
                 bundle.putString("user_name", userName);
                 AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
                 acceptRequestFragment.setArguments(bundle);
-                new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Request Information")
+                        .setMessage("Uername: " + userName + "\n\n" + "Start Location:" + start + "\n\nEnd Location: " + end + "\n\nEstimated Fare: " + fare )
+                        .setNegativeButton("Cancel",null)
+                        .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                            }
+                        }).create().show();
+                //new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
             }
         });
 
@@ -123,9 +211,9 @@ public class DriverRequestFragment extends Fragment {
 
     }
 
-//    public String getUserName() {
-//        rides = rideAdapter.getItem(p);
-//        return rides.getRider();
-//    }
+    public String getUserName() {
+        rides = rideAdapter.getItem(p);
+        return rides.getRiderName();
+    }
 
 }
