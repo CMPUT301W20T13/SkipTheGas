@@ -3,6 +3,8 @@ A full application which allows for driver-passenger communication to schedule r
 
 Wiki can be found [here](https://github.com/CMPUT301W20T13/SkipTheGas/wiki).
 
+Access to JavaDocs can be done via the wiki. The files are located in SkipTheGas/JavaDocs/
+
 How to use SkipTheGas:
 
 Signing up:
