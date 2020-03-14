@@ -70,7 +70,7 @@ public class SignUpActivityTest {
     public void signUpSuccess(){
         solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
         solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
-        solo.enterText((EditText)solo.getView(R.id.email_register_field), "nandu201098@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "test1@gmail.com");
         solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
         solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
         solo.clickOnButton("Register");
@@ -85,7 +85,7 @@ public class SignUpActivityTest {
     public void pwTooShort(){
         solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
         solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
-        solo.enterText((EditText)solo.getView(R.id.email_register_field), "nandu201098@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "test1@gmail.com");
         solo.enterText((EditText)solo.getView(R.id.password_register_field), "123");
         solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
         solo.clickOnButton("Register");
@@ -101,7 +101,7 @@ public class SignUpActivityTest {
     public void signUpFail1(){
         solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
         solo.enterText((EditText)solo.getView(R.id.username_register_field), "");
-        solo.enterText((EditText)solo.getView(R.id.email_register_field), "nandu201098@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "test1@gmail.com");
         solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
         solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
         solo.clickOnButton("Register");
@@ -126,18 +126,82 @@ public class SignUpActivityTest {
     }
 
     /**
-     * This test checks the phone number field during Sign up
-     * If the value entered is non-existent, a toast should be posted
+     * This test validates the email field during Sign up
+     * If the value entered is not in email format, a toast should be posted
      */
     @Test
     public void signUpFail3(){
         solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
         solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
-        solo.enterText((EditText)solo.getView(R.id.email_register_field), "nandu201098@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "notAnEmail");
+        solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
+        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
+        solo.clickOnButton("Register");
+        solo.waitForText("Email is invalid");
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+    }
+
+    /**
+     * This test checks the email field during Sign up
+     * If the email entered is already in the database, a toast should be posted
+     */
+    @Test
+    public void signUpFail4(){
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+        solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "nan.p2198@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
+        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
+        solo.clickOnButton("Register");
+        solo.waitForText("Unable to create user.");
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+    }
+
+    /**
+     * This test checks the phone number field during Sign up
+     * If the value entered is non-existent, a toast should be posted
+     */
+    @Test
+    public void signUpFail5(){
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+        solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "test1@gmail.com");
         solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
         solo.enterText((EditText)solo.getView(R.id.phone_register_field), "");
         solo.clickOnButton("Register");
         solo.waitForText("Phone number is required");
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+    }
+
+    /**
+     * This test validates the phone number field during Sign up
+     * If the value entered is more than 10 digits, a toast should be posted
+     */
+    @Test
+    public void signUpFail6(){
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+        solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "test1@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
+        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "67997767563563");
+        solo.clickOnButton("Register");
+        solo.waitForText("Phone number is invalid");
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+    }
+
+    /**
+     * This test validates the phone number field during Sign up
+     * If the value entered is less than 10 digits, a toast should be posted
+     */
+    @Test
+    public void signUpFail7(){
+        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
+        solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
+        solo.enterText((EditText)solo.getView(R.id.email_register_field), "test1@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
+        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "67997");
+        solo.clickOnButton("Register");
+        solo.waitForText("Phone number is invalid");
         solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
     }
 
