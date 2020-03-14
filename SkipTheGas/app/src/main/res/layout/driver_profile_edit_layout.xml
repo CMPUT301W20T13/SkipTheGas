@@ -79,27 +79,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="126dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="48dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Grersch"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="48dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="grersch@faraway.swamp"
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
@@ -107,7 +109,7 @@
         android:id="@+id/editText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="phone"
@@ -161,7 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="64dp"
-        android:text="50"
+        android:text="0"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/textView11"
@@ -173,7 +175,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="68dp"
-        android:text="50"
+        android:text="0"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
