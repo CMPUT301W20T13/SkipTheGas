@@ -57,6 +57,7 @@ public class DriverDrawerProfileFragment extends Fragment {
 
         editButton = getActivity().findViewById(R.id.editButton);
 
+        // get current user info from firebase
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
