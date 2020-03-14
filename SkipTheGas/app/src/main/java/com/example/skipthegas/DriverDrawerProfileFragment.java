@@ -1,9 +1,11 @@
 package com.example.skipthegas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,6 +27,8 @@ public class DriverDrawerProfileFragment extends Fragment {
     TextView driverPhoneEditText;
     TextView driverEmailEditText;
     TextView driverProfileHeader;
+
+    Button editButton;
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
@@ -51,6 +55,8 @@ public class DriverDrawerProfileFragment extends Fragment {
         driverEmailEditText = getActivity().findViewById(R.id.driver_profile_email_TextView);
         driverProfileHeader = getActivity().findViewById(R.id.driver_profile_header);
 
+        editButton = getActivity().findViewById(R.id.editButton);
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -70,7 +76,13 @@ public class DriverDrawerProfileFragment extends Fragment {
                         driverProfileHeader.setText(header);
                     }
                 });
-
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editProfileIntent = new Intent(getActivity(), DriverProfileEditable.class);
+                startActivity(editProfileIntent);
+            }
+        });
 
 
 //        driverNameEditText.setText(driverName);
