@@ -41,6 +41,12 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
         }
     }
 
+    /**
+     * Navigation menu function
+     * @param menuItem
+     * @return
+     * boolean false
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
