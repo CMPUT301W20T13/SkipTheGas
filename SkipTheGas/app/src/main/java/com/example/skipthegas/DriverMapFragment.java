@@ -27,7 +27,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-
 /**
  *  Driver's map activity fragment, driver can view maps from this fragment
  */
@@ -44,6 +43,13 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 9001;
     private static final float DEFAULT_ZOOM = 15f;
 
+    /**
+     * onCreateView method for DriverMapFragment fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -94,7 +100,6 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
 
     }
 
-
     /**
      * Get devices current location.
      */
@@ -126,9 +131,6 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
         }
     }
 
-
-    // Move Camera tp current location
-
     /**
      * Move Camera to current location
      * @param latLng
@@ -137,7 +139,6 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
     private void moveCamera(LatLng latLng, float zoom) {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
-
 
     /**
      * Get device permission to get current location

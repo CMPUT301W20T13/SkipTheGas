@@ -24,7 +24,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
-
 /**
  * This is a class which displays a fragment prompting a driver to accept a ride request
  */
@@ -50,7 +49,13 @@ public class AcceptRequestFragment extends DialogFragment {
         void onOkPressed();
     }
 
-
+    /**
+     * onCreateView method for AcceptRequestFragment fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,6 +85,12 @@ public class AcceptRequestFragment extends DialogFragment {
         return view;
     }
 
+    /**
+     * onCreateDialog method for AcceptRequestFragment fragment
+     * Allows driver to accept ride request
+     * @param savedInstanceState
+     * @return
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {

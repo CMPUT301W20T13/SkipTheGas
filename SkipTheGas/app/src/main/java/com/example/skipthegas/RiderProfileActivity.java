@@ -26,6 +26,10 @@ public class RiderProfileActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     TextView riderName,riderEmail,riderPhone,header;
 
+    /**
+     * onCreate method for RiderProfileActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

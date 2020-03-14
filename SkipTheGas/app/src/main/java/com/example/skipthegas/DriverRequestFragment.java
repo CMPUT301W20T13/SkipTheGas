@@ -40,12 +40,7 @@ import java.util.Objects;
  * This is a class that displays the active requests of the driver
  */
 public class DriverRequestFragment extends Fragment {
-    //
-//    ListView requestList;
-//    ArrayAdapter<Request> requestAdapter;
-//    ArrayList<Request> requestDataList;
-//
-//    RequestCustomList requestCustomList;
+
     ListView ridesList;
     ArrayAdapter<Ride> rideAdapter;
     ArrayList<Ride> rideDataList;
@@ -62,6 +57,13 @@ public class DriverRequestFragment extends Fragment {
     public Ride rides;
 
 
+    /**
+     * onCreateView method for DriverRequestFragment fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -70,6 +72,10 @@ public class DriverRequestFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Method connects to firebase and retrieves driver info
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -81,6 +87,11 @@ public class DriverRequestFragment extends Fragment {
                 .collection("users")
                 .document(Objects.requireNonNull(driverEmail))
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    /**
+                     * Method retrieves driver name and phone from firebase database
+                     * @param documentSnapshot
+                     * @param e
+                     */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         driverName = documentSnapshot.getString("username");
@@ -99,6 +110,11 @@ public class DriverRequestFragment extends Fragment {
         firebaseFirestore
                 .collection("all_requests")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    /**
+                     * Method retrieves posted ride request data from firebase database
+                     * @param queryDocumentSnapshots
+                     * @param e
+                     */
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         rideDataList.clear();
@@ -141,6 +157,13 @@ public class DriverRequestFragment extends Fragment {
 
         final ListView openFragment = getActivity().findViewById(R.id.request_list);
         openFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /**
+             * Method is invoked when request option is selected in drawer menu
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 p = position;

@@ -63,7 +63,12 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
-
+/**
+ * This is a class that implements the opening screen of the Rider account
+ * Rider is able to send requests from this screen
+ * Rider can access their profile from this screen
+ * Rider can logout from this screen
+ */
 public class RiderActivity extends FragmentActivity implements OnMapReadyCallback {
     GoogleMap mMap;
     FloatingActionMenu floatingActionMenu;
@@ -82,6 +87,10 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
     EditText mSearchView;
 
+    /**
+     * onCreate method for RiderActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +122,11 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         firebaseFirestore
                 .collection("all_requests")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    /**
+                     * This is the method for notifying the rider that the driver accepted their ride request
+                     * @param queryDocumentSnapshots
+                     * @param e
+                     */
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
@@ -168,6 +182,11 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                 .collection("users")
                 .document(email)
                 .addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+                    /**
+                     * This method fetches user information from firebase database
+                     * @param documentSnapshot
+                     * @param e
+                     */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         assert documentSnapshot != null;
@@ -179,6 +198,11 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
         // Post a new request
         postReqBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is invoked when the Post Request button within the Floating Action Menu is clicked
+             * Opens a dialog box with information regarding the ride request
+             * @param view
+             */
             @Override
             public void onClick(View view) {
 
@@ -199,16 +223,17 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                     String originAddress = getGeoAddress(origin);
                     String destinationAddress = getGeoAddress(destination);
 
+                    // Estimates distance between the start and end points
                     double ride_dist = distance(locPointsList.get(0).latitude, locPointsList.get(0).longitude,
                             locPointsList.get(1).latitude, locPointsList.get(1).longitude);
                     DecimalFormat twoDecPoints = new DecimalFormat("#.##");
                     String rounded_dist = twoDecPoints.format(ride_dist);
 
-                    //estimated ride time is calculated using a speed of 50 km/h for the time being
+                    // Estimated ride time is calculated using a speed of 50 km/h for the time being
                     double ride_time = (ride_dist/50)*60;
                     String rounded_time = twoDecPoints.format(ride_time);
 
-                    //estimated ride fare is calculated using a rate of $0.81 per km on top of a minimum fare of $5.25
+                    // Estimated ride fare is calculated using a rate of $0.81 per km on top of a minimum fare of $5.25
                     double ride_fare = 5.25 + (ride_dist*0.81);
                     String rounded_fare = twoDecPoints.format(ride_fare);
                     Ride ride = new Ride(username, phone, email, origin, destination, rounded_dist,
@@ -221,6 +246,11 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                                     + msg3 + rounded_fare + " QR bucks")
                             .setNegativeButton("Cancel",null)
                             .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                /**
+                                 * This method passes the ride request information to the firebase database
+                                 * @param dialogInterface
+                                 * @param i
+                                 */
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     HashMap<String, Object> reqData = new HashMap<>();
@@ -251,6 +281,10 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
+                                                /**
+                                                 * This method is invoked if the ride request post to the database fails
+                                                 * @param e
+                                                 */
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
                                                     Log.i(TAG,"post failed "+e.getMessage());
@@ -266,6 +300,11 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
         // Edit profile
         editProfBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is invoked when the User Profile button within the Floating Action Menu is clicked
+             * Opens the User's Profile
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 Log.i(TAG,"Editing Profile");
@@ -276,6 +315,11 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
         // Log out of current account
         logoutBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method is invoked when the Log out button within the Floating Action Menu is clicked
+             * Opens a dialog box that prompts for confirmation
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 Log.i(TAG,"Log out");
@@ -284,6 +328,11 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                         .setMessage("Are you sure?")
                         .setNegativeButton("NO",null)
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            /**
+                             * Method logs out the user when YES is clicked in the dialog box
+                             * @param dialogInterface
+                             * @param i
+                             */
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 logout();
@@ -294,6 +343,10 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
         // Switch to driver mode
         switchModeBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Method redirects to Driver account when DRIVER MODE button is clicked
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), DriverDrawerActivity.class));
@@ -302,6 +355,10 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
         // Clear the map
         clearMapBtn.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Method clears the map of any remaining markers when CLEAR MAP button is clicked
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 clearMap();
@@ -309,6 +366,10 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         });
     }
 
+    /**
+     * Method initializes the google map
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -323,6 +384,11 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         }
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            /**
+             * Method draws polyline between start and end locations when 2 markers are placed on the map
+             * Map will be cleared when user tries to place more than 2 markers on the map
+             * @param latLng
+             */
             @Override
             public void onMapClick(LatLng latLng) {
                 if (locPointsList.size()>=2){
@@ -351,6 +417,12 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         this.initSearch();
     }
 
+    /**
+     * Method asks user permission for enabling location on their device
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -362,7 +434,10 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         }
     }
 
-    // Function calculates the distance between the origin and the destination using the latitude and longitude of the 2 locations
+    /**
+     * Function calculates the distance between the origin and the destination
+     * using the latitude and longitude of the 2 locations
+     */
     private double distance(double origin_lat, double origin_lon, double dest_lat, double dest_lon) {
         double theta = origin_lon - dest_lon;
         double distCalc = Math.sin(DegToRad(origin_lat)) * Math.sin(DegToRad(dest_lat))
@@ -373,25 +448,28 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         return distCalc;
     }
 
-    // Function converts decimal degrees to radians
+    /**
+     * Function converts decimal degrees to radians
+     */
     private double DegToRad(double deg) {
         return (deg * Math.PI / 180.0);
     }
 
-    // Function converts radians to decimal degrees
+    /**
+     * Function converts radians to decimal degrees
+     * @param rad
+     * @return
+     */
     private double RadToDeg(double rad) {
         return (rad * 180.0 / Math.PI);
     }
 
-
-    // convert GeoPoint which is LatLng to address in real life
     /**
      * convert GeoPoint which is LatLng to address in real life
      * @param geoPoint
      * @return
      * the address
      */
-
     public String getGeoAddress(GeoPoint geoPoint) {
         Geocoder geocoder;
         List<Address> addresses;
@@ -409,17 +487,26 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         return returnAddress;
     }
 
+    /**
+     * Method logs the user out of the app
+     */
     public void logout(){
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
     }
 
+    /**
+     * Method clears the map
+     */
     public void clearMap(){
         locPointsList.clear();
         mMap.clear();
     }
 
+    /**
+     * Method initializes the search from the input in the search bar
+     */
     public void initSearch(){
         Log.i(TAG,"Initializing search ...");
         mSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -437,6 +524,9 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         });
     }
 
+    /**
+     * Method geo-locates the address in the search bar
+     */
     public void geoLocate(){
         Log.d(TAG,"Geo-locating ...");
         String searchStr = mSearchView.getText().toString();

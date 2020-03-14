@@ -10,7 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
  * This is a class that governs the driver profile screen
  */
 public class DriverProfileActivity extends AppCompatActivity {
-
+    /**
+     * onCreate method for DriverProfileActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -26,6 +26,13 @@ public class CustomList extends ArrayAdapter<Ride> {
         this.context = context;
     }
 
+    /**
+     * getView method for CustomList class
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @SuppressLint("SetTextI18n")
     @NonNull
     @Override

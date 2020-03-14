@@ -20,6 +20,11 @@ public class DriverProfileFragment extends DialogFragment {
         void onOkPressed();
     }
 
+    /**
+     * onCreateDialog method for DriverProfileFragment fragment
+     * @param savedInstanceState
+     * @return
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -30,6 +35,11 @@ public class DriverProfileFragment extends DialogFragment {
                 .setView(view)
                 .setTitle("Fitzhugh Phillifent's Profile")
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    /**
+                     * onClick method that opens driver profile when OK button is clicked
+                     * @param dialogInterface
+                     * @param i
+                     */
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getActivity(), "Opening Driver Profile", Toast.LENGTH_SHORT).show();

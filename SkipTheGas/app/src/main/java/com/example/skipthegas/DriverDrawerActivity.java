@@ -19,6 +19,10 @@ import com.google.android.material.navigation.NavigationView;
 public class DriverDrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout driverDrawer;
 
+    /**
+     * onCreate method for DriverDrawerActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +46,9 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
     }
 
     /**
-     * Navigation menu function
+     * Method is called when navigation item is selected in the DriverDrawerActivity class
      * @param menuItem
      * @return
-     * boolean false
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -69,6 +72,9 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
         return true;
     }
 
+    /**
+     * Method is called when the back button is pressed
+     */
     @Override
     public void onBackPressed() {
         if (driverDrawer.isDrawerOpen(GravityCompat.START)) {

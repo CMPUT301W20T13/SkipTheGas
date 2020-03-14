@@ -11,6 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
  * about a ride they have accepted
  */
 public class YourActiveRidesActivity extends AppCompatActivity {
+
+    /**
+     * onCreate method for YourActiveRidesActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

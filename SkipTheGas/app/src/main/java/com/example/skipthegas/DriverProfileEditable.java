@@ -21,6 +21,10 @@ import java.util.Objects;
  * This is a class that governs the editable view of the driver profile screen
  */
 public class DriverProfileEditable extends AppCompatActivity {
+    /**
+     * onCreate method DriverProfileEditable class
+     * @param savedInstanceState
+     */
     private String driverEmailString;
     private String driverNameString;
     private String driverPhoneString;
@@ -33,7 +37,6 @@ public class DriverProfileEditable extends AppCompatActivity {
     EditText driverEmail;
     EditText driverPhone;
     TextView driverHeader;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

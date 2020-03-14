@@ -9,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
  * This a class that governs the payment screen, where a QR code is generated for payment transfer
  */
 public class PaymentActivity extends AppCompatActivity {
+    /**
+     * onCreate method for PaymentActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

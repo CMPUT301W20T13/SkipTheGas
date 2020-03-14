@@ -31,6 +31,10 @@ public class RiderProfileEditable extends AppCompatActivity {
     String phone;
     String email;
 
+    /**
+     * onCreate method for RiderProfileEditable class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,17 +87,19 @@ public class RiderProfileEditable extends AppCompatActivity {
      * the user to the read-only rider profile screen with the new edited changes, upon a button
      * click
      * @param view
-     *      Changes screens from the rider profile (editable) to the rider profile (read-only)
+     * Changes screens from the rider profile (editable) to the rider profile (read-only)
+     *
+     * Need to finish implementing firebase update of the new edited fields
      */
     public void submitEdit(View view) {
-        Intent intent = new Intent(this, RiderProfileActivity.class);
-        startActivity(intent);
 
-        // UI initiation
         usernameDisplay = findViewById(R.id.editText3);
         emailDisplay = findViewById(R.id.editText4);
         phoneEdit = findViewById(R.id.editText5);
         QR_Edit = findViewById(R.id.editText6);
+
+        Intent intent = new Intent(this, RiderProfileActivity.class);
+        startActivity(intent);
 
 //        // Cloud database initiation
 //        firebaseFirestore = FirebaseFirestore.getInstance();

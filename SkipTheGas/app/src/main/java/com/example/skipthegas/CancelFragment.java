@@ -21,6 +21,11 @@ public class CancelFragment extends DialogFragment {
         void onOkPressed();
     }
 
+    /**
+     * onCreateDialog method for CancelFragment fragment
+     * @param savedInstanceState
+     * @return
+     */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -32,6 +37,11 @@ public class CancelFragment extends DialogFragment {
                 .setTitle("Are you sure you want to cancel?")
                 .setNegativeButton("No", null)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    /**
+                     * When Yes button is pressed ride is cancelled as per request
+                     * @param dialogInterface
+                     * @param i
+                     */
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getActivity(), "Cancelled Ride", Toast.LENGTH_SHORT).show();
