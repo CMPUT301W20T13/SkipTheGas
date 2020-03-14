@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-black"
-        android:text="Grersch's Profile"
+        android:text="Rider Profile"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,11 +23,14 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="128dp"
         android:layout_height="49dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="580dp"
+        android:layout_marginBottom="150dp"
         android:background="@drawable/roundedbutton"
         android:onClick="cancel"
         android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -35,19 +38,20 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="430dp"
         android:text="Username:"
         android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editButton" />
+        app:layout_constraintBottom_toTopOf="@+id/cancelButton"
+        app:layout_constraintEnd_toStartOf="@+id/editText3"
+        app:layout_constraintHorizontal_bias="0.186"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="65dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:text="Email:"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,10 +59,10 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="144dp"
+        android:layout_height="29dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="36dp"
         android:text="Phone Number:"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,34 +72,38 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="36dp"
         android:text="QR Bucks:"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-    <EditText
+    <TextView
         android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="360dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Grersch"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editButton" />
 
-    <EditText
+        android:textSize="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/editText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="48dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="grersch@faraway.swamp"
+
+        android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
@@ -103,11 +111,11 @@
         android:id="@+id/editText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="phone"
-        android:text="780-999-4114"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
@@ -115,26 +123,29 @@
         android:id="@+id/editText6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="number"
         android:text="893"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        tools:layout_editor_absoluteX="182dp" />
 
     <Button
         android:id="@+id/submitButton"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="150dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="520dp"
+        android:layout_marginBottom="200dp"
         android:background="@drawable/roundedbutton"
         android:onClick="submitEdit"
         android:text="Submit"
         app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.544"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

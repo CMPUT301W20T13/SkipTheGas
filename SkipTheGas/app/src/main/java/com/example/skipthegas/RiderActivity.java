@@ -2,17 +2,24 @@ package com.example.skipthegas;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -44,6 +51,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -102,6 +111,60 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
         assert firebaseUser != null;
         email = firebaseUser.getEmail();
         firebaseFirestore
+                .collection("all_requests")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            String requestID = doc.getId();
+                            boolean accepted = (boolean) doc.getData().get("is_accepted");
+                            boolean completed = (boolean) doc.getData().get("is_compete");
+
+                            String riderEmail = (String) doc.getData().get("rider_email");
+                            if (accepted && !completed && riderEmail.equals(email)) {
+                                //sends a notification if users request is accepted
+                                //Code taken from https://stackoverflow.com/questions/16045722/android-notification-is-not-showing
+                                //Author / user = Md Imran Choudhury
+                                NotificationManager mNotificationManager;
+                                String message = "Click here to go to the main menu";
+                                NotificationCompat.Builder mBuilder =
+                                        new NotificationCompat.Builder(getApplicationContext(), "notify_001");
+                                Intent ii = new Intent(getApplicationContext(), RiderActivity.class);
+                                PendingIntent pendingIntent = PendingIntent.getActivity(RiderActivity.this, 0, ii, 0);
+
+                                NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+                                bigText.bigText(message);
+                                bigText.setBigContentTitle("Driver has accepted your request");
+                                bigText.setSummaryText("message for: rider");
+
+                                mBuilder.setContentIntent(pendingIntent);
+                                mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+                                mBuilder.setContentTitle("Your Title");
+                                mBuilder.setContentText("Your text");
+                                mBuilder.setPriority(Notification.PRIORITY_MAX);
+                                mBuilder.setStyle(bigText);
+
+                                mNotificationManager =
+                                        (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                                {
+                                    String channelId = "rider_channel";
+                                    NotificationChannel channel = new NotificationChannel(
+                                            channelId,
+                                            "rider_notifications",
+                                            NotificationManager.IMPORTANCE_HIGH);
+                                    mNotificationManager.createNotificationChannel(channel);
+                                    mBuilder.setChannelId(channelId);
+                                }
+
+                                mNotificationManager.notify(0, mBuilder.build());
+                            }
+                        }
+                    }
+                });
+
+        firebaseFirestore
                 .collection("users")
                 .document(email)
                 .addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
@@ -121,8 +184,8 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
 
                 Log.i(TAG,"Request posted by user " + userId);
 
-                String msg1 = "Estimated ride distance:";
-                String msg2 = "Estimated ride time:";
+                String msg1 = "Estimated ride distance: ";
+                String msg2 = "Estimated ride time: ";
                 String msg3 = "Estimated ride fare: ";
 
                 if (locPointsList.size() < 2){
@@ -155,7 +218,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                             .setTitle("Requested Ride Details")
                             .setMessage(msg1 + rounded_dist + " km" + "\n"
                                     + msg2 + rounded_time + " min" + "\n"
-                                    + msg3 + rounded_fare + "QR bucks")
+                                    + msg3 + rounded_fare + " QR bucks")
                             .setNegativeButton("Cancel",null)
                             .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                                 @Override
