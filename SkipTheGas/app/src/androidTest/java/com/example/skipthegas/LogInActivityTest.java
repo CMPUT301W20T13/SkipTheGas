@@ -52,7 +52,7 @@ public class LogInActivityTest {
         solo.enterText((EditText)solo.getView(R.id.email_login_field), "brightonius@gmail.com");
         solo.enterText((EditText)solo.getView(R.id.password_login_field), "testpass");
         solo.clickOnButton("Log In");
-        solo.assertCurrentActivity("Wrong Activity", DriverProfileActivity.class);
+        solo.assertCurrentActivity("Wrong Activity", SelectionActivity.class);
     }
 
     /**
