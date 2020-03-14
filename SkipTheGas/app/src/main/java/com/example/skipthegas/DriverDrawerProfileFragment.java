@@ -20,6 +20,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.Objects;
 
+/**
+ * This is a fragment that is nested within the Driver's drawer menu
+ * It displays the driver's profile and relevant contact information
+ */
 public class DriverDrawerProfileFragment extends Fragment {
     TextView driverNameEditText;
     TextView driverPhoneEditText;
@@ -34,6 +38,13 @@ public class DriverDrawerProfileFragment extends Fragment {
     String driverPhone;
     String driverEmail;
 
+    /**
+     * onCreateView method for DriverDrawerProfileFragment fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,6 +53,10 @@ public class DriverDrawerProfileFragment extends Fragment {
         return view;
     }
 
+    /**
+     * onActivityCreated method for DriverDrawerProfileFragment fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -59,6 +74,11 @@ public class DriverDrawerProfileFragment extends Fragment {
                 .collection("users")
                 .document(Objects.requireNonNull(driverEmail))
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    /**
+                     * Method sets the edit text fields in the edit driver profile page
+                     * @param documentSnapshot
+                     * @param e
+                     */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         driverName = documentSnapshot.getString("username");

@@ -9,6 +9,11 @@ import androidx.appcompat.app.AppCompatActivity;
  * trip and gives the rider an opportunity to rate the driver
  */
 public class TripFeedBackActivity extends AppCompatActivity {
+
+    /**
+     * onCreate method for TripFeedBackActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

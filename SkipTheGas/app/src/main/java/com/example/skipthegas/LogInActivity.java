@@ -35,7 +35,10 @@ public class LogInActivity extends AppCompatActivity {
 
     FirebaseAuth firebaseAuth;
 
-
+    /**
+     * onCreate method for LogInActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +60,10 @@ public class LogInActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
              * This checks for valid login in formation and allows the user to enter if validated
              */
+            @Override
             public void onClick(View view) {
                 String email = loginEmailField.getText().toString();
                 String password = passwordField.getText().toString();
@@ -82,10 +85,10 @@ public class LogInActivity extends AppCompatActivity {
                 loginButton.setEnabled(false);
 
                 firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
                     /**
                      * This brings the user to the corresponding profile screen if validation was successful
                      */
+                    @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(LogInActivity.this, "Login success", Toast.LENGTH_SHORT).show();
@@ -102,6 +105,10 @@ public class LogInActivity extends AppCompatActivity {
         });
 
         passwordReset.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Method is invoked when password reset is clicked on
+             * @param view
+             */
             @Override
             public void onClick(View view) {
                 final EditText emailField = new EditText(view.getContext());
@@ -112,16 +119,30 @@ public class LogInActivity extends AppCompatActivity {
                         .setView(emailField)
                         .setNegativeButton("NO",null)
                         .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            /**
+                             * Confirms password reset request
+                             * Sends an email to user to reset password
+                             * @param dialogInterface
+                             * @param i
+                             */
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // Extract email address
                                 String mail = emailField.getText().toString();
                                 firebaseAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    /**
+                                     * Displays toast when password reset email is successfully sent
+                                     * @param aVoid
+                                     */
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(LogInActivity.this, "Email is send", Toast.LENGTH_SHORT).show();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
+                                    /**
+                                     * Displays email when password reset email fails to send
+                                     * @param e
+                                     */
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(LogInActivity.this, "Unable to send the email"+e.getMessage(), Toast.LENGTH_SHORT).show();

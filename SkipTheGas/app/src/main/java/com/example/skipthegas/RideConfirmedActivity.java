@@ -11,6 +11,10 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class RideConfirmedActivity extends AppCompatActivity {
 
+    /**
+     * onCreate method for RideConfirmedActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

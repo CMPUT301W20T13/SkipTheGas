@@ -28,6 +28,10 @@ public class ActiveRequestsActivity extends AppCompatActivity {
 
     CustomList customList;
 
+    /**
+     * onCreate method for ActiveRequestsActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

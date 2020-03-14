@@ -25,6 +25,13 @@ public class RequestCustomList extends ArrayAdapter<Request> {
         this.context = context;
     }
 
+    /**
+     * Method sets up the view for browsing requests
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

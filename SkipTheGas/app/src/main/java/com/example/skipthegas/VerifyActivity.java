@@ -12,6 +12,10 @@ import android.widget.Button;
 public class VerifyActivity extends AppCompatActivity {
     Button continueButton;
 
+    /**
+     * onCreate method for VerifyActivity
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

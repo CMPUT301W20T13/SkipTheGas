@@ -1,9 +1,11 @@
 package com.example.skipthegas;
 
-//import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 
+/**
+ * This is a class that stores all the information relevant for a ride request
+ */
 public class Request {
     private GeoPoint origin;
     private GeoPoint destination;

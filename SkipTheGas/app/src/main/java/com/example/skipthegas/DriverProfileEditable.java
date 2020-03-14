@@ -10,7 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
  * This is a class that governs the editable view of the driver profile screen
  */
 public class DriverProfileEditable extends AppCompatActivity {
-
+    /**
+     * onCreate method DriverProfileEditable class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

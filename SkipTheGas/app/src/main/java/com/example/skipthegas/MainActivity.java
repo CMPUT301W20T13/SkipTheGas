@@ -16,6 +16,10 @@ public class MainActivity extends AppCompatActivity {
     Button logInBtn;
     Button signUpBtn;
 
+    /**
+     * onCreate method for MainActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,10 +29,10 @@ public class MainActivity extends AppCompatActivity {
         signUpBtn = findViewById(R.id.signup_page_button);
 
         logInBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
              * This will bring the user to the login screen
              */
+            @Override
             public void onClick(View view) {
                 Intent logInIntent = new Intent(getApplicationContext(), LogInActivity.class);
 
@@ -37,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
             /**
              * This will bring the user to the sign in screen
              */
+            @Override
             public void onClick(View view) {
                 Intent signUpIntent = new Intent(getApplicationContext(), SignUpActivity.class);
 

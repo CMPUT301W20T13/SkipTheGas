@@ -44,6 +44,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     String userID;
 
+    /**
+     * onCreate method for the SignUpActivity class
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,22 +198,26 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    /*
+    /**
      * Function checks if the email entered in the registerEmailField is valid
      * Uses regex for validation
      * regex expression referenced from :
      * https://www.tutorialspoint.com/validate-email-address-in-java
+     * @param email
+     * @return
      */
     static boolean emailValidation(String email) {
         String regexForEmail = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         return email.matches(regexForEmail);
     }
 
-    /*
+    /**
      * Function checks if the phone number entered in the phoneNumField is valid
      * Uses regex for validation
      * regex expression referenced from :
      * https://www.journaldev.com/641/regular-expression-phone-number-validation-in-java
+     * @param phoneNumber
+     * @return
      */
     static boolean phoneNumValidation(String phoneNumber) {
         String regexForPhone = "\\d{10}";
