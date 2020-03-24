@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -175,7 +176,8 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
                         firebaseFirestore.collection("all_requests").document(request_ID).update("driver_name", driver_name);
                         firebaseFirestore.collection("all_requests").document(request_ID).update("driver_phone", driver_phone);
                         firebaseFirestore.collection("all_requests").document(request_ID).update("is_accepted", accepted);
-
+                        Intent intent = new Intent(getActivity(), DriverDrawerActivity.class);
+                        startActivity(intent);
                     }
                 }).create();
     }
