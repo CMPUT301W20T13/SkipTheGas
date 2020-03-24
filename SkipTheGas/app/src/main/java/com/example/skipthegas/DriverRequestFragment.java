@@ -173,6 +173,12 @@ public class DriverRequestFragment extends Fragment {
                 String end = rides.getDestinationAddress();
                 String fare = rides.getFare();
                 String request_ID = rides.getRequestID();
+                GeoPoint startLocation = rides.getOrigin();
+                GeoPoint endLocation = rides.getDestination();
+                double startLat = startLocation.getLatitude();
+                double startLog = startLocation.getLongitude();
+                double endLat = endLocation.getLatitude();
+                double endLog = endLocation.getLongitude();
                 //Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
@@ -181,6 +187,10 @@ public class DriverRequestFragment extends Fragment {
                 bundle.putString("driver_phone", driverPhone);
                 bundle.putString("driver_name", driverName);
                 bundle.putString("request_ID", request_ID);
+                bundle.putDouble("start_lat", startLat);
+                bundle.putDouble("start_lng", startLog);
+                bundle.putDouble("end_lat", endLat);
+                bundle.putDouble("end_lng", endLog);
 
 
                 acceptRequestFragment.setArguments(bundle);
@@ -200,35 +210,5 @@ public class DriverRequestFragment extends Fragment {
 
             }
         });
-
-//        ridesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                p = position;
-//                Bundle acceptBundle = new Bundle();
-//
-//            }
-//        });
-
-
-
-//        requestList = getActivity().findViewById(R.id.request_list);
-//
-//        String riderName = "Jun";
-//        String riderNumber = "2507971287";
-//        LatLng currentLocation = new LatLng(53.5253, -113.5272);
-//        LatLng riderDestination = new LatLng(53.4849, -113.5137);
-//
-//        requestDataList = new ArrayList<>();
-//
-//
-//        requestDataList.add((new Request(riderName, riderNumber, currentLocation, riderDestination)));
-//
-//        requestAdapter = new RequestCustomList(getActivity(), requestDataList);
-//
-//        requestList.setAdapter(requestAdapter);
-
-
     }
-
 }
