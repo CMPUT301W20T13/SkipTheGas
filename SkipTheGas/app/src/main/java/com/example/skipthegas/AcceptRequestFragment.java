@@ -3,35 +3,43 @@ package com.example.skipthegas;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.os.Bundle;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.Objects;
 
 /**
  * This is a class which displays a fragment prompting a driver to accept a ride request
  */
-public class AcceptRequestFragment extends DialogFragment {
-    private TextView userNameTextView;
-    private TextView startLocationTextView;
-    private TextView endLocationTextView;
-    private TextView estimatePriceTextView;
+public class AcceptRequestFragment extends DialogFragment implements OnMapReadyCallback {
+
+    private GoogleMap mMap;
+    private View mapView;
+
+    private static View view;
+
 
     private String userName;
     private String driver_phone;
@@ -39,6 +47,16 @@ public class AcceptRequestFragment extends DialogFragment {
     private String driver_name;
     private String request_ID;
     private boolean accepted;
+    private double startLat;
+    private double startLng;
+    private double endLat;
+    private double endLng;
+
+    private MarkerOptions startLocation;
+    private MarkerOptions endLocation;
+
+    private Polyline currentPolyline;
+
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
@@ -59,31 +77,46 @@ public class AcceptRequestFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.accept_request_layout, container, false);
-        userNameTextView = (TextView) view.findViewById(R.id.accept_fragment_rider_name);
+//        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
+//        View view = layoutInflater.inflate(R.layout.accept_request_layout, container, false);
+
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                parent.removeView(view);
+            }
+        }
+
+        try {
+            view = inflater.inflate(R.layout.accept_request_layout, container, false);
+        } catch (InflateException e) {
+            Toast.makeText(getActivity(), "Fragment Success", Toast.LENGTH_SHORT).show();
+        }
+//        View view =  inflater.inflate(R.layout.accept_request_layout, container, false);
+
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            String tempUserName = bundle.getString("user_name");
+            userName = bundle.getString("user_name");
             driver_email = bundle.getString("driver_email");
             driver_name = bundle.getString("driver_name");
             driver_phone = bundle.getString("driver_phone");
             request_ID = bundle.getString("request_ID");
-            userName = tempUserName;
-            Toast.makeText(getContext(), "Fragment Message: "+ tempUserName, Toast.LENGTH_SHORT).show();
-            userNameTextView.setText(tempUserName);
+            startLat = bundle.getDouble("start_lat");
+            startLng = bundle.getDouble("start_lng");
+            endLat = bundle.getDouble("end_lat");
+            endLng = bundle.getDouble("end_lng");
+            startLocation = new MarkerOptions().position(new LatLng(startLat, startLng)).title("Start Location");
+            endLocation = new MarkerOptions().position(new LatLng(endLat, endLng)).title("End Location");
         }
         else {
             Toast.makeText(getActivity(), "Bundle is null", Toast.LENGTH_SHORT).show();
         }
-//        userNameTextView.setText();
-
-//        DriverRequestFragment driverRequestFragment = (DriverRequestFragment) getActivity();
-//        String userName = driverRequestFragment.getUserName();
+        initMap();
 
         return view;
     }
+
 
     /**
      * onCreateDialog method for AcceptRequestFragment fragment
@@ -94,7 +127,18 @@ public class AcceptRequestFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.accept_request_layout, null);
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null) {
+                parent.removeView(view);
+            }
+        }
+        try {
+            view = LayoutInflater.from(getActivity()).inflate(R.layout.accept_request_layout, null);
+        } catch (InflateException e) {
+            Toast.makeText(getActivity(), "Bundle is null", Toast.LENGTH_SHORT).show();
+        }
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -116,4 +160,18 @@ public class AcceptRequestFragment extends DialogFragment {
                     }
                 }).create();
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+    }
+
+
+    private void initMap() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.driver_map_accept_fragment);
+        assert mapFragment != null;
+        mapFragment.getMapAsync(this);
+        mapView = mapFragment.getView();
+    }
+
 }

@@ -1,101 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:id="@+id/accept_request_layout">
 
-    <TextView
-        android:id="@+id/textView37"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Accept Request?"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="HardcodedText" />
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/driver_map_accept_fragment"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        tools:context=".MapsActivity" />
 
-    <TextView
-        android:id="@+id/textView39"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="24dp"
-        android:text="Username"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView37" />
 
-    <TextView
-        android:id="@+id/textView42"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="158dp"
-        android:layout_marginTop="16dp"
-        android:text="Start:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView39" />
+</LinearLayout>
 
-    <TextView
-        android:id="@+id/textView43"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginTop="16dp"
-        android:text="End:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView42" />
+<!--<fragment xmlns:map="http://schemas.android.com/apk/res-auto"-->
+<!--android:id="@+id/driver_map_accept_fragment"-->
+<!--android:name="com.google.android.gms.maps.SupportMapFragment"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--tools:context=".MapsActivity" />-->
 
-    <TextView
-        android:id="@+id/textView44"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginTop="16dp"
-        android:text="Estimated Price:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView43" />
 
-    <TextView
-        android:id="@+id/accept_fragment_rider_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:hint="User Name"
-        app:layout_constraintStart_toEndOf="@+id/textView39"
-        app:layout_constraintTop_toBottomOf="@+id/textView37" />
+<!--<TextView-->
+<!--android:id="@+id/textView37"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginTop="16dp"-->
+<!--android:text="Accept Request?"-->
+<!--app:layout_constraintEnd_toEndOf="parent"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toTopOf="parent"-->
+<!--tools:ignore="HardcodedText" />-->
 
-    <TextView
-        android:id="@+id/accept_fragment_start_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:hint="Start Location"
-        app:layout_constraintStart_toEndOf="@+id/textView42"
-        app:layout_constraintTop_toBottomOf="@+id/textView39" />
 
-    <TextView
-        android:id="@+id/accept_fragment_end_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:hint="End Location"
-        app:layout_constraintStart_toEndOf="@+id/textView43"
-        app:layout_constraintTop_toBottomOf="@+id/textView42" />
+<!--<TextView-->
+<!--android:id="@+id/textView39"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="128dp"-->
+<!--android:layout_marginTop="24dp"-->
+<!--android:text="Username"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/textView37" />-->
 
-    <TextView
-        android:id="@+id/accept_fragment_estimate_fare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:hint="Estimate Price"
-        app:layout_constraintStart_toEndOf="@+id/textView44"
-        app:layout_constraintTop_toBottomOf="@+id/textView43" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--<TextView-->
+<!--android:id="@+id/textView42"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="158dp"-->
+<!--android:layout_marginTop="16dp"-->
+<!--android:text="Start:"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/textView39" />-->
 
+<!--<TextView-->
+<!--android:id="@+id/textView43"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="164dp"-->
+<!--android:layout_marginTop="16dp"-->
+<!--android:text="End:"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/textView42" />-->
+
+<!--<TextView-->
+<!--android:id="@+id/textView44"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="88dp"-->
+<!--android:layout_marginTop="16dp"-->
+<!--android:text="Estimated Price:"-->
+<!--app:layout_constraintStart_toStartOf="parent"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/textView43" />-->
+
+<!--<TextView-->
+<!--android:id="@+id/accept_fragment_rider_name"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="8dp"-->
+<!--android:layout_marginTop="24dp"-->
+<!--android:hint="User Name"-->
+<!--app:layout_constraintStart_toEndOf="@+id/textView39"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/textView37" />-->
+
+<!--<TextView-->
+<!--android:id="@+id/accept_fragment_start_location"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="8dp"-->
+<!--android:layout_marginTop="16dp"-->
+<!--android:hint="Start Location"-->
+<!--app:layout_constraintStart_toEndOf="@+id/textView42"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/textView39" />-->
+
+<!--<TextView-->
+<!--android:id="@+id/accept_fragment_end_location"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="8dp"-->
+<!--android:layout_marginTop="16dp"-->
+<!--android:hint="End Location"-->
+<!--app:layout_constraintStart_toEndOf="@+id/textView43"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/textView42" />-->
+
+<!--<TextView-->
+<!--android:id="@+id/accept_fragment_estimate_fare"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:layout_marginStart="8dp"-->
+<!--android:layout_marginTop="16dp"-->
+<!--android:hint="Estimate Price"-->
+<!--app:layout_constraintStart_toEndOf="@+id/textView44"-->
+<!--app:layout_constraintTop_toBottomOf="@+id/textView43" />-->
 
