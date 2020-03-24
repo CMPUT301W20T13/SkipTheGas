@@ -41,5 +41,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.github.clans:fab:1.6.4'
 
+    // Google Direction
+    implementation 'com.google.maps:google-maps-services:0.11.0'
+    implementation 'org.slf4j:slf4j-simple:1.7.25'
+
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
 }
