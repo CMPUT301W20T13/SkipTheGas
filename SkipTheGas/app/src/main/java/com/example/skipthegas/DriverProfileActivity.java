@@ -24,7 +24,7 @@ public class DriverProfileActivity extends AppCompatActivity {
     /**
      * This opens the editable view of the driver profile upon a button click
      * @param view
-     *      Changes screens from the driver profile (read-only) to the driver profile (editable)
+     * Changes screens from the driver profile (read-only) to the driver profile (editable)
      */
     public void edit(View view) {
         Intent intent = new Intent(this, DriverProfileEditable.class);
@@ -34,7 +34,7 @@ public class DriverProfileActivity extends AppCompatActivity {
     /**
      * This opens the browse active requests screen upon a button click
      * @param view
-     *      Changes screens from the driver profile (read-only) to the driver profile (editable)
+     * Changes screens from the driver profile (read-only) to the driver profile (editable)
      */
     public void browseRequests(View view) {
         Intent intent = new Intent(this, ActiveRequestsActivity.class);
@@ -44,7 +44,7 @@ public class DriverProfileActivity extends AppCompatActivity {
     /**
      * This logs out a user upon a button click
      * @param view
-     *      Changes screens from the driver profile (read-only) to the login screen
+     * Changes screens from the driver profile (read-only) to the login screen
      */
     public void logOut(View view) {
         Intent intent = new Intent(this, LogInActivity.class);

@@ -65,7 +65,7 @@ public class RiderProfileActivity extends AppCompatActivity {
     /**
      * This opens the editable view of the rider profile upon a button click
      * @param view
-     *      Changes screens from the rider profile (read-only) to the rider profile (editable)
+     * Changes screens from the rider profile (read-only) to the rider profile (editable)
      */
     public void edit(View view) {
         Intent intent = new Intent(this, RiderProfileEditable.class);
@@ -75,7 +75,7 @@ public class RiderProfileActivity extends AppCompatActivity {
     /**
      * This opens the browse active requests screen upon a button click
      * @param view
-     *      Changes screens from the rider profile (read-only) to the rider profile (editable)
+     * Changes screens from the rider profile (read-only) to the rider profile (editable)
      */
     public void requestRides(View view) {
         Intent intent = new Intent(this, RequestRideActivity.class);
@@ -85,7 +85,7 @@ public class RiderProfileActivity extends AppCompatActivity {
     /**
      * This logs out a user upon a button click
      * @param view
-     *      Changes screens from the rider profile (read-only) to the login screen
+     * Changes screens from the rider profile (read-only) to the login screen
      */
     public void logOut(View view) {
         Intent intent = new Intent(this, LogInActivity.class);

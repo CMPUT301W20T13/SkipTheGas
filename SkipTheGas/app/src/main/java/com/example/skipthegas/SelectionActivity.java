@@ -34,7 +34,7 @@ public class SelectionActivity extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                Intent riderIntent = new Intent(getApplicationContext(), RiderActivity.class);
+                Intent riderIntent = new Intent(getApplicationContext(), RiderDrawerActivity.class);
                 startActivity(riderIntent);
             }
         });

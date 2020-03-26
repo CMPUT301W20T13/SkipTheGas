@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rider_request_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="Rider Requests Page"
+        android:textSize="30dp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/currentRequest"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="170dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Current Request"
+        app:layout_constraintBottom_toTopOf="@+id/activeRequests"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/rider_request_header" />
+
+    <Button
+        android:id="@+id/activeRequests"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="170dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="448dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Active Requests"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentRequest"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/pastRequests"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="170dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="370dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Past Requests"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activeRequests"
+        app:layout_constraintVertical_bias="0.803" />
+
+    <Button
+        android:id="@+id/cancelledRequests"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="170dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Cancelled Requests"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pastRequests"
+        app:layout_constraintVertical_bias="0.014" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
