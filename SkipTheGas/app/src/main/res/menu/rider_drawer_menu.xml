@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn='navigation_view'>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/rider_nav_map"
+            android:icon="@drawable/ic_menu_map"
+            android:title="Map"
+            tools:ignore="HardcodedText" />
+        <item
+            android:id="@+id/rider_nav_request"
+            android:icon="@drawable/ic_menu_request"
+            android:title="Ride Requests"
+            tools:ignore="HardcodedText" />
+        <item
+            android:id="@+id/rider_nav_profile"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="Profile"
+            tools:ignore="HardcodedText" />
+        <item
+            android:id="@+id/rider_logout"
+            android:icon="@drawable/ic_menu_profile"
+            android:title="Logout"
+            tools:ignore="HardcodedText" />
+    </group>
+
+</menu>
