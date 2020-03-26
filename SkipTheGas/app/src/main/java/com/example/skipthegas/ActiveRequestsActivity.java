@@ -65,14 +65,4 @@ public class ActiveRequestsActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * This returns the user back to their profile on a button click
-     * @param view
-     *      Changes view from the requests screen to the profile screen
-     */
-    public void returnToProfile(View view) {
-        Intent intent = new Intent(this, DriverProfileActivity.class);
-        startActivity(intent);
-    }
-
 }
