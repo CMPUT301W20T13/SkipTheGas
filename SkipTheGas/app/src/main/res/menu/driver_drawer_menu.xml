@@ -19,6 +19,11 @@
             android:icon="@drawable/ic_menu_profile"
             android:title="Profile"
             tools:ignore="HardcodedText" />
+        <item
+            android:id="@+id/nav_active_request"
+            android:icon="@drawable/ic_menu_request"
+            android:title="Accepted Request"
+            tools:ignore="HardcodedText" />
     </group>
 
 <!--    <item-->

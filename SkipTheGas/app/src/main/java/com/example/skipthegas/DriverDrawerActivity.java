@@ -65,6 +65,10 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
                 getSupportFragmentManager().beginTransaction().replace(R.id.driver_fragment_container, new DriverDrawerProfileFragment()).commit();
 
                 break;
+            case R.id.nav_active_request:
+                getSupportFragmentManager().beginTransaction().replace(R.id.driver_fragment_container, new DriverActiveRequestFragment()).commit();
+
+                break;
         }
 
         driverDrawer.closeDrawer(GravityCompat.START);

@@ -1,8 +1,5 @@
 package com.example.skipthegas;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -12,18 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,7 +28,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -44,7 +35,7 @@ import java.util.Objects;
 /**
  * This is a class that displays the active requests of the driver
  */
-public class DriverRequestFragment extends Fragment {
+public class DriverActiveRequestFragment extends Fragment {
 
     ListView ridesList;
     ArrayAdapter<Ride> rideAdapter;
@@ -143,7 +134,12 @@ public class DriverRequestFragment extends Fragment {
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             String requestID = doc.getId();
                             boolean accepted = (boolean) doc.getData().get("is_accepted");
-                            if (!accepted) {
+                            String request_driver = (String) doc.getData().get("driver_name");
+                            Toast toast = Toast.makeText(getActivity(), request_driver,Toast.LENGTH_LONG);
+                            toast.show();
+                            //Toast toast = Toast.makeText(getActivity(), driverName,Toast.LENGTH_LONG);
+                            //toast.show();
+                            if (accepted && driverName == request_driver) {
                                 String riderName = (String) doc.getData().get("rider_name");
                                 String riderPhone = (String) doc.getData().get("rider_phone");
                                 String riderEmail = (String) doc.getData().get("rider_email");
