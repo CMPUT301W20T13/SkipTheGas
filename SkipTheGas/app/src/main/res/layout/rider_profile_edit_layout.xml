@@ -23,28 +23,26 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="128dp"
         android:layout_height="49dp"
-        android:layout_marginTop="580dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/roundedbutton"
         android:onClick="cancel"
         android:text="Cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/submitButton" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="430dp"
+        android:layout_marginTop="32dp"
         android:text="Username:"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/cancelButton"
         app:layout_constraintEnd_toStartOf="@+id/editText3"
         app:layout_constraintHorizontal_bias="0.186"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/textView5"
@@ -83,16 +81,14 @@
         android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="48dp"
-        android:layout_marginBottom="360dp"
         android:ems="10"
-        android:inputType="textPersonName"
 
+        android:inputType="textPersonName"
         android:textSize="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <TextView
         android:id="@+id/editText4"
@@ -137,15 +133,13 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="150dp"
         android:layout_height="43dp"
-        android:layout_marginTop="520dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginTop="64dp"
         android:background="@drawable/roundedbutton"
         android:onClick="submitEdit"
         android:text="Submit"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editText6" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
