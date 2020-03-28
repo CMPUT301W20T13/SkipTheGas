@@ -76,9 +76,6 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
     private GeoApiContext mGeoApiContext = null;
 
     FirebaseFirestore firebaseFirestore;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
-
 
 
 
@@ -164,7 +161,12 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
         return builder
                 .setView(view)
                 .setTitle("Accept Request For Ride?")
-                .setNegativeButton("Cancel", null)
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mMap.clear();
+                    }
+                })
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -176,6 +178,7 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
                         firebaseFirestore.collection("all_requests").document(request_ID).update("driver_name", driver_name);
                         firebaseFirestore.collection("all_requests").document(request_ID).update("driver_phone", driver_phone);
                         firebaseFirestore.collection("all_requests").document(request_ID).update("is_accepted", accepted);
+                        mMap.clear();
                         Intent intent = new Intent(getActivity(), DriverDrawerActivity.class);
                         startActivity(intent);
                     }
@@ -206,8 +209,8 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
     private void setCamera() {
         LatLngBounds latLngBounds = new LatLngBounds(
-                new LatLng(startLat - 0.09, endLng - 0.09),
-                new LatLng(endLat + 0.09, endLng + 0.09)
+                new LatLng(startLat - 0.1, endLng - 0.1),
+                new LatLng(endLat + 0.1, endLng + 0.1)
         );
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));

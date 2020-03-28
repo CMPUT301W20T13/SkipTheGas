@@ -23,11 +23,12 @@ public class Ride {
     private boolean accepted;
     private boolean completed;
     private String requestID;
+    private  boolean isConfirmed;
 
     Ride(String riderName, String riderPhone, String riderEmail, GeoPoint origin,
          GeoPoint destination, String dist, String time, String fare,
          String driverName, String driverPhone, String driverEmail, boolean accepted, boolean completed,
-         String originAddress, String destinationAddress, String requestID) {
+         String originAddress, String destinationAddress, String requestID, boolean isConfirmed) {
         this.riderName = riderName;
         this.riderPhone = riderPhone;
         this.riderEmail = riderEmail;
@@ -44,6 +45,7 @@ public class Ride {
         this.originAddress = originAddress;
         this.destinationAddress = destinationAddress;
         this.requestID = requestID;
+        this.isConfirmed = isConfirmed;
     }
 
     String getRiderName() {
@@ -108,5 +110,9 @@ public class Ride {
 
     String getRequestID() {
         return this.requestID;
+    }
+
+    boolean getIsConfirmed() {
+        return this.isConfirmed;
     }
 }

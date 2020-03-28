@@ -138,7 +138,7 @@ public class DriverRequestFragment extends Fragment {
                                 String originAddress = (String) doc.getData().get("origin_address");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
 
-                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress, requestID));
+                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress, requestID, false));
                             }
                         }
                         rideAdapter.notifyDataSetChanged();
