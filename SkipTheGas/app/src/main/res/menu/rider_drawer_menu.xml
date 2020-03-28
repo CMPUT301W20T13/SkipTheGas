@@ -19,11 +19,19 @@
             android:icon="@drawable/ic_menu_profile"
             android:title="Profile"
             tools:ignore="HardcodedText" />
-        <item
-            android:id="@+id/rider_logout"
-            android:icon="@drawable/ic_menu_profile"
-            android:title="Logout"
-            tools:ignore="HardcodedText" />
+
     </group>
+
+        <item
+            android:title="Others"
+            tools:ignore="HardcodedText">
+            <menu>
+                <item
+                    android:id="@+id/rider_logout"
+                    android:icon="@drawable/ic_menu_profile"
+                    android:title="Logout"
+                    tools:ignore="HardcodedText" />
+            </menu>
+        </item>
 
 </menu>
