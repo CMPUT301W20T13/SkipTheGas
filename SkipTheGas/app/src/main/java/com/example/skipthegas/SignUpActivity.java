@@ -84,7 +84,7 @@ public class SignUpActivity extends AppCompatActivity {
              *      This is this user's entered email
              * @param phone
              *      This is the user's entered phone number
-             * @retur
+             * @return
              *      Either an error is returned, or the user is brought back to the login page if
              *      validation was successful
              */
@@ -161,6 +161,9 @@ public class SignUpActivity extends AppCompatActivity {
                             users.put("username",username);
                             users.put("email",email);
                             users.put("phone",phone);
+                            users.put("QR_code", 500); 
+                            users.put("good_rating", 0);
+                            users.put("bad_ratings", 0);
 
                             /* MORE USER INFO IS NEEDED */
 
