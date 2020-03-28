@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -24,8 +26,19 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 /**
  *  Driver's map activity fragment, driver can view maps from this fragment
@@ -42,6 +55,8 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 9001;
     private static final float DEFAULT_ZOOM = 15f;
+
+    FirebaseFirestore firebaseFirestore;
 
     /**
      * onCreateView method for DriverMapFragment fragment
@@ -97,6 +112,25 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
             layoutParams.setMargins(0, 0, 30, 30);
         }
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore
+                .collection("all_requests")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        for (QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                            boolean accepted = (boolean) doc.getData().get("is_accepted");
+                            if (!accepted) {
+                                GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
+                                String riderName = (String) doc.getData().get("rider_name");
+                                MarkerOptions startLocation;
+                                startLocation = new MarkerOptions().position(new LatLng(origin.getLatitude(), origin.getLongitude())).title(riderName);
+                                mMap.addMarker(startLocation);
+                            }
+                        }
+                    }
+                });
 
     }
 

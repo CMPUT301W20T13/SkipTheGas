@@ -238,7 +238,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                     String rounded_fare = twoDecPoints.format(ride_fare);
                     Ride ride = new Ride(username, phone, email, origin, destination, rounded_dist,
                             rounded_time, rounded_fare, null, null,
-                            null, false, false, originAddress, destinationAddress, null);
+                            null, false, false, originAddress, destinationAddress, null, false);
                     new AlertDialog.Builder(RiderActivity.this)
                             .setTitle("Requested Ride Details")
                             .setMessage(msg1 + rounded_dist + " km" + "\n"
