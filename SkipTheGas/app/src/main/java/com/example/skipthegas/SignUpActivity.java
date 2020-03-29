@@ -161,7 +161,7 @@ public class SignUpActivity extends AppCompatActivity {
                             users.put("username",username);
                             users.put("email",email);
                             users.put("phone",phone);
-                            users.put("QR_code", 500); 
+                            users.put("QR_bucks", 500.0);
                             users.put("good_rating", 0);
                             users.put("bad_ratings", 0);
 
