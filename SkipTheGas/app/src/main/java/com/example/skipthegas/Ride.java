@@ -21,14 +21,16 @@ public class Ride {
     private String time;
     private String fare;
     private boolean accepted;
-    private boolean completed;
+    private boolean isDriverCompleted;
+    private boolean isRiderCompleted;
     private String requestID;
-    private  boolean isConfirmed;
+    private boolean isConfirmed;
+    private boolean isCanceled;
 
     Ride(String riderName, String riderPhone, String riderEmail, GeoPoint origin,
          GeoPoint destination, String dist, String time, String fare,
-         String driverName, String driverPhone, String driverEmail, boolean accepted, boolean completed,
-         String originAddress, String destinationAddress, String requestID, boolean isConfirmed) {
+         String driverName, String driverPhone, String driverEmail, boolean accepted, boolean isDriverCompleted, boolean isRiderCompleted,
+         String originAddress, String destinationAddress, String requestID, boolean isConfirmed, boolean isCanceled) {
         this.riderName = riderName;
         this.riderPhone = riderPhone;
         this.riderEmail = riderEmail;
@@ -41,11 +43,13 @@ public class Ride {
         this.driverPhone = driverPhone;
         this.driverEmail = driverEmail;
         this.accepted = accepted;
-        this.completed = completed;
+        this.isDriverCompleted = isDriverCompleted;
+        this.isRiderCompleted = isRiderCompleted;
         this.originAddress = originAddress;
         this.destinationAddress = destinationAddress;
         this.requestID = requestID;
         this.isConfirmed = isConfirmed;
+        this.isCanceled = isCanceled;
     }
 
     String getRiderName() {
@@ -92,12 +96,16 @@ public class Ride {
         return this.fare;
     }
 
-    Boolean getAccepted() {
+    boolean getAccepted() {
         return this.accepted;
     }
 
-    Boolean getCompleted() {
-        return this.completed;
+    boolean getIsDriverCompleted() {
+        return this.isDriverCompleted;
+    }
+
+    boolean getIsRiderCompleted() {
+        return this.isRiderCompleted;
     }
 
     String getOriginAddress() {
@@ -114,5 +122,9 @@ public class Ride {
 
     boolean getIsConfirmed() {
         return this.isConfirmed;
+    }
+
+    boolean getIsCanceled() {
+        return this.isCanceled;
     }
 }

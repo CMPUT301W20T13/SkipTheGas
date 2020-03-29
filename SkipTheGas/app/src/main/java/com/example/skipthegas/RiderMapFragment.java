@@ -12,11 +12,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +29,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -40,6 +45,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -58,6 +66,7 @@ import com.google.maps.model.DirectionsRoute;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -80,21 +89,28 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 9001;
     private static final float DEFAULT_ZOOM = 15f;
 
+    // widgets
     Button postRequestButton, clearMapButton;
     ArrayList<LatLng> locationMarkerList;
+    private EditText searchEditText;
+
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
 
+    // vars
     public String estDistance;
     public String estTime;
     public String estFare;
     private MarkerOptions startLocation;
     private MarkerOptions endLocation;
     private String userEmail;
-    private String userID;
     private String userName;
     private String userPhone;
+
+    AutocompleteSupportFragment autocompleteFragment;
+
+
 
 
     /**
@@ -119,6 +135,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         // UI initiation
         postRequestButton = view.findViewById(R.id.post_request_button);
         clearMapButton = view.findViewById(R.id.clear_map_button);
+        searchEditText = view.findViewById(R.id.rider_map_search_edit_text);
 
         // Retrieve user information from firebase
         userEmail = firebaseUser.getEmail();
@@ -209,7 +226,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                 clearMap();
             }
         });
-
+//        initAutoComplete();
         return view;
     }
 
@@ -243,6 +260,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         } else {
             getDeviceLocation();
             mMap.setMyLocationEnabled(true);
+            initSearch();
         }
 
         if (mapView != null && mapView.findViewById(Integer.parseInt("1")) != null) {
@@ -350,6 +368,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         );
         DirectionsApiRequest directions = new DirectionsApiRequest(mGeoApiContext);
 
+        // Did not enable more than one routes
         directions.alternatives(false);
 
         com.google.maps.model.LatLng origin = new com.google.maps.model.LatLng(
@@ -380,6 +399,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
+    // Add polyline to the map
     private void addPolyline (final DirectionsResult result) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
@@ -417,6 +437,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         mMap.clear();
     }
 
+    // get location address from GeoPoint
     public String getGeoAddress(GeoPoint geoPoint) {
         Geocoder geocoder;
         List<Address> addresses;
@@ -433,4 +454,86 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         }
         return returnAddress;
     }
+
+    // initializing search bar
+    private void initSearch() {
+        Log.d(TAG, "init: initializing");
+
+        searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || keyEvent.getAction() == keyEvent.ACTION_DOWN || keyEvent.getAction() == keyEvent.KEYCODE_ENTER) {
+                    // execute method for searching
+                    geoLocate();
+                    searchEditText.getText().clear();
+                }
+                return false;
+            }
+        });
+    }
+
+    // search geo location
+    private void geoLocate() {
+        Log.d(TAG, "geoLocate: geolocating");
+
+        String searchString = searchEditText.getText().toString();
+        Geocoder geocoder = new Geocoder(getActivity());
+        List<Address> list = new ArrayList<>();
+        try {
+            list = geocoder.getFromLocationName(searchString, 1);
+        } catch (IOException e) {
+            Log.e(TAG, "gepLocate: IOException: " + e.getMessage());
+        }
+
+        if (list.size() != 0) {
+            if (locationMarkerList.size() >= 2) {
+                clearMap();
+            }
+            Address address = list.get(0);
+            Log.d(TAG, "geoLocate: found a location: " + address.toString());
+
+//            Toast.makeText(getActivity(), address.toString(), Toast.LENGTH_SHORT).show();
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            locationMarkerList.add(latLng);
+            MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+            if (locationMarkerList.size() == 1) {
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            } else {
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                startLocation = new MarkerOptions().position(locationMarkerList.get(0));
+                endLocation = new MarkerOptions().position(locationMarkerList.get(1));
+                if (locationMarkerList.size() == 2) {
+                    calculateDirections(startLocation, endLocation);
+                }
+            }
+            mMap.addMarker(markerOptions);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        } else {
+            Toast.makeText(getActivity(), "Location not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+//    private void initAutoComplete() {
+//        // Initialize the AutocompleteSupportFragment.
+//        autocompleteFragment = (AutocompleteSupportFragment) getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
+//
+//        // Specify the types of place data to return.
+//        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+//
+//        // Set up a PlaceSelectionListener to handle the response.
+//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+//            @Override
+//            public void onPlaceSelected(Place place) {
+//                // TODO: Get info about the selected place.
+//                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
+//
+//            }
+//
+//            @Override
+//            public void onError(Status status) {
+//                // TODO: Handle the error.
+//                Log.i(TAG, "An error occurred: " + status);
+//            }
+//        });
+//    }
 }
