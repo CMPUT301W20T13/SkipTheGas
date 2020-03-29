@@ -52,6 +52,7 @@ public class YourRideRequestActivity extends AppCompatActivity {
         cancelVerify.setOnClickListener((v)->{
             new CancelFragment().show(getSupportFragmentManager(), "Cancel Request");
         });
+
         //final TextView openProfile = findViewById(R.id.Driver);
         //openProfile.setOnClickListener((v)->{
         //  new DriverProfileFragment().show(getSupportFragmentManager(), "View Profile");
@@ -108,34 +109,10 @@ public class YourRideRequestActivity extends AppCompatActivity {
                             String requestID = doc.getId();
                             boolean accepted = (boolean) doc.getData().get("is_accepted");
                             String req_riderName = (String) doc.getData().get("rider_name");
-                            boolean completed = (boolean) doc.getData().get("is_compete");
-                            if (!riderName.equals(req_riderName)) {
-                                start.setText("Not set");
-                                end.setText("Not set");
-                                fare.setText("Not set");
-                                driver.setText("Not assigned");
-                                status.setText("Not available");
-                                cancelVerify.setEnabled(false);
+                            boolean completed = (boolean) doc.getData().get("is_completed");
+//
 
-                                String display_msg = "You do not have any open requests currently";
-                                Toast toast = Toast.makeText(getApplicationContext(), display_msg, Toast.LENGTH_LONG);
-                                toast.show();
-
-                            }
-                            else if (riderName.equals(req_riderName) && completed) {
-                                start.setText("Not set");
-                                end.setText("Not set");
-                                fare.setText("Not set");
-                                driver.setText("Not assigned");
-                                status.setText("Not available");
-                                cancelVerify.setEnabled(false);
-
-                                String display_msg = "You do not have any open requests currently";
-                                Toast toast = Toast.makeText(getApplicationContext(), display_msg, Toast.LENGTH_LONG);
-                                toast.show();
-
-                            }
-                            else if (riderName.equals(req_riderName) && !completed){
+                            if (riderName.equals(req_riderName) && !completed){
                                 String req_fare = (String) doc.getData().get("est_fare");
                                 String driverName = (String) doc.getData().get("driver_name");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
@@ -144,6 +121,7 @@ public class YourRideRequestActivity extends AppCompatActivity {
                                 start.setText(originAddress);
                                 driver.setText(driverName);
                                 fare.setText(req_fare);
+                                cancelVerify.setEnabled(true);
                                 if(accepted){
                                     status.setText("accepted");
                                 }
@@ -154,6 +132,34 @@ public class YourRideRequestActivity extends AppCompatActivity {
 
                                 //rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress, requestID, false));
                             }
+
+//                            else if (riderName != req_riderName) {
+//                                start.setText("Not set");
+//                                end.setText("Not set");
+//                                fare.setText("Not set");
+//                                driver.setText("Not assigned");
+//                                status.setText("Not available");
+//                                cancelVerify.setEnabled(false);
+//
+//                                String display_msg = "You do not have any open requests currently";
+//                                Toast toast = Toast.makeText(getApplicationContext(), display_msg, Toast.LENGTH_LONG);
+//                                toast.show();
+//
+//                            }
+
+//                            else if (riderName.equals(req_riderName) && completed) {
+//                                start.setText("Not set");
+//                                end.setText("Not set");
+//                                fare.setText("Not set");
+//                                driver.setText("Not assigned");
+//                                status.setText("Not available");
+//                                cancelVerify.setEnabled(false);
+//
+//                                String display_msg = "All your requests have been completed";
+//                                Toast toast = Toast.makeText(getApplicationContext(), display_msg, Toast.LENGTH_LONG);
+//                                toast.show();
+//
+//                            }
 
 
                         }
