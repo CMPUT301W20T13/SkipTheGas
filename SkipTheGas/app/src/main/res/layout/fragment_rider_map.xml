@@ -17,53 +17,71 @@
         android:layout_weight="20">
     </fragment>
 
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/rider_float_action_menu"
-        android:layout_width="28dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="-1dp"
-        app:menu_colorNormal="#3F51B5"
-        app:menu_colorPressed="#2196F3"
-        app:menu_fab_label=""
-        app:menu_openDirection="up"
-        app:menu_showShadow="true"
-        tools:ignore="RelativeOverlap">
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/clear_map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_label="Clear map"
-            app:fab_size="mini"
-            app:menu_colorNormal="#3F51B5"
-            app:menu_colorPressed="#2196F3" />
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/request_ride"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:fab_label="Post request"
-            app:fab_size="mini"
-            app:menu_colorNormal="#3F51B5"
-            app:menu_colorPressed="#2196F3" />
-
-    </com.github.clans.fab.FloatingActionMenu>
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_weight="1">
 
         <TextView
             android:id="@+id/rider_map_text_view"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:textSize="30sp"
-            android:text="Good Morning, Rider"
+            android:text="Hello, Rider"
             tools:ignore="HardcodedText" />
 
-    </RelativeLayout>
+        <Button
+            android:id="@+id/post_request_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="POST Request"
+            tools:ignore="HardcodedText"/>
+
+        <Button
+            android:id="@+id/clear_map_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clear Map"
+            tools:ignore="HardcodedText" />
+
+
+    </LinearLayout>
 
 </LinearLayout>
+
+
+
+    <!--    <com.github.clans.fab.FloatingActionMenu-->
+    <!--        android:id="@+id/rider_float_action_menu"-->
+    <!--        android:layout_width="28dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_marginTop="0dp"-->
+    <!--        android:layout_marginEnd="-1dp"-->
+    <!--        app:menu_colorNormal="#3F51B5"-->
+    <!--        app:menu_colorPressed="#2196F3"-->
+    <!--        app:menu_fab_label=""-->
+    <!--        app:menu_openDirection="up"-->
+    <!--        app:menu_showShadow="true"-->
+    <!--        tools:ignore="RelativeOverlap">-->
+
+    <!--        <com.github.clans.fab.FloatingActionButton-->
+    <!--            android:id="@+id/clear_map"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            app:fab_label="Clear map"-->
+    <!--            app:fab_size="mini"-->
+    <!--            app:menu_colorNormal="#3F51B5"-->
+    <!--            app:menu_colorPressed="#2196F3" />-->
+
+    <!--        <com.github.clans.fab.FloatingActionButton-->
+    <!--            android:id="@+id/request_ride"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            app:fab_label="Post request"-->
+    <!--            app:fab_size="mini"-->
+    <!--            app:menu_colorNormal="#3F51B5"-->
+    <!--            app:menu_colorPressed="#2196F3" />-->
+
+    <!--    </com.github.clans.fab.FloatingActionMenu>-->
