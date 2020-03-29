@@ -43,10 +43,16 @@ import java.util.Objects;
 public class RiderRequestFragment extends Fragment {
 
     Button rider_current_request;
-    Button rider_active_requests;
-    Button rider_past_requests;
+    Button rider_completed_requests;
     Button rider_cancelled_requests;
 
+    /**
+     * Initializes the buttons in the rider request fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,10 +61,30 @@ public class RiderRequestFragment extends Fragment {
         rider_current_request.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent editProfileIntent = new Intent(getActivity(), YourRideRequestActivity.class);
-                startActivity(editProfileIntent);
+                Intent currentRequestIntent = new Intent(getActivity(), YourRideRequestActivity.class);
+                startActivity(currentRequestIntent);
             }
         });
+
+        rider_completed_requests = view.findViewById(R.id.completedRequests);
+        rider_completed_requests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent completedReqIntent = new Intent(getActivity(), CompletedRequests.class);
+                startActivity(completedReqIntent);
+            }
+        });
+
+        rider_cancelled_requests = view.findViewById(R.id.cancelledRequests);
+        rider_cancelled_requests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cancelledReqIntent = new Intent(getActivity(), CancelledRequests.class);
+                startActivity(cancelledReqIntent);
+            }
+        });
+
         return view;
+
     }
 }
