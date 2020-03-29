@@ -48,6 +48,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".RiderProfileActivity" />
+        <activity android:name=".YourActiveRidesActivity" />
         <activity android:name=".DriverProfileActivity" />
         <activity android:name=".RideConfirmedActivity" />
         <activity android:name=".RiderActivity" />
@@ -55,6 +56,7 @@
         <activity android:name=".YourRideRequestActivity" />
         <activity android:name=".TripFeedBackActivity" />
         <activity android:name=".PaymentActivity" />
+        <activity android:name=".DriverProfileFragment" />
         <activity android:name=".PayAcceptedActivity" />
         <activity android:name=".ActiveRequestsActivity" />
         <activity android:name=".DriverProfileEditable" />
