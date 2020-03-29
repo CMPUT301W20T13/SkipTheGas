@@ -51,6 +51,14 @@ public class RiderRequestFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rider_request, container, false);
+        rider_current_request = view.findViewById(R.id.currentRequest);
+        rider_current_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent editProfileIntent = new Intent(getActivity(), YourRideRequestActivity.class);
+                startActivity(editProfileIntent);
+            }
+        });
         return view;
     }
 }
