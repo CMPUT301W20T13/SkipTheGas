@@ -32,6 +32,9 @@
             android:value="@string/google_maps_key" />
 
         <activity
+            android:name=".DriverTripProcessActivity"
+            android:label="@string/title_activity_driver_trip_process"></activity>
+        <activity
             android:name=".RiderDrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".VerifyActivity" />
