@@ -136,11 +136,11 @@ public class DriverRequestFragment extends Fragment {
                                 String driverPhone = (String) doc.getData().get("driver_phone");
                                 String driverEmail = (String) doc.getData().get("driver_email");
 //                                boolean accepted = (boolean) doc.getData().get("is_accepted");
-                                boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
+//                                boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
                                 String originAddress = (String) doc.getData().get("origin_address");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
 
-                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, isDriverCompleted, false, originAddress, destinationAddress, requestID, false, false));
+                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, false, false, originAddress, destinationAddress, requestID, false, false));
                             }
                         }
                         rideAdapter.notifyDataSetChanged();

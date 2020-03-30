@@ -73,20 +73,22 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+
         firebaseFirestore
                 .collection("all_requests")
-                .document(Objects.requireNonNull(requestID))
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        start = documentSnapshot.getGeoPoint("ride_origin");
-                        end = documentSnapshot.getGeoPoint("ride_destination");
-                        riderPhone = documentSnapshot.getString("rider_phone");
-                        startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
-                        endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End Location");
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            String temp = doc.getId();
+                            if (requestID.equals(temp)) {
+                                riderPhone = (String) doc.getData().get("rider_phone");
+                            }
+                        }
                     }
                 });
-        Toast.makeText(this, "Request ID: " + requestID, Toast.LENGTH_SHORT).show();
+
+        Toast.makeText(this, "Request ID: " + riderPhone, Toast.LENGTH_SHORT).show();
 
         initMap();
 //        calculateDirections(startLocation, endLocation);
