@@ -75,6 +75,8 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
     private GeoApiContext mGeoApiContext = null;
 
+    private Ride rides;
+
     FirebaseFirestore firebaseFirestore;
 
 
@@ -124,6 +126,7 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
             endLng = bundle.getDouble("end_lng");
             startLocation = new MarkerOptions().position(new LatLng(startLat, startLng)).title("Start Location");
             endLocation = new MarkerOptions().position(new LatLng(endLat, endLng)).title("End Location");
+
         }
         else {
             Toast.makeText(getActivity(), "Bundle is null", Toast.LENGTH_SHORT).show();
@@ -179,7 +182,8 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
                         firebaseFirestore.collection("all_requests").document(request_ID).update("driver_phone", driver_phone);
                         firebaseFirestore.collection("all_requests").document(request_ID).update("is_accepted", accepted);
                         mMap.clear();
-                        Intent intent = new Intent(getActivity(), DriverDrawerActivity.class);
+                        Intent intent = new Intent(getActivity(), DriverTripProcessActivity.class);
+                        intent.putExtra("request_id", request_ID);
                         startActivity(intent);
                     }
                 }).create();
@@ -209,7 +213,7 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
     private void setCamera() {
         LatLngBounds latLngBounds = new LatLngBounds(
-                new LatLng(startLat - 0.1, endLng - 0.1),
+                new LatLng(startLat - 0.1, startLng - 0.1),
                 new LatLng(endLat + 0.1, endLng + 0.1)
         );
 
