@@ -14,8 +14,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="135dp"
-        android:layout_marginTop="208dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="207dp"
         android:background="@drawable/roundedbutton"
         android:text="Rider"
         tools:ignore="ButtonStyle" />
@@ -25,8 +25,10 @@
         android:layout_width="135dp"
         android:layout_height="60dp"
         android:layout_below="@+id/rider_select_button"
+        android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="43dp"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="34dp"
         android:background="@drawable/roundedbutton2"
         android:text="Driver"
         tools:ignore="ButtonStyle" />
