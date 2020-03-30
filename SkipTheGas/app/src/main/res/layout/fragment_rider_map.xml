@@ -5,11 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<!--    <fragment android:id="@+id/autocomplete_fragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
-<!--        />-->
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -39,7 +35,6 @@
             android:textColor="#000"
             android:background="@null"
             android:id="@+id/rider_map_search_edit_text"
-            android:hint="  Enter Address"
             android:imeOptions="actionSearch"/>
 
     </RelativeLayout>
