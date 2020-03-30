@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -134,11 +136,11 @@ public class DriverRequestFragment extends Fragment {
                                 String driverPhone = (String) doc.getData().get("driver_phone");
                                 String driverEmail = (String) doc.getData().get("driver_email");
 //                                boolean accepted = (boolean) doc.getData().get("is_accepted");
-                                boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
+//                                boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
                                 String originAddress = (String) doc.getData().get("origin_address");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
 
-                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, isDriverCompleted, false, originAddress, destinationAddress, requestID, false, false));
+                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, false, false, originAddress, destinationAddress, requestID, false, false));
                             }
                         }
                         rideAdapter.notifyDataSetChanged();
@@ -191,6 +193,7 @@ public class DriverRequestFragment extends Fragment {
                 bundle.putDouble("start_lng", startLog);
                 bundle.putDouble("end_lat", endLat);
                 bundle.putDouble("end_lng", endLog);
+                bundle.putString("request_id", request_ID);
 
 
                 acceptRequestFragment.setArguments(bundle);
