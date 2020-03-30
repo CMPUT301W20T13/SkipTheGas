@@ -67,7 +67,6 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
         setContentView(R.layout.activity_driver_trip_process);
 
         completeButton = findViewById(R.id.driver_complete_button);
-        riderPhoneTextView = findViewById(R.id.driver_process_phone_TextView);
         Intent intent = getIntent();
         requestID = intent.getExtras().getString("request_id");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
