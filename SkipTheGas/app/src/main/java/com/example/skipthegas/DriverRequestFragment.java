@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
@@ -191,6 +193,7 @@ public class DriverRequestFragment extends Fragment {
                 bundle.putDouble("start_lng", startLog);
                 bundle.putDouble("end_lat", endLat);
                 bundle.putDouble("end_lng", endLog);
+                bundle.putString("request_id", request_ID);
 
 
                 acceptRequestFragment.setArguments(bundle);

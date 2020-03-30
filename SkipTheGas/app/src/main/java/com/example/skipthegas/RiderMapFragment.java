@@ -189,12 +189,12 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                                     requestData.put("driver_name", null);
                                     requestData.put("driver_phone", null);
                                     requestData.put("driver_email", null);
-                                    requestData.put("is_compete",false);
+                                    requestData.put("is_confirmed",false);
                                     requestData.put("is_accepted",false);
                                     requestData.put("origin_address", originAddress);
                                     requestData.put("destination_address", destinationAddress);
-                                    requestData.put("is_driver_confirmed", false);
-                                    requestData.put("is_rider_confirmed", false);
+                                    requestData.put("is_driver_completed", false);
+                                    requestData.put("is_rider_completed", false);
                                     requestData.put("is_cancel", false);
 
                                     firebaseFirestore
