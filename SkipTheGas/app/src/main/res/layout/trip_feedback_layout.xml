@@ -47,8 +47,7 @@
         android:layout_height="41dp"
         android:layout_marginTop="32dp"
         android:background="@drawable/roundedbutton"
-        android:onClick="proceedToPayment"
-        android:text="Proceed To Payment"
+        android:text="Back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,16 +95,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <TextView
-        android:id="@+id/textView32"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="84dp"
-        android:text="?"
-        app:layout_constraintStart_toEndOf="@+id/textView31"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <TextView
         android:id="@+id/textView33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -127,22 +116,28 @@
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toBottomOf="@+id/textView30" />
 
-    <ImageView
+    <ToggleButton
         android:id="@+id/imageView"
-        android:layout_width="36dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="128dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="112dp"
         android:layout_marginTop="64dp"
+        android:textOn=""
+        android:textOff=""
+        android:background="@drawable/thumbs_up_select"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView30"
         app:srcCompat="@drawable/thumbs_up" />
 
-    <ImageView
+    <ToggleButton
         android:id="@+id/imageView2"
-        android:layout_width="38dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="64dp"
+        android:textOn=""
+        android:textOff=""
+        android:background="@drawable/thumbs_down_select"
         app:layout_constraintStart_toEndOf="@+id/textView33"
         app:layout_constraintTop_toBottomOf="@+id/textView30"
         app:srcCompat="@drawable/thumbs_down" />
