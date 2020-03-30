@@ -295,6 +295,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                                                 }
                                             });
                                     clearMap();
+                                    postRequestButton.setEnabled(false);
                                 }
                             }).create().show();
                 }

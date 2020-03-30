@@ -14,16 +14,113 @@
         android:id="@+id/driver_trip_process_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         tools:context=".DriverTripProcessActivity"
-        android:layout_weight="40"/>
+        android:layout_weight="1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="5">
 
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Location:"
+            tools:ignore="HardcodedText"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/driver_process_start_location_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/textView32"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="End Location: "
+            tools:ignore="HardcodedText"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/driver_process_end_location_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/textView42"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rider Name:            Rider Email:"
+            tools:ignore="HardcodedText"
+            android:textSize="20sp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/driver_process_rider_name_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/driver_process_rider_email_TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/textView43"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rider Phone: "
+            tools:ignore="HardcodedText"
+            android:textSize="20sp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/driver_process_rider_phone_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_weight="3"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/driver_phone_icon"
+                android:src="@drawable/ic_phone_forward_red"
+                android:contentDescription="Phone Rider"
+                tools:ignore="HardcodedText"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/driver_process_rider_confirm_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/driver_complete_button"
@@ -32,29 +129,31 @@
             android:text="Complete"
             tools:ignore="HardcodedText" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/driver_process_comment_TextView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/driver_phone_icon"
-                android:src="@drawable/ic_phone_forward_red"
-                android:layout_weight="1"/>
-
-            <TextView
-                android:id="@+id/driver_process_phone_TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_weight="5"/>
-
-
-        </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
 
 </LinearLayout>
+
+<!--<LinearLayout-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="match_parent"-->
+<!--android:orientation="horizontal">-->
+
+
+
+<!--<TextView-->
+<!--    android:id="@+id/driver_process_phone_TextView"-->
+<!--    android:layout_width="wrap_content"-->
+<!--    android:layout_height="40dp"-->
+<!--    android:layout_weight="5"/>-->
+
+
+<!--</LinearLayout>-->
+
+

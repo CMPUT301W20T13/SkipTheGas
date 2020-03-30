@@ -46,13 +46,16 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     private GoogleMap mMap;
     private GeoApiContext mGeoApiContext = null;
-    private String requestID;
-    private String riderPhone;
+    public String requestID;
     private GeoPoint start;
     private GeoPoint end;
 
     Button completeButton;
     TextView riderPhoneTextView;
+    TextView riderStartAddressTextView;
+    TextView riderEndAddressTextView;
+    TextView riderNameTextView;
+    TextView riderEmailTextView;
 
     private MarkerOptions startLocation;
     private MarkerOptions endLocation;
@@ -66,34 +69,54 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_trip_process);
 
+        riderPhoneTextView = findViewById(R.id.driver_process_rider_phone_TextView);
         completeButton = findViewById(R.id.driver_complete_button);
-        riderPhoneTextView = findViewById(R.id.driver_process_phone_TextView);
+        riderStartAddressTextView = findViewById(R.id.driver_process_start_location_TextView);
+        riderEndAddressTextView = findViewById(R.id.driver_process_end_location_TextView);
+        riderNameTextView = findViewById(R.id.driver_process_rider_name_TextView);
+        riderEmailTextView = findViewById(R.id.driver_process_rider_email_TextView);
+
         Intent intent = getIntent();
         requestID = intent.getExtras().getString("request_id");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
+        initMap();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         firebaseFirestore
                 .collection("all_requests")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                .document(requestID)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            String temp = doc.getId();
-                            if (requestID.equals(temp)) {
-                                riderPhone = (String) doc.getData().get("rider_phone");
-                            }
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.d(TAG,"Error message: " + e.getMessage());
+                            return;
+                        }
+                        if (documentSnapshot != null && documentSnapshot.exists()) {
+                            Log.d(TAG, "Current Data: " + documentSnapshot.getData());
+                            String riderPhone = (String) documentSnapshot.getData().get("rider_phone");
+                            String startAddress = documentSnapshot.getString("origin_address");
+                            String endAddress = documentSnapshot.getString("destination_address");
+                            String riderName = documentSnapshot.getString("rider_name");
+                            String riderEmail = documentSnapshot.getString("rider_email");
+                            riderPhoneTextView.setText(riderPhone);
+                            riderStartAddressTextView.setText(startAddress);
+                            riderEndAddressTextView.setText(endAddress);
+                            riderNameTextView.setText(riderName);
+                            riderEmailTextView.setText(riderEmail);
+                        } else {
+                            Log.d(TAG, "Current data: null");
                         }
                     }
                 });
 
-        Toast.makeText(this, "Request ID: " + riderPhone, Toast.LENGTH_SHORT).show();
 
-        initMap();
+
+
+
+
 //        calculateDirections(startLocation, endLocation);
 
-        riderPhoneTextView.setText(riderPhone);
 
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
