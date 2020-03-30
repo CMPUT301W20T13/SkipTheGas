@@ -79,7 +79,7 @@ public class RiderRequestFragment extends Fragment {
         rider_cancelled_requests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cancelledReqIntent = new Intent(getActivity(), CancelledRequests.class);
+                Intent cancelledReqIntent = new Intent(getActivity(), CancelledRequestsFragment.class);
                 startActivity(cancelledReqIntent);
             }
         });

@@ -109,9 +109,9 @@ public class YourRideRequestActivity extends AppCompatActivity {
                             String requestID = doc.getId();
                             boolean accepted = (boolean) doc.getData().get("is_accepted");
                             String req_riderName = (String) doc.getData().get("rider_name");
+
                             boolean driver_completed = (boolean) doc.getData().get("is_driver_completed");
                             boolean rider_completed = (boolean) doc.getData().get("is_rider_completed");
-//
 
                             if (riderName.equals(req_riderName) && !driver_completed && !rider_completed){
                                 String req_fare = (String) doc.getData().get("est_fare");
