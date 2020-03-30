@@ -22,7 +22,7 @@
             android:fontFamily="sans-serif-black"
             android:textColor="#000000"
             android:padding="15dp"
-            android:text="Username"
+            android:text="  Username"
             android:textSize="12sp"
             tools:ignore="HardcodedText" />
 
@@ -33,7 +33,7 @@
             android:fontFamily="sans-serif-black"
             android:textColor="#000000"
             android:padding="15dp"
-            android:text="Start Location"
+            android:text="  Start Location"
             android:textSize="12sp"
             tools:ignore="HardcodedText"/>
 
@@ -44,7 +44,7 @@
             android:fontFamily="sans-serif-black"
             android:textColor="#000000"
             android:padding="15dp"
-            android:text="End Location"
+            android:text="  End Location"
             android:textSize="12sp"
             tools:ignore="HardcodedText"/>
 
@@ -56,7 +56,7 @@
             android:fontFamily="sans-serif-black"
             android:textColor="#000000"
             android:padding="15dp"
-            android:text="Est. QR Bucks"
+            android:text="  Est. QR Bucks"
             android:textSize="12sp"
             tools:ignore="HardcodedText"/>
     </LinearLayout>
