@@ -47,8 +47,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     private GoogleMap mMap;
     private GeoApiContext mGeoApiContext = null;
     public String requestID;
-    private GeoPoint start;
-    private GeoPoint end;
 
     Button completeButton;
     TextView riderPhoneTextView;
@@ -56,9 +54,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     TextView riderEndAddressTextView;
     TextView riderNameTextView;
     TextView riderEmailTextView;
+    TextView riderConfirmTextView;
 
-    private MarkerOptions startLocation;
-    private MarkerOptions endLocation;
 
     private static final String TAG = "DriverProcessActivity";
 
@@ -75,6 +72,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         riderEndAddressTextView = findViewById(R.id.driver_process_end_location_TextView);
         riderNameTextView = findViewById(R.id.driver_process_rider_name_TextView);
         riderEmailTextView = findViewById(R.id.driver_process_rider_email_TextView);
+        riderConfirmTextView = findViewById(R.id.driver_process_rider_confirm_TextView);
+
 
         Intent intent = getIntent();
         requestID = intent.getExtras().getString("request_id");
@@ -99,23 +98,28 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                             String endAddress = documentSnapshot.getString("destination_address");
                             String riderName = documentSnapshot.getString("rider_name");
                             String riderEmail = documentSnapshot.getString("rider_email");
+                            GeoPoint start = documentSnapshot.getGeoPoint("ride_origin");
+                            GeoPoint end = documentSnapshot.getGeoPoint("ride_destination");
+                            MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
+                            MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
+                            boolean riderConfirm = documentSnapshot.getBoolean("is_confirmed");
                             riderPhoneTextView.setText(riderPhone);
                             riderStartAddressTextView.setText(startAddress);
                             riderEndAddressTextView.setText(endAddress);
                             riderNameTextView.setText(riderName);
                             riderEmailTextView.setText(riderEmail);
+                            calculateDirections(startLocation, endLocation);
+                            if (!riderConfirm) {
+                                riderConfirmTextView.setText("Waiting for Rider to confirm.");
+                            } else {
+                                riderConfirmTextView.setText("Rider confirmed your request.");
+                            }
                         } else {
                             Log.d(TAG, "Current data: null");
                         }
                     }
                 });
 
-
-
-
-
-
-//        calculateDirections(startLocation, endLocation);
 
 
         completeButton.setOnClickListener(new View.OnClickListener() {
@@ -130,9 +134,24 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-//        mMap.addMarker(startLocation);
-//        mMap.addMarker(endLocation);
-//        setCamera(start, end);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore
+                .collection("all_requests")
+                .document(requestID)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        GeoPoint start = documentSnapshot.getGeoPoint("ride_origin");
+                        GeoPoint end = documentSnapshot.getGeoPoint("ride_destination");
+                        MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
+                        MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
+                        mMap.addMarker(startLocation);
+                        mMap.addMarker(endLocation);
+                        setCamera(start, end);
+                    }
+                });
+
     }
 
     private void initMap() {
@@ -148,8 +167,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     private void setCamera(GeoPoint start, GeoPoint end) {
         LatLngBounds latLngBounds = new LatLngBounds(
-                new LatLng(start.getLatitude() - 0.1, start.getLongitude() - 0.1),
-                new LatLng(end.getLatitude() + 0.1, end.getLongitude() + 0.1)
+                new LatLng(start.getLatitude() - 0.01, start.getLongitude() - 0.01),
+                new LatLng(end.getLatitude() + 0.01, end.getLongitude() + 0.01)
         );
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
