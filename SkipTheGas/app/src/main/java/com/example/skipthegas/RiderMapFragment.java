@@ -3,11 +3,18 @@ package com.example.skipthegas;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,9 +33,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -56,6 +67,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.PendingResult;
@@ -72,11 +85,23 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Rider's map activity fragement
+ * Rider's map activity fragment
  * Rider can view map from this fragment
  */
 public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
-    private GoogleMap mMap;
+    GoogleMap mMap;
+    FloatingActionMenu floatingActionMenu;
+    FloatingActionButton postReqBtn,editProfBtn,logoutBtn;
+    Button clearMapBtn,switchModeBtn;
+    ArrayList<LatLng> locPointsList;
+    int LOCATION_REQUEST_CODE = 1;
+    Polyline line;
+    FirebaseFirestore firebaseFirestore;
+    FirebaseAuth firebaseAuth;
+    String userId;
+    String username;
+    String phone;
+    String email;
     private View mapView;
 
     private static final String TAG = "RiderMapFragment";
@@ -94,10 +119,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
     ArrayList<LatLng> locationMarkerList;
     private EditText searchEditText;
 
-
-    FirebaseFirestore firebaseFirestore;
-    FirebaseAuth firebaseAuth;
-
     // vars
     public String estDistance;
     public String estTime;
@@ -109,9 +130,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
     private String userPhone;
 
     AutocompleteSupportFragment autocompleteFragment;
-
-
-
 
     /**
      * onCreateView method for the Rider map fragment
@@ -137,8 +155,71 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         clearMapButton = view.findViewById(R.id.clear_map_button);
         searchEditText = view.findViewById(R.id.rider_map_search_edit_text);
 
-        // Retrieve user information from firebase
+        //Notify that Driver Accepted Request
+        assert firebaseUser != null;
         userEmail = firebaseUser.getEmail();
+        firebaseFirestore
+                .collection("all_requests")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    /**
+                     * This is the method for notifying the rider that the driver accepted their ride request
+                     * @param queryDocumentSnapshots
+                     * @param e
+                     */
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            String requestID = doc.getId();
+                            boolean accepted = (boolean) doc.getData().get("is_accepted");
+                            boolean driverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                            boolean riderCompleted = (boolean) doc.getData().get("is_rider_completed");
+
+                            String riderEmail = (String) doc.getData().get("rider_email");
+                            if (accepted && !driverCompleted  && !riderCompleted && riderEmail.equals(email)) {
+                                //sends a notification if users request is accepted
+                                //Code taken from https://stackoverflow.com/questions/16045722/android-notification-is-not-showing
+                                //Author / user = Md Imran Choudhury
+                                NotificationManager mNotificationManager;
+                                String message = "Click here to go to the main menu";
+                                NotificationCompat.Builder mBuilder =
+                                        new NotificationCompat.Builder(getContext(), "notify_001");
+                                Intent ii = new Intent(getContext(), RiderActivity.class);
+                                PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, ii, 0);
+
+                                NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+                                bigText.bigText(message);
+                                bigText.setBigContentTitle("Driver has accepted your request");
+                                bigText.setSummaryText("message for: rider");
+
+                                mBuilder.setContentIntent(pendingIntent);
+                                mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+                                mBuilder.setContentTitle("Your Title");
+                                mBuilder.setContentText("Your text");
+                                mBuilder.setPriority(Notification.PRIORITY_MAX);
+                                mBuilder.setStyle(bigText);
+
+                                mNotificationManager =
+                                        (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                                {
+                                    String channelId = "rider_channel";
+                                    NotificationChannel channel = new NotificationChannel(
+                                            channelId,
+                                            "rider_notifications",
+                                            NotificationManager.IMPORTANCE_HIGH);
+                                    mNotificationManager.createNotificationChannel(channel);
+                                    mBuilder.setChannelId(channelId);
+                                }
+
+                                mNotificationManager.notify(0, mBuilder.build());
+                            }
+                        }
+                    }
+                });
+
+        // Retrieve user information from firebase
+
         firebaseFirestore
                 .collection("users")
                 .document(userEmail)
