@@ -1,9 +1,16 @@
 package com.example.skipthegas;
 
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -118,6 +125,9 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                     driverNameTextView.setText(driverName);
                                     driverEmailTextView.setText(driverEmail);
                                     driverPhoneTextView.setText(driverPhone);
+
+                                    //  Notification
+                                    notification();
                                 }
                                 if (accepted && confirmed) {
                                     String driverAcceptedText = "Driver accepted your request.";
@@ -271,5 +281,45 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                 }
             }
         });
+    }
+
+    //sends a notification if users request is accepted
+    //Code taken from https://stackoverflow.com/questions/16045722/android-notification-is-not-showing
+    //Author / user = Md Imran Choudhury
+    private void notification() {
+        NotificationManager mNotificationManager;
+        String message = "Notification";
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(getApplicationContext(), "notify_001");
+        Intent ii = new Intent(getApplicationContext(), RiderActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(RiderTripProcessActivity.this, 0, ii, 0);
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText(message);
+        bigText.setBigContentTitle("Driver has accepted your request");
+        bigText.setSummaryText("message for: Rider");
+
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+        mBuilder.setContentTitle("Your Title");
+        mBuilder.setContentText("Your text");
+        mBuilder.setPriority(Notification.PRIORITY_MAX);
+        mBuilder.setStyle(bigText);
+
+        mNotificationManager =
+                (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            String channelId = "rider_channel";
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "rider_notifications",
+                    NotificationManager.IMPORTANCE_HIGH);
+            mNotificationManager.createNotificationChannel(channel);
+            mBuilder.setChannelId(channelId);
+        }
+
+        mNotificationManager.notify(0, mBuilder.build());
     }
 }
