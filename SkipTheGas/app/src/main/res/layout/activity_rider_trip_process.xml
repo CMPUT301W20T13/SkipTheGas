@@ -1,97 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment
         android:id="@+id/rider_process_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        tools:context=".RiderTripProcessActivity"
-        android:layout_weight="1"/>
+        android:layout_height="250dp"
+        android:layout_weight="1"
+        tools:context=".DriverTripProcessActivity" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="5">
-
-
-        <TextView
-            android:id="@+id/textView42"
+        android:orientation="horizontal" >
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Driver Name:          Driver Email:"
-            tools:ignore="HardcodedText"
-            android:textSize="25sp"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/username_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#000000"
+                android:padding="15dp"
+                android:text="Driver Username"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/email_text_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#000000"
+                android:padding="15dp"
+                android:text="Driver Email"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText"/>
+
+            <TextView
+                android:id="@+id/phone_text_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#000000"
+                android:padding="15dp"
+                android:text="Driver Phone"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/rider_process_driver_name_TextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="N/A"
-                android:layout_weight="1"
+                android:padding="15dp"
+                android:text="Driver"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/rider_process_driver_email_TextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="N/A"
-                android:layout_weight="1"
+                android:padding="10dp"
+                android:text="Email"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText" />
-
-        </LinearLayout>
-
-
-
-        <TextView
-            android:id="@+id/textView43"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rider Phone: "
-            tools:ignore="HardcodedText"
-            android:textSize="25sp"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/rider_process_driver_phone_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:layout_weight="3"
-                android:text="N/A"
+                android:padding="10dp"
+                android:text="Phone #"
+                android:textSize="12sp"
                 tools:ignore="HardcodedText" />
 
             <ImageView
+                android:id="@+id/driver_phone_icon"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/rider_phone_icon"
-                android:src="@drawable/ic_phone_forward_red"
+                android:layout_height="30dp"
+                android:layout_weight="1"
                 android:contentDescription="Phone Rider"
-                tools:ignore="HardcodedText"
-                android:layout_weight="1"/>
+                android:src="@drawable/ic_phone_forward_red"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <Button
             android:layout_width="match_parent"
@@ -103,51 +124,51 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="63dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/rider_process_driver_accept_TextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:layout_width="395dp"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="Waiting For Driver to Accept"/>
+                android:text="Waiting For Driver to Accept"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/rider_process_confirm_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
+                android:enabled="false"
                 android:text="Confirm"
-                tools:ignore="HardcodedText"
-                android:enabled="false"/>
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
-
-
+        <TextView
+            android:id="@+id/rider_process_rider_confirm_TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/rider_complete_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Complete"
-            tools:ignore="HardcodedText"
-            android:enabled="false"/>
+            tools:ignore="HardcodedText" />
 
         <TextView
             android:id="@+id/rider_process_comment_TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25sp"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 
-
 </LinearLayout>
-
-
 
 
 
