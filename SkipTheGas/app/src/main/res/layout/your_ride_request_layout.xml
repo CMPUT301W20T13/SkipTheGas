@@ -67,12 +67,29 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="176dp"
         android:layout_height="56dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginBottom="200dp"
         android:background="@drawable/roundedbutton"
         android:text="Cancel Request"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.523"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
+        app:layout_constraintVertical_bias="0.753" />
+
+    <Button
+        android:id="@+id/back_button"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="165dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="150dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+        app:layout_constraintTop_toBottomOf="@+id/textView40"
+        app:layout_constraintVertical_bias="0.919" />
 
     <TextView
         android:id="@+id/textView21"

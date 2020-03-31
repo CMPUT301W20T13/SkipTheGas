@@ -53,6 +53,12 @@ public class YourRideRequestActivity extends AppCompatActivity {
             new CancelFragment().show(getSupportFragmentManager(), "Cancel Request");
         });
 
+//        setContentView(R.layout.your_ride_request_layout);
+//        final Button backButton = findViewById(R.id.back_button);
+//        backButton.setOnClickListener((v)->{
+//            getSupportFragmentManager().beginTransaction().replace(R.id.rider_fragment_container, new RiderRequestFragment()).commit();
+//        });
+
         //final TextView openProfile = findViewById(R.id.Driver);
         //openProfile.setOnClickListener((v)->{
         //  new DriverProfileFragment().show(getSupportFragmentManager(), "View Profile");
@@ -147,8 +153,8 @@ public class YourRideRequestActivity extends AppCompatActivity {
 //                                toast.show();
 //
 //                            }
-
-//                            else if (riderName.equals(req_riderName) && completed) {
+//
+//                            else if (riderName.equals(req_riderName) && (driver_completed || rider_completed)) {
 //                                start.setText("Not set");
 //                                end.setText("Not set");
 //                                fare.setText("Not set");
@@ -179,4 +185,5 @@ public class YourRideRequestActivity extends AppCompatActivity {
     public void onOkPressed(){
         Toast.makeText(this, "Ride Canceled", Toast.LENGTH_SHORT).show();
     }
+
 }
