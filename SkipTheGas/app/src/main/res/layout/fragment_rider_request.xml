@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
-        android:text="Rider Requests Page"
+        android:text="View Ride Requests"
         android:textSize="30dp"
         android:layout_marginTop="70dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,50 +20,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/currentRequest"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="170dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/roundedbutton"
-        android:text="Current Request"
-        app:layout_constraintBottom_toTopOf="@+id/completedRequests"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/rider_request_header" />
-
-    <Button
         android:id="@+id/completedRequests"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="170dp"
         android:layout_height="49dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="448dp"
+        android:layout_marginTop="128dp"
         android:background="@drawable/roundedbutton"
         android:text="Completed Requests"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/currentRequest"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/rider_request_header" />
 
     <Button
         android:id="@+id/cancelledRequests"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="170dp"
         android:layout_height="49dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="370dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/roundedbutton"
         android:text="Cancelled Requests"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/completedRequests"
-        app:layout_constraintVertical_bias="0.803" />
+        app:layout_constraintTop_toBottomOf="@+id/completedRequests" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
