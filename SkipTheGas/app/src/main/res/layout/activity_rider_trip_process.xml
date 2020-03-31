@@ -13,7 +13,7 @@
         android:id="@+id/rider_process_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="350dp"
         tools:context=".RiderTripProcessActivity"
         android:layout_weight="1"/>
 
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="Driver Name:            Driver Email:"
             tools:ignore="HardcodedText"
-            android:textSize="20sp"/>
+            android:textSize="25sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -41,14 +41,14 @@
                 android:id="@+id/rider_process_driver_name_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/rider_process_driver_email_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:layout_weight="1"/>
 
         </LinearLayout>
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:text="Rider Phone: "
             tools:ignore="HardcodedText"
-            android:textSize="20sp"/>
+            android:textSize="25sp"/>
 
 
         <LinearLayout
@@ -73,7 +73,7 @@
                 android:id="@+id/rider_process_driver_phone_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:layout_weight="3"/>
 
             <ImageView
@@ -103,7 +103,7 @@
                 android:id="@+id/rider_process_driver_accept_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="25sp"
                 android:layout_weight="1"/>
 
             <Button
@@ -111,7 +111,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="Button" />
+                android:text="Confirm"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -129,7 +130,7 @@
             android:id="@+id/rider_process_comment_TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"/>
+            android:textSize="25sp"/>
 
     </LinearLayout>
 

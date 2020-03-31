@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -17,7 +19,14 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.maps.DirectionsApiRequest;
 import com.google.maps.GeoApiContext;
 import com.google.maps.PendingResult;
@@ -28,6 +37,8 @@ import com.google.maps.model.DirectionsRoute;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 public class RiderTripProcessActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -35,32 +46,72 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
 
     private static final String TAG = "RiderProcessActivity";
 
+    Button viewRequestButton;
+    Button confirmButton;
+    Button completeButton;
+    TextView driverNameTextView;
+    TextView driverPhoneTextView;
+    TextView driverEmailTextView;
+
+    FirebaseFirestore firebaseFirestore;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
+
+    public String userEmail;
+    String requestID;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rider_trip_process);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         initMap();
+
+        viewRequestButton = findViewById(R.id.rider_process_view_request_button);
+        confirmButton = findViewById(R.id.rider_process_confirm_button);
+        completeButton = findViewById(R.id.rider_complete_button);
+        driverNameTextView = findViewById(R.id.rider_process_driver_name_TextView);
+        driverPhoneTextView = findViewById(R.id.rider_process_driver_phone_TextView);
+        driverEmailTextView = findViewById(R.id.rider_process_driver_email_TextView);
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        assert firebaseUser != null;
+        userEmail = firebaseUser.getEmail();
+        firebaseFirestore
+                .collection("all_requests")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+
+                            boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                            boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
+                            String riderEmail = (String) doc.getData().get("rider_email");
+                            if (!isDriverCompleted && !isRiderCompleted && userEmail.equals(riderEmail)) {
+                                requestID = doc.getId();
+                            }
+                        }
+                    }
+                });
+
+
+
+
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
 

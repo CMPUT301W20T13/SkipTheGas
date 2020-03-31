@@ -19,6 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.protobuf.StringValue;
 
 import java.util.Objects;
 
@@ -31,6 +32,9 @@ public class DriverDrawerProfileFragment extends Fragment {
     TextView driverPhoneEditText;
     TextView driverEmailEditText;
     TextView driverProfileHeader;
+    TextView driverQRBucks;
+    TextView driverGoodRating;
+    TextView driverBadRating;
 
     Button editButton;
 
@@ -41,6 +45,9 @@ public class DriverDrawerProfileFragment extends Fragment {
     String driverName;
     String driverPhone;
     String driverEmail;
+    double QRBucks;
+    long goodRating;
+    long badRating;
 
     /**
      * onCreateView method for DriverDrawerProfileFragment fragment
@@ -69,6 +76,10 @@ public class DriverDrawerProfileFragment extends Fragment {
         driverPhoneEditText = getActivity().findViewById(R.id.driver_profile_phone_TextView);
         driverEmailEditText = getActivity().findViewById(R.id.driver_profile_email_TextView);
         driverProfileHeader = getActivity().findViewById(R.id.driver_profile_header);
+        driverQRBucks = getActivity().findViewById(R.id.driver_profile_QRbucks_TextView);
+        driverGoodRating = getActivity().findViewById(R.id.driver_profile_good_rating_TextView);
+        driverBadRating = getActivity().findViewById(R.id.driver_profile_bad_rating_TextView);
+
 
         editButton = getActivity().findViewById(R.id.editButton);
 
@@ -90,11 +101,21 @@ public class DriverDrawerProfileFragment extends Fragment {
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         driverName = documentSnapshot.getString("username");
                         driverPhone = documentSnapshot.getString("phone");
+                        QRBucks = (double) documentSnapshot.getData().get("QR_bucks");
+                        goodRating = (long) documentSnapshot.getData().get("good_rating");
+                        badRating = (long) documentSnapshot.getData().get("bad_ratings");
+                        String QR = String.valueOf(QRBucks);
+                        String good = String.valueOf(goodRating);
+                        String bad = String.valueOf(badRating);
+
                         String header = driverName + "'s Profile";
                         driverNameEditText.setText(driverName);
                         driverPhoneEditText.setText(driverPhone);
                         driverEmailEditText.setText(driverEmail);
                         driverProfileHeader.setText(header);
+                        driverQRBucks.setText(QR);
+                        driverGoodRating.setText(good);
+                        driverBadRating.setText(bad);
                     }
                 });
         editButton.setOnClickListener(new View.OnClickListener() {
