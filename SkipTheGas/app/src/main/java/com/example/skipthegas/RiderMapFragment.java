@@ -90,10 +90,6 @@ import java.util.Locale;
  */
 public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap mMap;
-    FloatingActionMenu floatingActionMenu;
-    FloatingActionButton postReqBtn,editProfBtn,logoutBtn;
-    Button clearMapBtn,switchModeBtn;
-    ArrayList<LatLng> locPointsList;
     int LOCATION_REQUEST_CODE = 1;
     Polyline line;
     FirebaseFirestore firebaseFirestore;
@@ -149,74 +145,13 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        userEmail = firebaseUser.getEmail();
 
         // UI initiation
         postRequestButton = view.findViewById(R.id.post_request_button);
         clearMapButton = view.findViewById(R.id.clear_map_button);
         searchEditText = view.findViewById(R.id.rider_map_search_edit_text);
 
-        //Notify that Driver Accepted Request
-        assert firebaseUser != null;
-        userEmail = firebaseUser.getEmail();
-        firebaseFirestore
-                .collection("all_requests")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    /**
-                     * This is the method for notifying the rider that the driver accepted their ride request
-                     * @param queryDocumentSnapshots
-                     * @param e
-                     */
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            String requestID = doc.getId();
-                            boolean accepted = (boolean) doc.getData().get("is_accepted");
-                            boolean driverCompleted = (boolean) doc.getData().get("is_driver_completed");
-                            boolean riderCompleted = (boolean) doc.getData().get("is_rider_completed");
-
-                            String riderEmail = (String) doc.getData().get("rider_email");
-                            if (accepted && !driverCompleted  && !riderCompleted && riderEmail.equals(email)) {
-                                //sends a notification if users request is accepted
-                                //Code taken from https://stackoverflow.com/questions/16045722/android-notification-is-not-showing
-                                //Author / user = Md Imran Choudhury
-                                NotificationManager mNotificationManager;
-                                String message = "Click here to go to the main menu";
-                                NotificationCompat.Builder mBuilder =
-                                        new NotificationCompat.Builder(getContext(), "notify_001");
-                                Intent ii = new Intent(getContext(), RiderActivity.class);
-                                PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), 0, ii, 0);
-
-                                NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-                                bigText.bigText(message);
-                                bigText.setBigContentTitle("Driver has accepted your request");
-                                bigText.setSummaryText("message for: rider");
-
-                                mBuilder.setContentIntent(pendingIntent);
-                                mBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
-                                mBuilder.setContentTitle("Your Title");
-                                mBuilder.setContentText("Your text");
-                                mBuilder.setPriority(Notification.PRIORITY_MAX);
-                                mBuilder.setStyle(bigText);
-
-                                mNotificationManager =
-                                        (NotificationManager)getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                                {
-                                    String channelId = "rider_channel";
-                                    NotificationChannel channel = new NotificationChannel(
-                                            channelId,
-                                            "rider_notifications",
-                                            NotificationManager.IMPORTANCE_HIGH);
-                                    mNotificationManager.createNotificationChannel(channel);
-                                    mBuilder.setChannelId(channelId);
-                                }
-
-                                mNotificationManager.notify(0, mBuilder.build());
-                            }
-                        }
-                    }
-                });
 
         // Retrieve user information from firebase
 
@@ -228,6 +163,33 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         userPhone = documentSnapshot.getString("phone");
                         userName = documentSnapshot.getString("username");
+                    }
+                });
+
+        firebaseFirestore
+                .collection("all_requests")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                            boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
+                            boolean canceled = (boolean) doc.getData().get("is_cancel");
+                            String riderEmail = (String) doc.getData().get("rider_email");
+                            if (!canceled && !isDriverCompleted && !isRiderCompleted && userEmail.equals(riderEmail)) {
+                                new AlertDialog.Builder(getActivity())
+                                        .setTitle("Open Request")
+                                        .setMessage("You have an open request in process" + "\n" + "Press Enter to enter request.")
+                                        .setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Intent startIntent = new Intent(getActivity(), RiderTripProcessActivity.class);
+                                                startActivity(startIntent);
+                                            }
+                                        }).create().show();
+
+                            }
+                        }
                     }
                 });
 
@@ -310,7 +272,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                 clearMap();
             }
         });
-//        initAutoComplete();
         return view;
     }
 
@@ -597,27 +558,4 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-//    private void initAutoComplete() {
-//        // Initialize the AutocompleteSupportFragment.
-//        autocompleteFragment = (AutocompleteSupportFragment) getFragmentManager().findFragmentById(R.id.autocomplete_fragment);
-//
-//        // Specify the types of place data to return.
-//        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
-//
-//        // Set up a PlaceSelectionListener to handle the response.
-//        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-//            @Override
-//            public void onPlaceSelected(Place place) {
-//                // TODO: Get info about the selected place.
-//                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-//
-//            }
-//
-//            @Override
-//            public void onError(Status status) {
-//                // TODO: Handle the error.
-//                Log.i(TAG, "An error occurred: " + status);
-//            }
-//        });
-//    }
 }
