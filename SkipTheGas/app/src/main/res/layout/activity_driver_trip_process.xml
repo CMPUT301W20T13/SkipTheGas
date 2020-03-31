@@ -1,120 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment
         android:id="@+id/driver_trip_process_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        tools:context=".DriverTripProcessActivity"
-        android:layout_weight="1"/>
+        android:layout_height="250dp"
+        android:layout_weight="1"
+        tools:context=".DriverTripProcessActivity" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="5">
-
-
-        <TextView
-            android:id="@+id/textView2"
+        android:orientation="horizontal" >
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Start Location:"
-            tools:ignore="HardcodedText"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2">
 
-        <TextView
-            android:id="@+id/driver_process_start_location_TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/username_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#000000"
+                android:padding="15dp"
+                android:text="Rider Username"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
 
-        <TextView
-            android:id="@+id/textView32"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="End Location: "
-            tools:ignore="HardcodedText"
-            android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/start_loc_text_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#000000"
+                android:padding="15dp"
+                android:text="Start Location"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText"/>
 
-        <TextView
-            android:id="@+id/driver_process_end_location_TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/end_loc_text_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#000000"
+                android:padding="15dp"
+                android:text="End Location"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText"/>
 
-        <TextView
-            android:id="@+id/textView42"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rider Name:            Rider Email:"
-            tools:ignore="HardcodedText"
-            android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/email_text_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#000000"
+                android:padding="15dp"
+                android:text="Rider Phone"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText"/>
+
+            <TextView
+                android:id="@+id/phone_text_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:textColor="#000000"
+                android:padding="15dp"
+                android:text="Rider Phone"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/driver_process_rider_name_TextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_weight="1"/>
+                android:padding="15dp"
+                android:text="Rider"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/driver_process_start_location_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Start Location"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText"/>
+
+            <TextView
+                android:id="@+id/driver_process_end_location_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="End Location"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText"/>
 
             <TextView
                 android:id="@+id/driver_process_rider_email_TextView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-
-
-        <TextView
-            android:id="@+id/textView43"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rider Phone: "
-            tools:ignore="HardcodedText"
-            android:textSize="20sp"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                android:padding="10dp"
+                android:text="Email"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/driver_process_rider_phone_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_weight="3"/>
+                android:padding="10dp"
+                android:text="Phone #"
+                android:textSize="12sp"
+                tools:ignore="HardcodedText" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
                 android:id="@+id/driver_phone_icon"
-                android:src="@drawable/ic_phone_forward_red"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_weight="1"
                 android:contentDescription="Phone Rider"
-                tools:ignore="HardcodedText"
-                android:layout_weight="1"/>
+                android:src="@drawable/ic_phone_forward_red"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/driver_process_rider_confirm_TextView"
@@ -126,6 +164,7 @@
             android:id="@+id/driver_complete_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="Complete"
             tools:ignore="HardcodedText" />
 
@@ -133,10 +172,9 @@
             android:id="@+id/driver_process_comment_TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
-
 
 </LinearLayout>
 
