@@ -1,12 +1,14 @@
 package com.example.skipthegas;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -140,7 +142,20 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         completeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                new AlertDialog.Builder(DriverTripProcessActivity.this)
+                        .setTitle("Complete")
+                        .setNegativeButton("No",null)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                firebaseFirestore
+                                        .collection("all_requests")
+                                        .document(requestID)
+                                        .update("is_driver_completed",true);
+                                Intent scannerIntent = new Intent(getApplicationContext(), DriverPaymentScannerActivity.class);
+                                startActivity(scannerIntent);
+                            }
+                        });
             }
         });
     }
