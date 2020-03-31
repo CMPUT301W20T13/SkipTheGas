@@ -7,25 +7,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.zxing.Result;
 
 import java.util.Objects;
-
-import javax.annotation.Nullable;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -36,7 +29,7 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
     private static ZXingScannerView scannerView;
     private static final String TAG = "Message";
     private FirebaseFirestore firebaseFirestore;
-    private double currentBal;
+    double currentBal;
     FirebaseAuth firebaseAuth;
     String userEmail;
 
@@ -144,39 +137,34 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
         double paymentReceived = Double.parseDouble(scanResult); // QR bucks you received for this ride
         Toast.makeText(this, "You earned:"+paymentReceived, Toast.LENGTH_SHORT).show();
 
-        new AlertDialog.Builder(this).setTitle("Scan Result")
-                .setMessage(scanResult)
-                .setNeutralButton("Continue", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        // Continue scanning
-                        scannerView.resumeCameraPreview(DriverPaymentScannerActivity.this);
-                    }
+        new AlertDialog.Builder(this).setTitle("Receiving Payment")
+                .setMessage("QR Bucks: "+scanResult)
+                .setNeutralButton("Continue", (dialogInterface, i) -> {
+                    // Continue scanning
+                    scannerView.resumeCameraPreview(DriverPaymentScannerActivity.this);
                 })
-                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        firebaseFirestore
-                                .collection("users")
-                                .document(userEmail)
-                                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
-                                                        @Nullable FirebaseFirestoreException e) {
-                                        if (e!=null) {
-                                            Log.i(TAG,"Listen failed");
-                                            return;
-                                        }
+                .setPositiveButton("Accept", (dialogInterface, i) -> {
+                    firebaseFirestore.collection("users").document(userEmail)
+                            .addSnapshotListener((documentSnapshot, e) -> {
+                                if (e != null) {
+                                    Log.i(TAG,"get op failed");
+                                    return;
+                                }
+                                if (documentSnapshot != null && documentSnapshot.exists()) {
+                                    currentBal = (double)documentSnapshot.get("QR_bucks");
+                                } else {
+                                    Log.i(TAG,"Current data: null");
+                                }
+                            });
+                    firebaseFirestore
+                            .collection("users")
+                            .document(userEmail)
+                            .update("QR_bucks",currentBal + paymentReceived);
 
-                                        if (documentSnapshot != null && documentSnapshot.exists()){
-                                            currentBal = (double) documentSnapshot.get("QR_bucks");
-                                        } else {
-                                            Log.i(TAG,"Current data: null");
-                                        }
-
-                                    }
-                                });
-                    }
+                    // jump back to driver activity
+                    Intent driverDrawerIntent = new Intent(getApplicationContext(),DriverDrawerActivity.class);
+                    startActivity(driverDrawerIntent);
+                    finish();
                 })
                 .create().show();
     }
