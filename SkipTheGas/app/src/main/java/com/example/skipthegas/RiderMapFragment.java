@@ -180,6 +180,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                                 new AlertDialog.Builder(getActivity())
                                         .setTitle("Open Request")
                                         .setMessage("You have an open request in process" + "\n" + "Press Enter to enter request.")
+                                        .setNegativeButton("Cancel", null)
                                         .setPositiveButton("Enter", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
