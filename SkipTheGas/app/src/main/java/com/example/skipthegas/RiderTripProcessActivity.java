@@ -52,6 +52,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
     TextView driverNameTextView;
     TextView driverPhoneTextView;
     TextView driverEmailTextView;
+    TextView driverAcceptedTextView;
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
@@ -76,6 +77,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
         driverNameTextView = findViewById(R.id.rider_process_driver_name_TextView);
         driverPhoneTextView = findViewById(R.id.rider_process_driver_phone_TextView);
         driverEmailTextView = findViewById(R.id.rider_process_driver_email_TextView);
+        driverAcceptedTextView = findViewById(R.id.rider_process_driver_accept_TextView);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -98,6 +100,20 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                             String riderEmail = (String) doc.getData().get("rider_email");
                             if (!isDriverCompleted && !isRiderCompleted && userEmail.equals(riderEmail)) {
                                 requestID = doc.getId();
+                                boolean accepted = doc.getBoolean("is_accepted");
+                                boolean confirmed = doc.getBoolean("is_confirmed");
+                                if (accepted && !confirmed) {
+                                    viewRequestButton.setEnabled(true);
+                                    confirmButton.setEnabled(true);
+                                    String driverAcceptedText = "Driver accepted your request. Please confirm.";
+                                    driverAcceptedTextView.setText(driverAcceptedText);
+                                    String driverName = doc.getString("driver_name");
+                                    String driverEmail = doc.getString("driver_email");
+                                    String driverPhone = doc.getString("driver_phone");
+                                    driverNameTextView.setText(driverName);
+                                    driverEmailTextView.setText(driverEmail);
+                                    driverPhoneTextView.setText(driverPhone);
+                                }
                             }
                         }
                     }

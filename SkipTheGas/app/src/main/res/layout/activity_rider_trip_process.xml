@@ -28,7 +28,7 @@
             android:id="@+id/textView42"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Driver Name:            Driver Email:"
+            android:text="Driver Name:          Driver Email:"
             tools:ignore="HardcodedText"
             android:textSize="25sp"/>
 
@@ -42,14 +42,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:layout_weight="1"/>
+                android:text="N/A"
+                android:layout_weight="1"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/rider_process_driver_email_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:layout_weight="1"/>
+                android:text="N/A"
+                android:layout_weight="1"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -74,7 +78,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:layout_weight="3"/>
+                android:layout_weight="3"
+                android:text="N/A"
+                tools:ignore="HardcodedText" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -92,7 +98,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/rider_process_view_request_button"
             android:text="View Current Request"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            android:enabled="true"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,8 +110,9 @@
                 android:id="@+id/rider_process_driver_accept_TextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:layout_weight="1"/>
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:text="Waiting For Driver to Accept"/>
 
             <Button
                 android:id="@+id/rider_process_confirm_button"
@@ -112,7 +120,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="Confirm"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                android:enabled="false"/>
 
         </LinearLayout>
 
@@ -124,7 +133,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Complete"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            android:enabled="false"/>
 
         <TextView
             android:id="@+id/rider_process_comment_TextView"

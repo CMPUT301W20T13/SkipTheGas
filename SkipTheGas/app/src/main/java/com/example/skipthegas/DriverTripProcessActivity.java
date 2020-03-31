@@ -167,8 +167,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     private void setCamera(GeoPoint start, GeoPoint end) {
         LatLngBounds latLngBounds = new LatLngBounds(
-                new LatLng(start.getLatitude() - 0.01, start.getLongitude() - 0.01),
-                new LatLng(end.getLatitude() + 0.01, end.getLongitude() + 0.01)
+                new LatLng(start.getLatitude() - 0.05, start.getLongitude() - 0.05),
+                new LatLng(end.getLatitude() + 0.05, end.getLongitude() + 0.05)
         );
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
