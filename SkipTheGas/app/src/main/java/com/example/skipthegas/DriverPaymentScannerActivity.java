@@ -10,9 +10,22 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.zxing.Result;
+
+import java.util.Objects;
+
+import javax.annotation.Nullable;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -21,10 +34,18 @@ import static android.Manifest.permission.CAMERA;
 public class DriverPaymentScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private static final int REQUEST_CAMERA = 1;
     private static ZXingScannerView scannerView;
+    private static final String TAG = "Message";
+    private FirebaseFirestore firebaseFirestore;
+    private double currentBal;
+    FirebaseAuth firebaseAuth;
+    String userEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        userEmail = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
 
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
@@ -120,18 +141,41 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
     public void handleResult(final Result result) {
         String scanResult = result.getText();
 
+        double paymentReceived = Double.parseDouble(scanResult); // QR bucks you received for this ride
+        Toast.makeText(this, "You earned:"+paymentReceived, Toast.LENGTH_SHORT).show();
+
         new AlertDialog.Builder(this).setTitle("Scan Result")
                 .setMessage(scanResult)
                 .setNeutralButton("Continue", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        // Continue scanning
                         scannerView.resumeCameraPreview(DriverPaymentScannerActivity.this);
                     }
                 })
                 .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        firebaseFirestore
+                                .collection("users")
+                                .document(userEmail)
+                                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
+                                                        @Nullable FirebaseFirestoreException e) {
+                                        if (e!=null) {
+                                            Log.i(TAG,"Listen failed");
+                                            return;
+                                        }
 
+                                        if (documentSnapshot != null && documentSnapshot.exists()){
+                                            currentBal = (double) documentSnapshot.get("QR_bucks");
+                                        } else {
+                                            Log.i(TAG,"Current data: null");
+                                        }
+
+                                    }
+                                });
                     }
                 })
                 .create().show();
