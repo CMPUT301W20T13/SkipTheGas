@@ -183,6 +183,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                         .document(requestID)
                                         .update("is_rider_completed",true);
                                 Intent paymentIntent = new Intent(getApplicationContext(),PaymentActivity.class);
+                                paymentIntent.putExtra("request_Id",requestID);
                                 startActivity(paymentIntent);
                             }
                         });
