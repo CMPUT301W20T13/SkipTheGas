@@ -38,7 +38,13 @@
         <activity
             android:name=".RiderTripProcessActivity"
             android:label="@string/title_activity_rider_trip_process"></activity>
-        <activity android:name=".DriverPaymentScannerActivity" />
+        <activity android:name=".DriverPaymentScannerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DriverTripProcessActivity">
+                
+            </meta-data>
+        </activity>
         <activity
             android:name=".DriverTripProcessActivity"
             android:label="@string/title_activity_driver_trip_process" />
