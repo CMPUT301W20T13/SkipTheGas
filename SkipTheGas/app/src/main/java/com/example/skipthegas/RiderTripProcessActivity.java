@@ -1,15 +1,22 @@
 package com.example.skipthegas;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,7 +24,9 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -54,6 +63,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
     private GeoApiContext mGeoApiContext = null;
 
     private static final String TAG = "RiderProcessActivity";
+    private static final int REQUEST_CALL = 1;
 
     Button viewRequestButton;
     Button confirmButton;
@@ -62,6 +72,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
     TextView driverPhoneTextView;
     TextView driverEmailTextView;
     TextView driverAcceptedTextView;
+    ImageView phoneCallIcon;
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
@@ -87,6 +98,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
         driverPhoneTextView = findViewById(R.id.rider_process_driver_phone_TextView);
         driverEmailTextView = findViewById(R.id.rider_process_driver_email_TextView);
         driverAcceptedTextView = findViewById(R.id.rider_process_driver_accept_TextView);
+        phoneCallIcon = findViewById(R.id.driver_phone_icon);
 
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -157,9 +169,67 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
             }
         });
 
+        completeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(RiderTripProcessActivity.this)
+                        .setTitle("Complete")
+                        .setNegativeButton("No", null)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                firebaseFirestore
+                                        .collection("all_requests")
+                                        .document(requestID)
+                                        .update("is_rider_completed",true);
+                                Intent paymentIntent = new Intent(getApplicationContext(),PaymentActivity.class);
+                                startActivity(paymentIntent);
+                            }
+                        });
+            }
+        });
+
+        phoneCallIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makePhoneCall();
+            }
+        });
 
     }
 
+    public void makePhoneCall(){
+        String number = driverPhoneTextView.getText().toString();
+        if (number.trim().length() > 0) {
+
+            if (ContextCompat.checkSelfPermission(RiderTripProcessActivity.this,
+                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) { // Permission not granted
+
+                ActivityCompat.requestPermissions(RiderTripProcessActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+
+            } else {
+
+                String dial = "tel:" + number;
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+
+            }
+
+        } else {
+            Toast.makeText(this, "Please Enter Valid Number", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CALL) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // Permission Granted
+                 makePhoneCall();
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
