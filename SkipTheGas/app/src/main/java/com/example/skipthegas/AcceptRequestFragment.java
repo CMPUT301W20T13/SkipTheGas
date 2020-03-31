@@ -212,12 +212,9 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
     }
 
     private void setCamera() {
-        LatLngBounds latLngBounds = new LatLngBounds(
-                new LatLng(startLat - 0.05, startLng - 0.05),
-                new LatLng(endLat + 0.05, endLng + 0.05)
-        );
+        LatLngBounds.Builder builder = new LatLngBounds.Builder().include(new LatLng(startLat, startLng)).include(new LatLng(endLat, endLng));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0));
     }
 
     // calculate the direction between two points

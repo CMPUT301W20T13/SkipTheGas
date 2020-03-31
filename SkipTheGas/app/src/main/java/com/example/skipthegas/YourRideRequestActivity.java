@@ -140,33 +140,6 @@ public class YourRideRequestActivity extends AppCompatActivity {
                                 //rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress, requestID, false));
                             }
 
-//                            else if (riderName != req_riderName) {
-//                                start.setText("Not set");
-//                                end.setText("Not set");
-//                                fare.setText("Not set");
-//                                driver.setText("Not assigned");
-//                                status.setText("Not available");
-//                                cancelVerify.setEnabled(false);
-//
-//                                String display_msg = "You do not have any open requests currently";
-//                                Toast toast = Toast.makeText(getApplicationContext(), display_msg, Toast.LENGTH_LONG);
-//                                toast.show();
-//
-//                            }
-//
-//                            else if (riderName.equals(req_riderName) && (driver_completed || rider_completed)) {
-//                                start.setText("Not set");
-//                                end.setText("Not set");
-//                                fare.setText("Not set");
-//                                driver.setText("Not assigned");
-//                                status.setText("Not available");
-//                                cancelVerify.setEnabled(false);
-//
-//                                String display_msg = "All your requests have been completed";
-//                                Toast toast = Toast.makeText(getApplicationContext(), display_msg, Toast.LENGTH_LONG);
-//                                toast.show();
-//
-//                            }
 
 
                         }
