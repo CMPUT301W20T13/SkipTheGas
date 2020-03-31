@@ -57,14 +57,6 @@ public class RiderRequestFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rider_request, container, false);
-        rider_current_request = view.findViewById(R.id.currentRequest);
-        rider_current_request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent currentRequestIntent = new Intent(getActivity(), YourRideRequestActivity.class);
-                startActivity(currentRequestIntent);
-            }
-        });
 
         rider_completed_requests = view.findViewById(R.id.completedRequests);
         rider_completed_requests.setOnClickListener(this);
@@ -73,17 +65,6 @@ public class RiderRequestFragment extends Fragment implements View.OnClickListen
         rider_cancelled_requests.setOnClickListener(this);
 
         return view;
-//        rider_cancelled_requests.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                swapFragment();
-//                Intent cancelledReqIntent = new Intent(getActivity(), CancelledRequestsFragment.class);
-//                startActivity(cancelledReqIntent);
-//            }
-//        });
-//
-//        return view;
-
     }
 
     @Override
