@@ -296,6 +296,8 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                                             });
                                     clearMap();
                                     postRequestButton.setEnabled(false);
+                                    Intent intent = new Intent(getActivity(), RiderTripProcessActivity.class);
+                                    startActivity(intent);
                                 }
                             }).create().show();
                 }
