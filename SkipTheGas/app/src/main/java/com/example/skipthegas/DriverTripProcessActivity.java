@@ -166,12 +166,9 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     }
 
     private void setCamera(GeoPoint start, GeoPoint end) {
-        LatLngBounds latLngBounds = new LatLngBounds(
-                new LatLng(start.getLatitude() - 0.05, start.getLongitude() - 0.05),
-                new LatLng(end.getLatitude() + 0.05, end.getLongitude() + 0.05)
-        );
+        LatLngBounds.Builder builder = new LatLngBounds.Builder().include(new LatLng(start.getLatitude(), start.getLongitude())).include(new LatLng(end.getLatitude(), end.getLongitude()));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0));
     }
 
     // calculate the direction between two points

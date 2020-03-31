@@ -3,10 +3,12 @@ package com.example.skipthegas;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -79,8 +81,6 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
         driverEmailTextView = findViewById(R.id.rider_process_driver_email_TextView);
         driverAcceptedTextView = findViewById(R.id.rider_process_driver_accept_TextView);
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -97,11 +97,16 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
 
                             boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
                             boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
+                            boolean canceled = (boolean) doc.getData().get("is_cancel");
                             String riderEmail = (String) doc.getData().get("rider_email");
-                            if (!isDriverCompleted && !isRiderCompleted && userEmail.equals(riderEmail)) {
+                            if (!isDriverCompleted && !isRiderCompleted && !canceled && userEmail.equals(riderEmail)) {
                                 requestID = doc.getId();
                                 boolean accepted = doc.getBoolean("is_accepted");
                                 boolean confirmed = doc.getBoolean("is_confirmed");
+                                GeoPoint start = doc.getGeoPoint("ride_origin");
+                                GeoPoint end = doc.getGeoPoint("ride_destination");
+                                MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
+                                MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
                                 if (accepted && !confirmed) {
                                     viewRequestButton.setEnabled(true);
                                     confirmButton.setEnabled(true);
@@ -114,12 +119,33 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                     driverEmailTextView.setText(driverEmail);
                                     driverPhoneTextView.setText(driverPhone);
                                 }
+                                if (accepted && confirmed) {
+                                    String driverAcceptedText = "Driver accepted your request.";
+                                    driverAcceptedTextView.setText(driverAcceptedText);
+                                    confirmButton.setEnabled(false);
+                                    completeButton.setEnabled(true);
+                                }
+                                calculateDirections(startLocation, endLocation);
                             }
                         }
                     }
                 });
 
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseFirestore.collection("all_requests").document(requestID).update("is_confirmed", true);
+            }
+        });
 
+        viewRequestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), YourRideRequestActivity.class);
+                intent.putExtra("request_id", requestID);
+                startActivity(intent);
+            }
+        });
 
 
     }
@@ -128,6 +154,36 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+
+        assert firebaseUser != null;
+        String mapUserEmail = firebaseUser.getEmail();
+
+        firebaseFirestore
+                .collection("all_requests")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                            boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
+                            boolean canceled = (boolean) doc.getData().get("is_cancel");
+                            String riderEmail = (String) doc.getData().get("rider_email");
+                            if (!isDriverCompleted && !isRiderCompleted && !canceled && mapUserEmail.equals(riderEmail)) {
+                                GeoPoint start = doc.getGeoPoint("ride_origin");
+                                GeoPoint end = doc.getGeoPoint("ride_destination");
+                                MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
+                                MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
+                                mMap.addMarker(startLocation);
+                                mMap.addMarker(endLocation);
+                                setCamera(start, end);
+                            }
+                        }
+                    }
+                });
+
     }
 
 
@@ -143,12 +199,9 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
     }
 
     private void setCamera(GeoPoint start, GeoPoint end) {
-        LatLngBounds latLngBounds = new LatLngBounds(
-                new LatLng(start.getLatitude() - 0.01, start.getLongitude() - 0.01),
-                new LatLng(end.getLatitude() + 0.01, end.getLongitude() + 0.01)
-        );
+        LatLngBounds.Builder builder = new LatLngBounds.Builder().include(new LatLng(start.getLatitude(), start.getLongitude())).include(new LatLng(end.getLatitude(), end.getLongitude()));
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0));
     }
 
     // calculate the direction between two points
