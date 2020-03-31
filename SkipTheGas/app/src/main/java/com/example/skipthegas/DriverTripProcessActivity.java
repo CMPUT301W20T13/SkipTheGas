@@ -1,15 +1,22 @@
 package com.example.skipthegas;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +54,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     private GoogleMap mMap;
     private GeoApiContext mGeoApiContext = null;
     public String requestID;
+    private static final int REQUEST_CALL = 1;
 
     Button completeButton;
     TextView riderPhoneTextView;
@@ -55,7 +63,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     TextView riderNameTextView;
     TextView riderEmailTextView;
     TextView riderConfirmTextView;
-
+    ImageView phoneCallIcon;
 
     private static final String TAG = "DriverProcessActivity";
 
@@ -73,10 +81,10 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         riderNameTextView = findViewById(R.id.driver_process_rider_name_TextView);
         riderEmailTextView = findViewById(R.id.driver_process_rider_email_TextView);
         riderConfirmTextView = findViewById(R.id.driver_process_rider_confirm_TextView);
-
+        phoneCallIcon = findViewById(R.id.driver_phone_icon);
 
         Intent intent = getIntent();
-        requestID = intent.getExtras().getString("request_id");
+        requestID = Objects.requireNonNull(intent.getExtras()).getString("request_id");
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         initMap();
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -85,6 +93,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                 .collection("all_requests")
                 .document(requestID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         if (e != null) {
@@ -120,6 +129,12 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                     }
                 });
 
+        phoneCallIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                makePhoneCall();
+            }
+        });
 
 
         completeButton.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +145,38 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         });
     }
 
+    public void makePhoneCall(){
+        String number = riderPhoneTextView.getText().toString();
+        if (number.trim().length() > 0) {
+
+            if (ContextCompat.checkSelfPermission(DriverTripProcessActivity.this,
+                    Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) { // Permission not granted
+
+                ActivityCompat.requestPermissions(DriverTripProcessActivity.this, new String[]{Manifest.permission.CALL_PHONE}, REQUEST_CALL);
+
+            } else {
+
+                String dial = "tel:" + number;
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse(dial)));
+
+            }
+
+        } else {
+            Toast.makeText(this, "Please Enter Valid Number", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CALL) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) { // Permission Granted
+                makePhoneCall();
+            } else {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
