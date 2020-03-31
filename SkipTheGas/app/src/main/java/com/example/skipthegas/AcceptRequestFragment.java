@@ -213,8 +213,8 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
     private void setCamera() {
         LatLngBounds latLngBounds = new LatLngBounds(
-                new LatLng(startLat - 0.01, startLng - 0.01),
-                new LatLng(endLat + 0.01, endLng + 0.01)
+                new LatLng(startLat - 0.05, startLng - 0.05),
+                new LatLng(endLat + 0.05, endLng + 0.05)
         );
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
