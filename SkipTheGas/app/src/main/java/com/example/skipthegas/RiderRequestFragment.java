@@ -40,7 +40,7 @@ import java.util.Objects;
  * This fragment displays the rider's past and active requests
  * STILL NEED TO COMPLETE IMPLEMENTATION
  */
-public class RiderRequestFragment extends Fragment {
+public class RiderRequestFragment extends Fragment implements View.OnClickListener {
 
     Button rider_current_request;
     Button rider_completed_requests;
@@ -67,24 +67,51 @@ public class RiderRequestFragment extends Fragment {
         });
 
         rider_completed_requests = view.findViewById(R.id.completedRequests);
-        rider_completed_requests.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent completedReqIntent = new Intent(getActivity(), CompletedRequests.class);
-                startActivity(completedReqIntent);
-            }
-        });
+        rider_completed_requests.setOnClickListener(this);
 
         rider_cancelled_requests = view.findViewById(R.id.cancelledRequests);
-        rider_cancelled_requests.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cancelledReqIntent = new Intent(getActivity(), CancelledRequestsFragment.class);
-                startActivity(cancelledReqIntent);
-            }
-        });
+        rider_cancelled_requests.setOnClickListener(this);
 
         return view;
+//        rider_cancelled_requests.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                swapFragment();
+//                Intent cancelledReqIntent = new Intent(getActivity(), CancelledRequestsFragment.class);
+//                startActivity(cancelledReqIntent);
+//            }
+//        });
+//
+//        return view;
 
     }
+
+    @Override
+    public void onClick(View v) {
+        Fragment fragment = null;
+        switch (v.getId()) {
+            case R.id.cancelledRequests:
+                fragment = new CancelledRequestsFragment();
+                replaceFragment(fragment);
+                break;
+            case R.id.completedRequests:
+                fragment = new CompletedRequestsFragment();
+                replaceFragment(fragment);
+        }
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.rider_fragment_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+//    private void swapFragment(){
+//        Fragment CancelledRequestsFragment = new Fragment();
+//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.rider_fragment_container, CancelledRequestsFragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+//    }
 }

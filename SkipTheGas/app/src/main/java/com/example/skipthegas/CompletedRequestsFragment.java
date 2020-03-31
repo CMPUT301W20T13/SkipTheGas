@@ -39,9 +39,9 @@ import java.util.Objects;
 /**
  * This fragment displays the rider's cancelled requests in list view
  */
-public class CancelledRequestsFragment extends Fragment implements View.OnClickListener {
+public class CompletedRequestsFragment extends Fragment implements View.OnClickListener {
 
-    ListView cancelledReqList;
+    ListView completedReqList;
     ArrayAdapter<Ride> requestAdapter;
     ArrayList<Ride> requestList;
 
@@ -53,7 +53,6 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
     private String riderPhone;
     private String riderEmail;
 
-    private int p;
     public Ride requests;
 
     Button back_button;
@@ -68,7 +67,7 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.ride_cancelled_layout, container, false);
+        View view = inflater.inflate(R.layout.ride_completed_layout, container, false);
 
         back_button = view.findViewById(R.id.button3);
         back_button.setOnClickListener(this);
@@ -103,13 +102,13 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                     }
                 });
 
-        cancelledReqList = getActivity().findViewById(R.id.cancelled_requests_list);
+        completedReqList = getActivity().findViewById(R.id.completed_requests_list);
 
         requestList = new ArrayList<>();
 
-        requestAdapter = new ArrayAdapter<Ride>(getActivity(), R.layout.content, requestList);
+        requestAdapter = new CustomList(getActivity(), requestList);
 
-        cancelledReqList.setAdapter(requestAdapter);
+        completedReqList.setAdapter(requestAdapter);
 
         firebaseFirestore
                 .collection("all_requests")
@@ -124,8 +123,8 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                         requestList.clear();
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             String requestID = doc.getId();
-                            boolean cancelled = (boolean) doc.getData().get("is_cancel");
-                            if (cancelled) {
+                            boolean completed = (boolean) doc.getData().get("is_rider_completed");
+                            if (completed) {
                                 String riderName = (String) doc.getData().get("rider_name");
                                 String riderPhone = (String) doc.getData().get("rider_phone");
                                 String riderEmail = (String) doc.getData().get("rider_email");
@@ -141,71 +140,15 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                                 String originAddress = (String) doc.getData().get("origin_address");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
 
-                                requestList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, false, false, originAddress, destinationAddress, requestID, false, true));
+                                requestList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, isDriverCompleted, false, originAddress, destinationAddress, requestID, false, false));
                             }
                         }
                         requestAdapter.notifyDataSetChanged();
                     }
                 });
 
+
         Log.v("Ride Info", requestList.toString());
-
-//        final ListView openFragment = getActivity().findViewById(R.id.cancelled_requests_list);
-//        openFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            /**
-//             * Method is invoked when request option is selected in drawer menu
-//             * @param parent
-//             * @param view
-//             * @param position
-//             * @param id
-//             */
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                p = position;
-//                requests = requestAdapter.getItem(position);
-//                String userName = requests.getRiderName();
-//                String start = requests.getOriginAddress();
-//                String end = requests.getDestinationAddress();
-//                String fare = requests.getFare();
-//                String request_ID = requests.getRequestID();
-//                GeoPoint startLocation = requests.getOrigin();
-//                GeoPoint endLocation = requests.getDestination();
-//                double startLat = startLocation.getLatitude();
-//                double startLog = startLocation.getLongitude();
-//                double endLat = endLocation.getLatitude();
-//                double endLog = endLocation.getLongitude();
-                //Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
-//                Bundle bundle = new Bundle();
-//                AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
-//                bundle.putString("user_name", userName);
-//                bundle.putString("rider_email", riderEmail);
-//                bundle.putString("rider_phone", riderPhone);
-//                bundle.putString("rider_name", riderName);
-//                bundle.putString("request_ID", request_ID);
-//                bundle.putDouble("start_lat", startLat);
-//                bundle.putDouble("start_lng", startLog);
-//                bundle.putDouble("end_lat", endLat);
-//                bundle.putDouble("end_lng", endLog);
-//                bundle.putString("request_id", request_ID);
-//
-//
-//                acceptRequestFragment.setArguments(bundle);
-//                acceptRequestFragment.show(getFragmentManager(), "Accept Request");
-//                new AlertDialog.Builder(getActivity())
-//                        .setTitle("Request Information")
-//                        .setMessage("Uername: " + userName + "\n\n" + "Start Location:" + start + "\n\nEnd Location: " + end + "\n\nEstimated Fare: " + fare )
-//                        .setNegativeButton("Cancel",null)
-//                        .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                Toast.makeText(getContext(), "Try" + driverName + "!!!", Toast.LENGTH_SHORT).show();
-//
-//
-//                            }
-//                        }).create().show();
-
-//            }
-//        });
 
     }
 
