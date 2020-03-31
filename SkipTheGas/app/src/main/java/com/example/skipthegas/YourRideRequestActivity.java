@@ -1,8 +1,6 @@
 package com.example.skipthegas;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,10 +138,7 @@ public class YourRideRequestActivity extends AppCompatActivity {
                                 //rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress, requestID, false));
                             }
 
-
-
                         }
-                        //rideAdapter.notifyDataSetChanged();
                     }
                 });
 
