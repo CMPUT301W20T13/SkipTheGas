@@ -166,6 +166,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Complete"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/roundedbutton"
             tools:ignore="HardcodedText" />
 
         <TextView
