@@ -121,7 +121,8 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         for (QueryDocumentSnapshot doc: queryDocumentSnapshots) {
                             boolean accepted = (boolean) doc.getData().get("is_accepted");
-                            if (!accepted) {
+                            boolean cancel = (boolean) doc.getData().get("is_cancel");
+                            if (!accepted && !cancel) {
                                 GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
                                 String riderName = (String) doc.getData().get("rider_name");
                                 MarkerOptions startLocation;

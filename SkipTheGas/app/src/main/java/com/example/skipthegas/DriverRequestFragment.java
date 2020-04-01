@@ -123,7 +123,8 @@ public class DriverRequestFragment extends Fragment {
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             String requestID = doc.getId();
                             boolean accepted = (boolean) doc.getData().get("is_accepted");
-                            if (!accepted) {
+                            boolean cancel = (boolean) doc.getData().get("is_cancel");
+                            if (!accepted && !cancel) {
                                 String riderName = (String) doc.getData().get("rider_name");
                                 String riderPhone = (String) doc.getData().get("rider_phone");
                                 String riderEmail = (String) doc.getData().get("rider_email");

@@ -63,8 +63,9 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
                 break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.driver_fragment_container, new DriverDrawerProfileFragment()).commit();
-
                 break;
+            case R.id.driver_nav_logout:
+                Toast.makeText(this, "Logout Clicked", Toast.LENGTH_SHORT).show();
         }
 
         driverDrawer.closeDrawer(GravityCompat.START);
