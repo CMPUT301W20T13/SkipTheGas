@@ -77,7 +77,7 @@
             android:id="@+id/start_loc_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="17dp"
+            android:padding="10dp"
             android:text="Start Location"
             android:textSize="12sp"
             tools:ignore="HardcodedText"/>
@@ -86,7 +86,7 @@
             android:id="@+id/end_loc_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="17dp"
+            android:padding="10dp"
             android:text="End Location"
             android:textSize="12sp"
             tools:ignore="HardcodedText"/>
