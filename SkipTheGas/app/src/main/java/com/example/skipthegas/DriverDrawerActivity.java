@@ -13,6 +13,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+
 /**
  * This is a class that implements the drawer style menu for the driver
  */
@@ -65,7 +67,9 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
                 getSupportFragmentManager().beginTransaction().replace(R.id.driver_fragment_container, new DriverDrawerProfileFragment()).commit();
                 break;
             case R.id.driver_nav_logout:
-                Toast.makeText(this, "Logout Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Logging out Driver", Toast.LENGTH_SHORT).show();
+                logout();
+                break;
         }
 
         driverDrawer.closeDrawer(GravityCompat.START);
@@ -83,6 +87,16 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
         } else {
             super.onBackPressed();
         }
-
     }
+
+    /**
+     * This logs out a user upon a button click
+     * Changes screens from the rider profile view to the login screen
+     */
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
+    }
+
 }

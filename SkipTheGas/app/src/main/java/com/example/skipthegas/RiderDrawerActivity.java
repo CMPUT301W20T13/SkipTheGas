@@ -71,6 +71,7 @@ public class RiderDrawerActivity extends AppCompatActivity implements Navigation
                 getSupportFragmentManager().beginTransaction().replace(R.id.rider_fragment_container, new RiderDrawerProfileFragment()).commit();
                 break;
             case R.id.rider_logout:
+                Toast.makeText(this, "Logging out Rider", Toast.LENGTH_SHORT).show();
                 logout();
                 break;
         }
