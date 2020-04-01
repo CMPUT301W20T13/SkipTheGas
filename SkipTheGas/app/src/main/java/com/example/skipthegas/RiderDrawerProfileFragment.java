@@ -30,6 +30,7 @@ public class RiderDrawerProfileFragment extends Fragment {
     TextView riderNameEditText;
     TextView riderPhoneEditText;
     TextView riderEmailEditText;
+    TextView riderQREditText;
     TextView riderProfileHeader;
 
     Button editButton;
@@ -41,6 +42,7 @@ public class RiderDrawerProfileFragment extends Fragment {
     String riderName;
     String riderPhone;
     String riderEmail;
+    double QRBucks;
 
     /**
      * onCreateView method for RiderDrawerProfileFragment fragment
@@ -68,6 +70,7 @@ public class RiderDrawerProfileFragment extends Fragment {
         riderNameEditText = getActivity().findViewById(R.id.rider_profile_user_name_textView);
         riderPhoneEditText = getActivity().findViewById(R.id.rider_profile_phone_TextView);
         riderEmailEditText = getActivity().findViewById(R.id.rider_profile_email_TextView);
+        riderQREditText = getActivity().findViewById(R.id.editText6);
         riderProfileHeader = getActivity().findViewById(R.id.rider_profile_header);
 
         editButton = getActivity().findViewById(R.id.editButton);
@@ -94,6 +97,8 @@ public class RiderDrawerProfileFragment extends Fragment {
                         riderPhoneEditText.setText(riderPhone);
                         riderEmailEditText.setText(riderEmail);
                         riderProfileHeader.setText(header);
+                        QRBucks = (double) documentSnapshot.getData().get("QR_bucks");
+                        riderQREditText.setText(String.valueOf(QRBucks));
                     }
                 });
         editButton.setOnClickListener(new View.OnClickListener() {
