@@ -2,6 +2,7 @@ package com.example.skipthegas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class RiderDrawerProfileFragment extends Fragment {
     String riderPhone;
     String riderEmail;
     double QRBucks;
+    String TAG = "RiderDrawerProfileFragment:";
 
     /**
      * onCreateView method for RiderDrawerProfileFragment fragment
@@ -78,7 +80,9 @@ public class RiderDrawerProfileFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        riderEmail = firebaseUser.getEmail();
+        if (firebaseUser!=null) {
+            riderEmail = firebaseUser.getEmail();
+        }
         firebaseFirestore
                 .collection("users")
                 .document(Objects.requireNonNull(riderEmail))
@@ -90,15 +94,23 @@ public class RiderDrawerProfileFragment extends Fragment {
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        riderName = documentSnapshot.getString("username");
-                        riderPhone = documentSnapshot.getString("phone");
-                        String header = riderName + "'s Profile";
-                        riderNameEditText.setText(riderName);
-                        riderPhoneEditText.setText(riderPhone);
-                        riderEmailEditText.setText(riderEmail);
-                        riderProfileHeader.setText(header);
-                        QRBucks = (double) documentSnapshot.getData().get("QR_bucks");
-                        riderQREditText.setText(String.valueOf(QRBucks));
+                        if (e!=null){
+                            Log.i(TAG,"Error occurred "+e.getMessage());
+                            return;
+                        }
+                        if (documentSnapshot!=null && documentSnapshot.exists()) {
+                            riderName = documentSnapshot.getString("username");
+                            riderPhone = documentSnapshot.getString("phone");
+                            String header = riderName + "'s Profile";
+                            riderNameEditText.setText(riderName);
+                            riderPhoneEditText.setText(riderPhone);
+                            riderEmailEditText.setText(riderEmail);
+                            riderProfileHeader.setText(header);
+                            QRBucks = (double) documentSnapshot.getData().get("QR_bucks");
+                            riderQREditText.setText(String.valueOf(QRBucks));
+                        } else {
+                            Log.d(TAG,"document does not exist");
+                        }
                     }
                 });
         editButton.setOnClickListener(new View.OnClickListener() {

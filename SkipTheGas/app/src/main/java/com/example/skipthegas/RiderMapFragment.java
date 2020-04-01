@@ -169,6 +169,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                         if (documentSnapshot != null && documentSnapshot.exists()){
                             userPhone = documentSnapshot.getString("phone");
                             userName = documentSnapshot.getString("username");
+                            currentBalance = (double) documentSnapshot.get("QR_bucks");
                         } else {
                             Log.d(TAG, "Document does not exist.");
                         }
