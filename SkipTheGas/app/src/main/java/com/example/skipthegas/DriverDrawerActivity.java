@@ -67,10 +67,10 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
                 getSupportFragmentManager().beginTransaction().replace(R.id.driver_fragment_container, new DriverDrawerProfileFragment()).commit();
                 break;
             case R.id.driver_nav_logout:
-                Toast.makeText(this, "Logout Clicked", Toast.LENGTH_SHORT).show();
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
+                Toast.makeText(this, "Logging out Driver", Toast.LENGTH_SHORT).show();
+                logout();
+                break;
+
         }
 
         driverDrawer.closeDrawer(GravityCompat.START);
@@ -88,7 +88,16 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
         } else {
             super.onBackPressed();
         }
+    }
 
+    /**
+     * This logs out a user upon a button click
+     * Changes screens from the rider profile view to the login screen
+     */
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        finish();
     }
 
 }
