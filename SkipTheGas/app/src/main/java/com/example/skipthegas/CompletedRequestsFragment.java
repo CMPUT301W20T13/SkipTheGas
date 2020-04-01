@@ -129,8 +129,11 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             String requestID = doc.getId();
                             boolean completed = (boolean) doc.getData().get("is_rider_completed");
-                            if (completed) {
-                                String riderName = (String) doc.getData().get("rider_name");
+                            String req_riderName = (String) doc.getData().get("rider_name");
+                            boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                            boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
+                            if (completed && req_riderName.equals(riderName) && isDriverCompleted && isRiderCompleted) {
+                                //String riderName = (String) doc.getData().get("rider_name");
                                 String riderPhone = (String) doc.getData().get("rider_phone");
                                 String riderEmail = (String) doc.getData().get("rider_email");
                                 GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
@@ -141,14 +144,14 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
                                 String driverName = (String) doc.getData().get("driver_name");
                                 String driverPhone = (String) doc.getData().get("driver_phone");
                                 String driverEmail = (String) doc.getData().get("driver_email");
-                                boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
+                                //boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
                                 String originAddress = (String) doc.getData().get("origin_address");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
 
                                 requestList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, isDriverCompleted, false, originAddress, destinationAddress, requestID, false, false));
                             }
                         }
-                        //requestAdapter.notifyDataSetChanged();
+                        requestAdapter.notifyDataSetChanged();
                     }
                 });
 
@@ -176,15 +179,15 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
 //            qrArray = addElement(i, qrArray, qr_bucks);
 //        }
 
-        usernameArray = new String[]{"Nan", "Nan"};
-        startLocArray = new String[]{"Origin1", "Origin2"};
-        endLocArray = new String[]{"Destination1", "Destination2"};
-        qrArray = new String[]{"10", "20"};
+        //usernameArray = new String[]{"Nan", "Nan"};
+        //startLocArray = new String[]{"Origin1", "Origin2"};
+        //endLocArray = new String[]{"Destination1", "Destination2"};
+        //qrArray = new String[]{"10", "20"};
 
-        ReqListAdapter populate = new ReqListAdapter(getActivity(), usernameArray, startLocArray, endLocArray, qrArray);
+        //ReqListAdapter populate = new ReqListAdapter(getActivity(), usernameArray, startLocArray, endLocArray, qrArray);
 
-        completedReqList = getActivity().findViewById(R.id.completed_requests_list);
-        completedReqList.setAdapter(populate);
+        //completedReqList = getActivity().findViewById(R.id.completed_requests_list);
+        //completedReqList.setAdapter(populate);
 
     }
 

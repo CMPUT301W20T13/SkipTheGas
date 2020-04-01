@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import static com.google.common.collect.Iterables.size;
@@ -44,7 +45,7 @@ import static com.google.common.collect.Iterables.size;
 public class CancelledRequestsFragment extends Fragment implements View.OnClickListener {
 
     ListView cancelledReqList;
-    //ArrayAdapter<Ride> requestAdapter;
+    ArrayAdapter<Ride> requestAdapter;
     ArrayList<Ride> requestList;
 
     FirebaseFirestore firebaseFirestore;
@@ -111,11 +112,13 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                     }
                 });
 
-        requestList = new ArrayList<>();
 
+        requestList = new ArrayList<>();
+        cancelledReqList = getActivity().findViewById(R.id.cancelled_requests_list);
+        requestAdapter = new CustomList(getActivity(), requestList);
         //requestAdapter = new ArrayAdapter<Ride>(getActivity(), R.layout.content, requestList);
 
-        //cancelledReqList.setAdapter(requestAdapter);
+        cancelledReqList.setAdapter(requestAdapter);
 
         firebaseFirestore
                 .collection("all_requests")
@@ -130,8 +133,9 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                         requestList.clear();
                         for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                             String requestID = doc.getId();
+                            String req_riderName = (String) doc.getData().get("rider_name");
                             boolean cancelled = (boolean) doc.getData().get("is_cancel");
-                            if (cancelled) {
+                            if (cancelled && req_riderName.equals(riderName)) {
                                 String riderName = (String) doc.getData().get("rider_name");
                                 String riderPhone = (String) doc.getData().get("rider_phone");
                                 String riderEmail = (String) doc.getData().get("rider_email");
@@ -143,7 +147,7 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                                 String driverName = (String) doc.getData().get("driver_name");
                                 String driverPhone = (String) doc.getData().get("driver_phone");
                                 String driverEmail = (String) doc.getData().get("driver_email");
-                                //boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
+                                boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
                                 String originAddress = (String) doc.getData().get("origin_address");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
 
@@ -151,7 +155,7 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                             }
                         }
 
-                        //requestAdapter.notifyDataSetChanged();
+                        requestAdapter.notifyDataSetChanged();
                     }
                 });
 
@@ -178,16 +182,15 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
 //            qrArray = addElement(i, qrArray, qr_bucks);
 //        }
 
+        //usernameArray = new String[]{"Nan", "Nan"};
+        //startLocArray = new String[]{"Origin1", "Origin2"};
+        //endLocArray = new String[]{"Destination1", "Destination2"};
+        //qrArray = new String[]{"10", "20"};
 
-        usernameArray = new String[]{"Nan", "Nan"};
-        startLocArray = new String[]{"Origin1", "Origin2"};
-        endLocArray = new String[]{"Destination1", "Destination2"};
-        qrArray = new String[]{"10", "20"};
+        //ReqListAdapter populate = new ReqListAdapter(getActivity(), usernameArray, startLocArray, endLocArray, qrArray);
 
-        ReqListAdapter populate = new ReqListAdapter(getActivity(), usernameArray, startLocArray, endLocArray, qrArray);
-
-        cancelledReqList = getActivity().findViewById(R.id.cancelled_requests_list);
-        cancelledReqList.setAdapter(populate);
+        //cancelledReqList = getActivity().findViewById(R.id.cancelled_requests_list);
+        //cancelledReqList.setAdapter(populate);
 
     }
 
