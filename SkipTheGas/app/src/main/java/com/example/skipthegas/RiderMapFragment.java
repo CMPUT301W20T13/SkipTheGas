@@ -163,18 +163,15 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         if (e != null) {
-                            Log.i(TAG,"Error occurred " + e.getMessage());
+                            Log.d(TAG, "Message: " + e.getMessage());
                             return;
                         }
-
-                        if (documentSnapshot!=null && documentSnapshot.exists()) {
+                        if (documentSnapshot != null && documentSnapshot.exists()){
                             userPhone = documentSnapshot.getString("phone");
                             userName = documentSnapshot.getString("username");
-                            currentBalance = (double) documentSnapshot.get("QR_bucks");
                         } else {
-                            Log.d(TAG,"document does not exist");
+                            Log.d(TAG, "Document does not exist.");
                         }
-
                     }
                 });
 

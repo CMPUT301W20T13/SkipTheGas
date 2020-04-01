@@ -36,6 +36,7 @@ public class SelectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent riderIntent = new Intent(getApplicationContext(), RiderDrawerActivity.class);
                 startActivity(riderIntent);
+                finish();
             }
         });
 
@@ -48,6 +49,7 @@ public class SelectionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent driverIntent = new Intent(getApplicationContext(), DriverDrawerActivity.class);
                 startActivity(driverIntent);
+                finish();
             }
         });
     }

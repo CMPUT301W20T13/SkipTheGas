@@ -136,6 +136,9 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                             }
                             if (cancel) {
                                 Toast.makeText(getApplicationContext(), "Driver Canceled Request", Toast.LENGTH_SHORT).show();
+                                Intent cancelIntent = new Intent(getApplicationContext(), DriverDrawerActivity.class);
+                                startActivity(cancelIntent);
+                                finish();
                             }
                         } else {
                             Log.d(TAG, "Current data: null");

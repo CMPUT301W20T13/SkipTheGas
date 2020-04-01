@@ -70,6 +70,7 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
                 Toast.makeText(this, "Logging out Driver", Toast.LENGTH_SHORT).show();
                 logout();
                 break;
+
         }
 
         driverDrawer.closeDrawer(GravityCompat.START);
