@@ -178,45 +178,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                     }
                 });
 
-
-
-        firebaseFirestore
-                .collection("all_requests")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.i(TAG,"Error occurred " + e.getMessage());
-                            return;
-                        }
-                        if (queryDocumentSnapshots!=null) {
-                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
-                                boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
-                                boolean canceled = (boolean) doc.getData().get("is_cancel");
-                                String riderEmail = (String) doc.getData().get("rider_email");
-                                if (!canceled && !isDriverCompleted && !isRiderCompleted && userEmail.equals(riderEmail)) {
-                                    new AlertDialog.Builder(getActivity())
-                                            .setTitle("Open Request")
-                                            .setMessage("You have an open request in process" + "\n" + "Press Enter to enter request.")
-                                            .setNegativeButton("Cancel", null)
-                                            .setPositiveButton("Enter", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Intent startIntent = new Intent(getActivity(), RiderTripProcessActivity.class);
-                                                    startActivity(startIntent);
-                                                }
-                                            }).create().show();
-
-                                }
-                            }
-                        } else {
-                            Log.d(TAG,"Error occurred");
-                        }
-
-                    }
-                });
-
         postRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
