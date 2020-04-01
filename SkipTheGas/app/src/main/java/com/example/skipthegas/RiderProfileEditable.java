@@ -22,14 +22,15 @@ import javax.annotation.Nullable;
  */
 public class RiderProfileEditable extends AppCompatActivity {
 
-    TextView usernameDisplay, emailDisplay;
-    EditText phoneEdit, QR_Edit;
+    TextView usernameDisplay, emailDisplay, qrDisplay;
+    EditText phoneEdit;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     String userId;
     String username;
     String phone;
     String email;
+    double qr_bucks;
 
     /**
      * onCreate method for RiderProfileEditable class
@@ -44,7 +45,7 @@ public class RiderProfileEditable extends AppCompatActivity {
         usernameDisplay = findViewById(R.id.editText3);
         emailDisplay = findViewById(R.id.editText4);
         phoneEdit = findViewById(R.id.editText5);
-        QR_Edit = findViewById(R.id.editText6);
+        qrDisplay = findViewById(R.id.editText6);
 
         // Cloud database initiation
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -64,9 +65,12 @@ public class RiderProfileEditable extends AppCompatActivity {
                         email = documentSnapshot.getString("email");
                         phone = documentSnapshot.getString("phone");
                         username = documentSnapshot.getString("username");
+                        qr_bucks = (double) documentSnapshot.getData().get("QR_bucks");
                         usernameDisplay.setText(username);
                         emailDisplay.setText(email);
                         phoneEdit.setText(phone);
+                        qrDisplay.setText(String.valueOf(qr_bucks));
+
                     }
                 });
     }
@@ -96,7 +100,7 @@ public class RiderProfileEditable extends AppCompatActivity {
         usernameDisplay = findViewById(R.id.editText3);
         emailDisplay = findViewById(R.id.editText4);
         phoneEdit = findViewById(R.id.editText5);
-        QR_Edit = findViewById(R.id.editText6);
+        qrDisplay = findViewById(R.id.editText6);
 
         Intent intent = new Intent(this, RiderProfileActivity.class);
         startActivity(intent);

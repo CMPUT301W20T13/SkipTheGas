@@ -120,7 +120,6 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="number"
-        android:text="100"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rider_profile_phone_TextView" />
 
