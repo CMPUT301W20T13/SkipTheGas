@@ -105,15 +105,37 @@ public class TripFeedBackActivity extends AppCompatActivity {
     }
 
     // Good rating ToggleButton
+    @SuppressLint("SetTextI18n")
     public void onClickGoodRating(View view) {
-        badRating.setChecked(false);
+        goodRating.setEnabled(false);
+        badRating.setEnabled(true);
+
         goodRating.setChecked(true);
+        goodCount+=1;
+        goodRatingCntView.setText(Integer.toString(goodCount));
+        if (badRating.isChecked()) {
+            badRating.setChecked(false);
+            badCount-=1;
+            badRatingCntView.setText(Integer.toString(badCount));
+        }
+        Toast.makeText(this, "Liked", Toast.LENGTH_SHORT).show();
     }
 
     // Bad rating ToggleButton
+    @SuppressLint("SetTextI18n")
     public void onClickBadRating(View view) {
-        goodRating.setChecked(false);
+        badRating.setEnabled(false);
+        goodRating.setEnabled(true);
+
         badRating.setChecked(true);
+        badCount+=1;
+        badRatingCntView.setText(Integer.toString(badCount));
+        if (goodRating.isChecked()) {
+            goodRating.setChecked(false);
+            goodCount-=1;
+            goodRatingCntView.setText(Integer.toString(goodCount));
+        }
+        Toast.makeText(this, "Disliked", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickReturn(View view) {
