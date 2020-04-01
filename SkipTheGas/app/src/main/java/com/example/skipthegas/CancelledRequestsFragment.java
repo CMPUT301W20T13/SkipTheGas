@@ -36,13 +36,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
+import static com.google.common.collect.Iterables.size;
+
 /**
  * This fragment displays the rider's cancelled requests in list view
  */
 public class CancelledRequestsFragment extends Fragment implements View.OnClickListener {
 
     ListView cancelledReqList;
-    ArrayAdapter<Ride> requestAdapter;
+    //ArrayAdapter<Ride> requestAdapter;
     ArrayList<Ride> requestList;
 
     FirebaseFirestore firebaseFirestore;
@@ -52,6 +54,11 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
     private String riderName;
     private String riderPhone;
     private String riderEmail;
+
+    String[] usernameArray;
+    String[] startLocArray;
+    String[] endLocArray;
+    String[] qrArray;
 
     private int p;
     public Ride requests;
@@ -74,6 +81,7 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
         back_button.setOnClickListener(this);
 
         return view;
+
     }
 
     /**
@@ -103,13 +111,11 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                     }
                 });
 
-        cancelledReqList = getActivity().findViewById(R.id.cancelled_requests_list);
-
         requestList = new ArrayList<>();
 
-        requestAdapter = new ArrayAdapter<Ride>(getActivity(), R.layout.content, requestList);
+        //requestAdapter = new ArrayAdapter<Ride>(getActivity(), R.layout.content, requestList);
 
-        cancelledReqList.setAdapter(requestAdapter);
+        //cancelledReqList.setAdapter(requestAdapter);
 
         firebaseFirestore
                 .collection("all_requests")
@@ -137,75 +143,51 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                                 String driverName = (String) doc.getData().get("driver_name");
                                 String driverPhone = (String) doc.getData().get("driver_phone");
                                 String driverEmail = (String) doc.getData().get("driver_email");
-                                boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
+                                //boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
                                 String originAddress = (String) doc.getData().get("origin_address");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
 
                                 requestList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, false, false, originAddress, destinationAddress, requestID, false, true));
                             }
                         }
-                        requestAdapter.notifyDataSetChanged();
+
+                        //requestAdapter.notifyDataSetChanged();
                     }
                 });
 
         Log.v("Ride Info", requestList.toString());
 
-//        final ListView openFragment = getActivity().findViewById(R.id.cancelled_requests_list);
-//        openFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            /**
-//             * Method is invoked when request option is selected in drawer menu
-//             * @param parent
-//             * @param view
-//             * @param position
-//             * @param id
-//             */
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                p = position;
-//                requests = requestAdapter.getItem(position);
-//                String userName = requests.getRiderName();
-//                String start = requests.getOriginAddress();
-//                String end = requests.getDestinationAddress();
-//                String fare = requests.getFare();
-//                String request_ID = requests.getRequestID();
-//                GeoPoint startLocation = requests.getOrigin();
-//                GeoPoint endLocation = requests.getDestination();
-//                double startLat = startLocation.getLatitude();
-//                double startLog = startLocation.getLongitude();
-//                double endLat = endLocation.getLatitude();
-//                double endLog = endLocation.getLongitude();
-                //Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
-//                Bundle bundle = new Bundle();
-//                AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
-//                bundle.putString("user_name", userName);
-//                bundle.putString("rider_email", riderEmail);
-//                bundle.putString("rider_phone", riderPhone);
-//                bundle.putString("rider_name", riderName);
-//                bundle.putString("request_ID", request_ID);
-//                bundle.putDouble("start_lat", startLat);
-//                bundle.putDouble("start_lng", startLog);
-//                bundle.putDouble("end_lat", endLat);
-//                bundle.putDouble("end_lng", endLog);
-//                bundle.putString("request_id", request_ID);
-//
-//
-//                acceptRequestFragment.setArguments(bundle);
-//                acceptRequestFragment.show(getFragmentManager(), "Accept Request");
-//                new AlertDialog.Builder(getActivity())
-//                        .setTitle("Request Information")
-//                        .setMessage("Uername: " + userName + "\n\n" + "Start Location:" + start + "\n\nEnd Location: " + end + "\n\nEstimated Fare: " + fare )
-//                        .setNegativeButton("Cancel",null)
-//                        .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialogInterface, int i) {
-//                                Toast.makeText(getContext(), "Try" + driverName + "!!!", Toast.LENGTH_SHORT).show();
-//
-//
-//                            }
-//                        }).create().show();
+//        for (int i = 0; i < size(requestList); i++) {
+//            Ride req = requestList.get(i);
+//            String username = req.getRiderName();
+//            usernameArray = addElement(i, usernameArray, username);
+//        }
+//        for (int i = 0; i < size(requestList); i++) {
+//            Ride req = requestList.get(i);
+//            String startLoc = req.getOriginAddress();
+//            startLocArray = addElement(i, startLocArray, startLoc);
+//        }
+//        for (int i = 0; i < size(requestList); i++) {
+//            Ride req = requestList.get(i);
+//            String endLoc = req.getDestinationAddress();
+//            endLocArray = addElement(i, endLocArray, endLoc);
+//        }
+//        for (int i = 0; i < size(requestList); i++) {
+//            Ride req = requestList.get(i);
+//            String qr_bucks = req.getFare();
+//            qrArray = addElement(i, qrArray, qr_bucks);
+//        }
 
-//            }
-//        });
+
+        usernameArray = new String[]{"Nan", "Nan"};
+        startLocArray = new String[]{"Origin1", "Origin2"};
+        endLocArray = new String[]{"Destination1", "Destination2"};
+        qrArray = new String[]{"10", "20"};
+
+        ReqListAdapter populate = new ReqListAdapter(getActivity(), usernameArray, startLocArray, endLocArray, qrArray);
+
+        cancelledReqList = getActivity().findViewById(R.id.cancelled_requests_list);
+        cancelledReqList.setAdapter(populate);
 
     }
 
@@ -225,5 +207,17 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
         transaction.replace(R.id.rider_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public static String[] addElement(int n, String[] elementArray, String newElement) {
+        String newArray[] = new String[n + 1];
+
+        // insert the elements from old array into new array
+        for (int i = 0; i < n; i++)
+            newArray[i] = elementArray[i];
+
+        newArray[n] = newElement;
+
+        return newArray;
     }
 }
