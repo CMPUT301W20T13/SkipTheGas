@@ -53,6 +53,11 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
     private String riderPhone;
     private String riderEmail;
 
+    String[] usernameArray;
+    String[] startLocArray;
+    String[] endLocArray;
+    String[] qrArray;
+
     public Ride requests;
 
     Button back_button;
@@ -143,12 +148,43 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
                                 requestList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, isDriverCompleted, false, originAddress, destinationAddress, requestID, false, false));
                             }
                         }
-                        requestAdapter.notifyDataSetChanged();
+                        //requestAdapter.notifyDataSetChanged();
                     }
                 });
 
 
         Log.v("Ride Info", requestList.toString());
+
+//        for (int i = 0; i < size(requestList); i++) {
+//            Ride req = requestList.get(i);
+//            String username = req.getRiderName();
+//            usernameArray = addElement(i, usernameArray, username);
+//        }
+//        for (int i = 0; i < size(requestList); i++) {
+//            Ride req = requestList.get(i);
+//            String startLoc = req.getOriginAddress();
+//            startLocArray = addElement(i, startLocArray, startLoc);
+//        }
+//        for (int i = 0; i < size(requestList); i++) {
+//            Ride req = requestList.get(i);
+//            String endLoc = req.getDestinationAddress();
+//            endLocArray = addElement(i, endLocArray, endLoc);
+//        }
+//        for (int i = 0; i < size(requestList); i++) {
+//            Ride req = requestList.get(i);
+//            String qr_bucks = req.getFare();
+//            qrArray = addElement(i, qrArray, qr_bucks);
+//        }
+
+        usernameArray = new String[]{"Nan", "Nan"};
+        startLocArray = new String[]{"Origin1", "Origin2"};
+        endLocArray = new String[]{"Destination1", "Destination2"};
+        qrArray = new String[]{"10", "20"};
+
+        ReqListAdapter populate = new ReqListAdapter(getActivity(), usernameArray, startLocArray, endLocArray, qrArray);
+
+        completedReqList = getActivity().findViewById(R.id.completed_requests_list);
+        completedReqList.setAdapter(populate);
 
     }
 
