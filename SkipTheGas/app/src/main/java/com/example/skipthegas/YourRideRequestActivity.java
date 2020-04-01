@@ -1,6 +1,10 @@
 package com.example.skipthegas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +23,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
+import javax.annotation.Nullable;
+
 /**
  * This is a class which governs the "your ride request" screen, where riders can view details
  * regarding the ride request they have submitted
@@ -29,11 +35,13 @@ public class YourRideRequestActivity extends AppCompatActivity {
     TextView fare;
     TextView status;
     TextView driver;
+    Button backButton;
+    Button cancelButton;
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     FirebaseUser firebaseUser;
-
+    String requestID;
     String riderName, riderEmail, riderPhone;
 
     /**
@@ -45,102 +53,78 @@ public class YourRideRequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.your_ride_request_layout);
 
-        setContentView(R.layout.your_ride_request_layout);
-        final Button cancelVerify = findViewById(R.id.verificationButton);
-        cancelVerify.setOnClickListener((v)->{
-            new CancelFragment().show(getSupportFragmentManager(), "Cancel Request");
-        });
-
-//        setContentView(R.layout.your_ride_request_layout);
-//        final Button backButton = findViewById(R.id.back_button);
-//        backButton.setOnClickListener((v)->{
-//            getSupportFragmentManager().beginTransaction().replace(R.id.rider_fragment_container, new RiderRequestFragment()).commit();
+//        final Button cancelVerify = findViewById(R.id.verificationButton);
+//        cancelVerify.setOnClickListener((v)->{
+//            new CancelFragment().show(getSupportFragmentManager(), "Cancel Request");
 //        });
 
-        //final TextView openProfile = findViewById(R.id.Driver);
-        //openProfile.setOnClickListener((v)->{
-        //  new DriverProfileFragment().show(getSupportFragmentManager(), "View Profile");
-        //});
+        Intent intent = getIntent();
+        requestID = Objects.requireNonNull(intent.getExtras()).getString("request_id");
 
         start = findViewById(R.id.startTextView);
         end = findViewById(R.id.endTextView);
         fare = findViewById(R.id.fareTextView);
         driver = findViewById(R.id.driverTextView);
         status = findViewById(R.id.statusTextView);
-        driver.setOnClickListener((v)-> {
-            new DriverProfileFragment().show(getSupportFragmentManager(), "View Profile");
-        });
+        backButton = findViewById(R.id.back_button);
+        cancelButton = findViewById(R.id.verificationButton);
+//        driver.setOnClickListener((v)-> {
+//            new DriverProfileFragment().show(getSupportFragmentManager(), "View Profile");
+//        });
 
-        //driver.setOnClickListener(new View.OnClickListener() {
-        //  @Override
-        //public void onClick(View v) {
-        //  Intent editProfileIntent = new Intent(YourRideRequestActivity.this, DriverProfileFragment.class);
-        //YourRideRequestActivity.this.startActivity(editProfileIntent);
-        //}
-        //});
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        riderEmail = firebaseUser.getEmail();
-        firebaseFirestore
-                .collection("users")
-                .document(Objects.requireNonNull(riderEmail))
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    /**
-                     * Method retrieves driver name and phone from firebase database
-                     * @param documentSnapshot
-                     * @param e
-                     */
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        riderName = documentSnapshot.getString("username");
-                        riderPhone = documentSnapshot.getString("phone");
-                    }
-                });
         firebaseFirestore
                 .collection("all_requests")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    /**
-                     * Method retrieves posted ride request data from firebase database
-                     * @param queryDocumentSnapshots
-                     * @param e
-                     */
+                .document(requestID)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        //rideDataList.clear();
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            String requestID = doc.getId();
-                            boolean accepted = (boolean) doc.getData().get("is_accepted");
-                            String req_riderName = (String) doc.getData().get("rider_name");
-
-                            boolean driver_completed = (boolean) doc.getData().get("is_driver_completed");
-                            boolean rider_completed = (boolean) doc.getData().get("is_rider_completed");
-
-                            if (riderName.equals(req_riderName) && !driver_completed && !rider_completed){
-                                String req_fare = (String) doc.getData().get("est_fare");
-                                String driverName = (String) doc.getData().get("driver_name");
-                                String destinationAddress = (String) doc.getData().get("destination_address");
-                                String originAddress = (String) doc.getData().get("origin_address");
-                                end.setText(destinationAddress);
-                                start.setText(originAddress);
-                                driver.setText(driverName);
-                                fare.setText(req_fare);
-                                cancelVerify.setEnabled(true);
-                                if(accepted){
-                                    status.setText("accepted");
-                                }
-                                else{
-                                    status.setText("not accepted");
-                                }
-
-
-                                //rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, completed, originAddress, destinationAddress, requestID, false));
-                            }
-
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        boolean accepted = (boolean) documentSnapshot.getData().get("is_accepted");
+                        String req_fare = (String) documentSnapshot.getData().get("est_fare");
+                        String driverName = (String) documentSnapshot.getData().get("driver_name");
+                        String destinationAddress = (String) documentSnapshot.getData().get("destination_address");
+                        String originAddress = (String) documentSnapshot.getData().get("origin_address");
+                        end.setText(destinationAddress);
+                        start.setText(originAddress);
+                        if (driverName != null) {
+                            driver.setText(driverName);
+                        }
+                        fare.setText(req_fare);
+                        if(accepted){
+                            status.setText("accepted");
+                        }
+                        else{
+                            status.setText("Not Accepted");
                         }
                     }
                 });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(YourRideRequestActivity.this)
+                        .setTitle("Warning")
+                        .setMessage("Are you sure to cancel your request?")
+                        .setNegativeButton("Back", null)
+                        .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                firebaseFirestore.collection("all_requests").document(requestID).update("is_cancel", true);
+                                Intent intent = new Intent(getApplicationContext(), RiderDrawerActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }).create().show();
+            }
+        });
 
     }
 

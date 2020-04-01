@@ -75,7 +75,7 @@
         app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView14"
-        app:layout_constraintVertical_bias="0.753" />
+        app:layout_constraintVertical_bias="0.734" />
 
     <Button
         android:id="@+id/back_button"
@@ -160,7 +160,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:text="Fitzhugh Phillifent"
+        android:text="N/A"
         android:textStyle="italic"
         app:layout_constraintStart_toEndOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
