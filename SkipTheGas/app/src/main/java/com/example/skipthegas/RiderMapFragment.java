@@ -125,6 +125,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
     private String userName;
     private String userPhone;
 
+    double currentBalance;
     AutocompleteSupportFragment autocompleteFragment;
 
     /**
@@ -154,43 +155,65 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
 
 
         // Retrieve user information from firebase
-
+        
         firebaseFirestore
                 .collection("users")
                 .document(userEmail)
                 .addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        userPhone = documentSnapshot.getString("phone");
-                        userName = documentSnapshot.getString("username");
+                        if (e != null) {
+                            Log.i(TAG,"Error occurred " + e.getMessage());
+                            return;
+                        }
+
+                        if (documentSnapshot!=null && documentSnapshot.exists()) {
+                            userPhone = documentSnapshot.getString("phone");
+                            userName = documentSnapshot.getString("username");
+                            currentBalance = (double) documentSnapshot.get("QR_bucks");
+                        } else {
+                            Log.d(TAG,"document does not exist");
+                        }
+
                     }
                 });
+
+
 
         firebaseFirestore
                 .collection("all_requests")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
-                            boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
-                            boolean canceled = (boolean) doc.getData().get("is_cancel");
-                            String riderEmail = (String) doc.getData().get("rider_email");
-                            if (!canceled && !isDriverCompleted && !isRiderCompleted && userEmail.equals(riderEmail)) {
-                                new AlertDialog.Builder(getActivity())
-                                        .setTitle("Open Request")
-                                        .setMessage("You have an open request in process" + "\n" + "Press Enter to enter request.")
-                                        .setNegativeButton("Cancel", null)
-                                        .setPositiveButton("Enter", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Intent startIntent = new Intent(getActivity(), RiderTripProcessActivity.class);
-                                                startActivity(startIntent);
-                                            }
-                                        }).create().show();
-
-                            }
+                        if (e != null) {
+                            Log.i(TAG,"Error occurred " + e.getMessage());
+                            return;
                         }
+                        if (queryDocumentSnapshots!=null) {
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                                boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
+                                boolean canceled = (boolean) doc.getData().get("is_cancel");
+                                String riderEmail = (String) doc.getData().get("rider_email");
+                                if (!canceled && !isDriverCompleted && !isRiderCompleted && userEmail.equals(riderEmail)) {
+                                    new AlertDialog.Builder(getActivity())
+                                            .setTitle("Open Request")
+                                            .setMessage("You have an open request in process" + "\n" + "Press Enter to enter request.")
+                                            .setNegativeButton("Cancel", null)
+                                            .setPositiveButton("Enter", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent startIntent = new Intent(getActivity(), RiderTripProcessActivity.class);
+                                                    startActivity(startIntent);
+                                                }
+                                            }).create().show();
+
+                                }
+                            }
+                        } else {
+                            Log.d(TAG,"Error occurred");
+                        }
+
                     }
                 });
 
@@ -214,55 +237,63 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                     double dist = Double.parseDouble(tempDist);
                     double fare = 5.25 + (dist * 0.81);
                     estFare = twoDecPoints.format(fare);
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle("Requested Ride Details")
-                            .setMessage(msg1 + estDistance + "\n" + msg2 + estTime + "\n" + msg3 + estFare + "QR bucks")
-                            .setNegativeButton("Cancel", null)
-                            .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    HashMap<String, Object> requestData = new HashMap<>();
-                                    requestData.put("rider_name", userName);
-                                    requestData.put("rider_phone", userPhone);
-                                    requestData.put("rider_email", userEmail);
-                                    requestData.put("ride_origin", origin);
-                                    requestData.put("ride_destination",destination);
-                                    requestData.put("est_distance",estDistance);
-                                    requestData.put("est_time",estTime);
-                                    requestData.put("est_fare",estFare);
-                                    requestData.put("driver_name", null);
-                                    requestData.put("driver_phone", null);
-                                    requestData.put("driver_email", null);
-                                    requestData.put("is_confirmed",false);
-                                    requestData.put("is_accepted",false);
-                                    requestData.put("origin_address", originAddress);
-                                    requestData.put("destination_address", destinationAddress);
-                                    requestData.put("is_driver_completed", false);
-                                    requestData.put("is_rider_completed", false);
-                                    requestData.put("is_cancel", false);
+                    if (fare > currentBalance) {
 
-                                    firebaseFirestore
-                                            .collection("all_requests")
-                                            .add(requestData)
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                @Override
-                                                public void onSuccess(DocumentReference documentReference) {
-                                                    Log.i(TAG, "post success");
-                                                    Toast.makeText(getContext(), "Request posted.", Toast.LENGTH_SHORT).show();
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.i(TAG, "pst failed"+e.getMessage());
-                                                }
-                                            });
-                                    clearMap();
-                                    postRequestButton.setEnabled(false);
-                                    Intent intent = new Intent(getActivity(), RiderTripProcessActivity.class);
-                                    startActivity(intent);
-                                }
-                            }).create().show();
+                        Toast.makeText(getActivity(), "Cannot post request, Your balance is not enough", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(getActivity(), "Can post request", Toast.LENGTH_SHORT).show();
+                        Log.i(TAG,"Can post request");
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle("Requested Ride Details")
+                                .setMessage(msg1 + estDistance + "\n" + msg2 + estTime + "\n" + msg3 + estFare + "QR bucks")
+                                .setNegativeButton("Cancel", null)
+                                .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        HashMap<String, Object> requestData = new HashMap<>();
+                                        requestData.put("rider_name", userName);
+                                        requestData.put("rider_phone", userPhone);
+                                        requestData.put("rider_email", userEmail);
+                                        requestData.put("ride_origin", origin);
+                                        requestData.put("ride_destination",destination);
+                                        requestData.put("est_distance",estDistance);
+                                        requestData.put("est_time",estTime);
+                                        requestData.put("est_fare",estFare);
+                                        requestData.put("driver_name", null);
+                                        requestData.put("driver_phone", null);
+                                        requestData.put("driver_email", null);
+                                        requestData.put("is_confirmed",false);
+                                        requestData.put("is_accepted",false);
+                                        requestData.put("origin_address", originAddress);
+                                        requestData.put("destination_address", destinationAddress);
+                                        requestData.put("is_driver_completed", false);
+                                        requestData.put("is_rider_completed", false);
+                                        requestData.put("is_cancel", false);
+
+                                        firebaseFirestore
+                                                .collection("all_requests")
+                                                .add(requestData)
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentReference documentReference) {
+                                                        Log.i(TAG, "post success");
+                                                        Toast.makeText(getContext(), "Request posted.", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.i(TAG, "pst failed"+e.getMessage());
+                                                    }
+                                                });
+                                        clearMap();
+                                        postRequestButton.setEnabled(false);
+                                        Intent intent = new Intent(getActivity(), RiderTripProcessActivity.class);
+                                        startActivity(intent);
+                                    }
+                                }).create().show();
+                    }
                 }
             }
         });
