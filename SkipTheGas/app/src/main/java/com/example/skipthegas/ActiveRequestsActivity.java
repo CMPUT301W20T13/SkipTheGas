@@ -43,12 +43,12 @@ public class ActiveRequestsActivity extends AppCompatActivity {
 
         ridesList = findViewById(R.id.rides_list);
 
-        String []riders ={"Grersch"};
-        String []drivers ={""};
-        String []startLocs ={"University of Alberta"};
-        String []endLocs ={"Dairy Queen"};
-        Date []dates ={new Date(2020, 3, 7)};
-        Integer []prices ={131};
+//        String []riders ={"Grersch"};
+//        String []drivers ={""};
+//        String []startLocs ={"University of Alberta"};
+//        String []endLocs ={"Dairy Queen"};
+//        Date []dates ={new Date(2020, 3, 7)};
+//        Integer []prices ={131};
 
         rideDataList = new ArrayList<>();
 
