@@ -2,6 +2,7 @@ package com.example.skipthegas;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,11 @@ public class CustomList extends ArrayAdapter<Ride> {
         endLoc.setText(ride.getDestinationAddress());
         //rideDate.setText(ride.getDate().toString());
         ridePrice.setText(ride.getFare());
+
+        riderName.setOnClickListener((v)-> {
+            Intent profile = new Intent(getContext(), RiderProfileActivity.class);
+            context.startActivity(profile);
+        });
 
         return view;
     }
