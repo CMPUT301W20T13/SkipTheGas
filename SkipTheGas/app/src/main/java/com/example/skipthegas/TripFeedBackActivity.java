@@ -13,6 +13,7 @@ import android.widget.ToggleButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -145,6 +146,15 @@ public class TripFeedBackActivity extends AppCompatActivity {
 
             // TODO: ********** ********** Update your driver ratings in Firebase (You are the rider) ********** **********
             /* TODO */
+            // Get the document field of the driver
+            DocumentReference docRef = firebaseFirestore.collection("users").document(yourDriverEmail);
+            if (goodRating.isChecked()) {
+                // Update Good Rating
+                docRef.update("good_rating", goodCount);
+            } else if (badRating.isChecked()) {
+                // Update Bad Rating
+                docRef.update("bad_ratings", badCount);
+            }
             // TODO: ********** ********** Update your driver ratings in Firebase (You are the rider) ********** **********
             Intent riderIntent = new Intent(getApplicationContext(),RiderDrawerActivity.class);
             startActivity(riderIntent);
