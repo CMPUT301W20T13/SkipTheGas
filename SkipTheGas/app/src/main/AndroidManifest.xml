@@ -72,6 +72,7 @@
         <activity android:name=".RideConfirmedActivity" />
         <activity android:name=".RiderActivity" />
         <activity android:name=".RequestRideActivity" />
+        <activity android:name=".RiderDrawerProfileFragment" />
         <activity android:name=".YourRideRequestActivity" />
         <activity android:name=".TripFeedBackActivity" />
         <activity android:name=".PaymentActivity" />
