@@ -38,6 +38,10 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -75,9 +79,14 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     TextView riderConfirmTextView;
     ImageView phoneCallIcon;
 
+    double currentBalance;
+    String userEmail;
+
     private static final String TAG = "DriverProcessActivity";
 
     FirebaseFirestore firebaseFirestore;
+    FirebaseAuth firebaseAuth;
+
 
     Intent scannerIntent;
 
@@ -100,6 +109,31 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         initMap();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser != null) {
+            userEmail = firebaseUser.getEmail();
+        }
+
+        firebaseFirestore
+                .collection("users")
+                .document(userEmail).get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            if (documentSnapshot != null && documentSnapshot.exists()) {
+                                currentBalance = (double) documentSnapshot.get("QR_bucks");
+                                scannerIntent.putExtra("current_balance", currentBalance);
+                            } else {
+                                Log.d(TAG, "Document does not exist.");
+                            }
+                        } else {
+                            Log.d(TAG, "Error: " + task.getException());
+                        }
+                    }
+                });
 
         firebaseFirestore
                 .collection("all_requests")
@@ -174,6 +208,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                                         .document(requestID)
                                         .update("is_driver_completed",true);
                                 startActivity(scannerIntent);
+                                finish();
                             }
                         }).create().show();
             }
