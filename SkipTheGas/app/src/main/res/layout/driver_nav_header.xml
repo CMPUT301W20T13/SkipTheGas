@@ -13,9 +13,10 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round"/>
+        android:src="@drawable/ic_directions_car_black"/>
 
     <TextView
+        android:id="@+id/driver_welcome_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
@@ -24,6 +25,7 @@
         tools:ignore="HardcodedText" />
 
     <TextView
+        android:id="@+id/driver_drawer_mail_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="driver@skipthegas.com"

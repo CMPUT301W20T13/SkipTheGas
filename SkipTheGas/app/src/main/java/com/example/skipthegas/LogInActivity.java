@@ -93,6 +93,8 @@ public class LogInActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(LogInActivity.this, "Login success", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(), SelectionActivity.class));
+                            finish();
+                            loginButton.setEnabled(true);
                             progressBar.setVisibility(View.GONE);
                         } else {
                             Toast.makeText(LogInActivity.this, "Your email or password is incorrect "+task.getException(), Toast.LENGTH_SHORT).show();
