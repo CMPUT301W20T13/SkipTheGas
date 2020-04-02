@@ -189,7 +189,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                 paymentIntent.putExtra("request_Id",requestID);
                                 startActivity(paymentIntent);
                             }
-                        });
+                        }).create().show();
             }
         });
 
