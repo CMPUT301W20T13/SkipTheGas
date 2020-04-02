@@ -170,7 +170,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                                 Intent scannerIntent = new Intent(getApplicationContext(), DriverPaymentScannerActivity.class);
                                 startActivity(scannerIntent);
                             }
-                        });
+                        }).create().show();
             }
         });
     }
