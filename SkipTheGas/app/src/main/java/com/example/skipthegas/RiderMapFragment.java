@@ -176,6 +176,9 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                     }
                 });
 
+        // only for testing
+//        firebaseFirestore.collection("users").document(userEmail).update("QR_bucks", 100.0);
+
         postRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
