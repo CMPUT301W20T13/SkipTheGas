@@ -116,50 +116,58 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-
-                            boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
-                            boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
-                            boolean canceled = (boolean) doc.getData().get("is_cancel");
-                            String riderEmail = (String) doc.getData().get("rider_email");
-                            if (!isDriverCompleted && !isRiderCompleted && !canceled && userEmail.equals(riderEmail)) {
-                                requestID = doc.getId();
-                                boolean accepted = doc.getBoolean("is_accepted");
-                                boolean confirmed = doc.getBoolean("is_confirmed");
-                                GeoPoint start = doc.getGeoPoint("ride_origin");
-                                GeoPoint end = doc.getGeoPoint("ride_destination");
-                                MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
-                                MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
-                                if (accepted && !confirmed) {
-                                    viewRequestButton.setEnabled(true);
-                                    confirmButton.setEnabled(true);
-                                    confirmButton.setTextColor(Color.WHITE);
-                                    String driverAcceptedText = "Driver accepted your request. Please confirm.";
-                                    driverAcceptedTextView.setText(driverAcceptedText);
-                                    String driverName = doc.getString("driver_name");
-                                    String driverEmail = doc.getString("driver_email");
-                                    String driverPhone = doc.getString("driver_phone");
-                                    driverNameTextView.setText(driverName);
-                                    driverEmailTextView.setText(driverEmail);
-                                    driverPhoneTextView.setText(driverPhone);
-
-                                    //  Notification
-                                    if (count) {
-                                        notification();
-                                        count = false;
-                                    }
-                                }
-                                if (accepted && confirmed) {
-                                    String driverAcceptedText = "Driver accepted your request.";
-                                    driverAcceptedTextView.setText(driverAcceptedText);
-                                    confirmButton.setEnabled(false);
-                                    confirmButton.setTextColor(Color.BLACK);
-                                    completeButton.setEnabled(true);
-                                    completeButton.setTextColor(Color.WHITE);
-                                }
-                                calculateDirections(startLocation, endLocation);
-                            }
+                        if (e!=null) {
+                            Log.i(TAG,"Error!: "+e.getMessage());
+                            return;
                         }
+                        if (queryDocumentSnapshots!=null){
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                                boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
+                                boolean canceled = (boolean) doc.getData().get("is_cancel");
+                                String riderEmail = (String) doc.getData().get("rider_email");
+                                if (!isDriverCompleted && !isRiderCompleted && !canceled && userEmail.equals(riderEmail)) {
+                                    requestID = doc.getId();
+                                    boolean accepted = doc.getBoolean("is_accepted");
+                                    boolean confirmed = doc.getBoolean("is_confirmed");
+                                    GeoPoint start = doc.getGeoPoint("ride_origin");
+                                    GeoPoint end = doc.getGeoPoint("ride_destination");
+                                    MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
+                                    MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
+                                    if (accepted && !confirmed) {
+                                        viewRequestButton.setEnabled(true);
+                                        confirmButton.setEnabled(true);
+                                        confirmButton.setTextColor(Color.WHITE);
+                                        String driverAcceptedText = "Driver accepted your request. Please confirm.";
+                                        driverAcceptedTextView.setText(driverAcceptedText);
+                                        String driverName = doc.getString("driver_name");
+                                        String driverEmail = doc.getString("driver_email");
+                                        String driverPhone = doc.getString("driver_phone");
+                                        driverNameTextView.setText(driverName);
+                                        driverEmailTextView.setText(driverEmail);
+                                        driverPhoneTextView.setText(driverPhone);
+
+                                        //  Notification
+                                        if (count) {
+                                            notification();
+                                            count = false;
+                                        }
+                                    }
+                                    if (accepted && confirmed) {
+                                        String driverAcceptedText = "Driver accepted your request.";
+                                        driverAcceptedTextView.setText(driverAcceptedText);
+                                        confirmButton.setEnabled(false);
+                                        confirmButton.setTextColor(Color.BLACK);
+                                        completeButton.setEnabled(true);
+                                        completeButton.setTextColor(Color.WHITE);
+                                    }
+                                    calculateDirections(startLocation, endLocation);
+                                }
+                            }
+                        } else {
+                            Log.d(TAG,"document does not exist");
+                        }
+
                     }
                 });
 

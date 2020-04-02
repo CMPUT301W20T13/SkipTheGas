@@ -55,10 +55,14 @@ public class PaymentActivity extends AppCompatActivity {
 
     String TAG = "PaymentActivity:";
 
+    Intent feedBackIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_layout);
+
+        feedBackIntent = new Intent(getApplicationContext(),TripFeedBackActivity.class);
 
         fareView = findViewById(R.id.ride_fare);
         currentBalView = findViewById(R.id.currentBalView);
@@ -84,8 +88,10 @@ public class PaymentActivity extends AppCompatActivity {
                         }
                         if (documentSnapshot != null && documentSnapshot.exists()) {
                             String strFare = (String) documentSnapshot.get("est_fare");
+                            String yourDriverEmail = (String) documentSnapshot.get("driver_email");
                             assert strFare != null;
                             Log.d(TAG,strFare);
+                            feedBackIntent.putExtra("your_driver_email",yourDriverEmail);
                             fareView.setText(strFare);
                         } else {
                             Log.i(TAG,"Document does not exist");
@@ -113,10 +119,6 @@ public class PaymentActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
-
-
 
     }
 
@@ -156,7 +158,7 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     public void goToRating(View view) {
-        Intent feedBackIntent = new Intent(getApplicationContext(),TripFeedBackActivity.class);
+        Log.i(TAG,"request Id:"+requestID);
         feedBackIntent.putExtra("request_Id",requestID);
         feedBackIntent.putExtra("fare",fare);
         startActivity(feedBackIntent);

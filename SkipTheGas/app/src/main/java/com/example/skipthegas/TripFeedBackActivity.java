@@ -40,7 +40,7 @@ public class TripFeedBackActivity extends AppCompatActivity {
     String yourDriverEmail;
     String TAG = "TripFeedBackActivity:";
     double fare;
-    int goodCount,badCount;
+    long goodCount,badCount;
     /**
      * onCreate method for TripFeedBackActivity class
      * @param savedInstanceState
@@ -53,7 +53,10 @@ public class TripFeedBackActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         requestID = intent.getStringExtra("request_Id");
+        yourDriverEmail = intent.getStringExtra("your_driver_email");
         fare = intent.getDoubleExtra("fare",25.0);
+        Log.i(TAG, yourDriverEmail);
+        Toast.makeText(this, "Your driver email:" + yourDriverEmail, Toast.LENGTH_SHORT).show();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -64,24 +67,26 @@ public class TripFeedBackActivity extends AppCompatActivity {
         driverNameView = findViewById(R.id.textView28);
         rideFareView = findViewById(R.id.textView29);
         rideFareView.setText(fare + " QR");
-        firebaseFirestore
-                .collection("all_requests")
-                .document(requestID)
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.d(TAG,"Error occurred " + e.getMessage());
-                            return;
-                        }
-                        if (documentSnapshot!=null && documentSnapshot.exists()) {
-                            // Get drivers Email from request Info
-                            yourDriverEmail = (String) documentSnapshot.get("driver_email");
-                        } else {
-                            Log.i(TAG,"document does not exist");
-                        }
-                    }
-                });
+
+//        firebaseFirestore
+//                .collection("all_requests")
+//                .document(requestID)
+//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+//                        if (e != null) {
+//                            Log.d(TAG,"Error occurred " + e.getMessage());
+//                            return;
+//                        }
+//                        if (documentSnapshot!=null && documentSnapshot.exists()) {
+//                            // Get drivers Email from request Info
+//                            yourDriverEmail = (String) documentSnapshot.get("driver_email");
+//                            Log.i(TAG, yourDriverEmail);
+//                        } else {
+//                            Log.i(TAG,"document does not exist");
+//                        }
+//                    }
+//                });
 
         firebaseFirestore
                 .collection("users")
@@ -94,15 +99,15 @@ public class TripFeedBackActivity extends AppCompatActivity {
                            return;
                        }
                        if (documentSnapshot!=null && documentSnapshot.exists()) {
-                           goodCount = (int) documentSnapshot.get("good_rating");
-                           badCount = (int) documentSnapshot.get("bad_rating");
+                           goodCount = (long) documentSnapshot.get("good_rating");
+                           badCount = (long) documentSnapshot.get("bad_ratings");
                        } else {
                            Log.i(TAG,"document does not exist");
                        }
                     }
                 });
-        goodRatingCntView.setText(Integer.toString(goodCount));
-        badRatingCntView.setText(Integer.toString(badCount));
+        goodRatingCntView.setText(Long.toString(goodCount));
+        badRatingCntView.setText(Long.toString(badCount));
     }
 
     // Good rating ToggleButton
@@ -113,11 +118,11 @@ public class TripFeedBackActivity extends AppCompatActivity {
 
         goodRating.setChecked(true);
         goodCount+=1;
-        goodRatingCntView.setText(Integer.toString(goodCount));
+        goodRatingCntView.setText(Long.toString(goodCount));
         if (badRating.isChecked()) {
             badRating.setChecked(false);
             badCount-=1;
-            badRatingCntView.setText(Integer.toString(badCount));
+            badRatingCntView.setText(Long.toString(badCount));
         }
         Toast.makeText(this, "Liked", Toast.LENGTH_SHORT).show();
     }
@@ -130,11 +135,11 @@ public class TripFeedBackActivity extends AppCompatActivity {
 
         badRating.setChecked(true);
         badCount+=1;
-        badRatingCntView.setText(Integer.toString(badCount));
+        badRatingCntView.setText(Long.toString(badCount));
         if (goodRating.isChecked()) {
             goodRating.setChecked(false);
             goodCount-=1;
-            goodRatingCntView.setText(Integer.toString(goodCount));
+            goodRatingCntView.setText(Long.toString(goodCount));
         }
         Toast.makeText(this, "Disliked", Toast.LENGTH_SHORT).show();
     }
@@ -156,6 +161,7 @@ public class TripFeedBackActivity extends AppCompatActivity {
                 docRef.update("bad_ratings", badCount);
             }
             // TODO: ********** ********** Update your driver ratings in Firebase (You are the rider) ********** **********
+
             Intent riderIntent = new Intent(getApplicationContext(),RiderDrawerActivity.class);
             startActivity(riderIntent);
             finish();
