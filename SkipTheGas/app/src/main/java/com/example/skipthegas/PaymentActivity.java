@@ -1,5 +1,6 @@
 package com.example.skipthegas;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -45,6 +46,7 @@ public class PaymentActivity extends AppCompatActivity {
     Button ratingButton;
     QRCodeWriter writer;
     TextView fareView;
+    TextView currentBalView;
 
     String requestID;
     String riderEmail;
@@ -59,6 +61,7 @@ public class PaymentActivity extends AppCompatActivity {
         setContentView(R.layout.payment_layout);
 
         fareView = findViewById(R.id.ride_fare);
+        currentBalView = findViewById(R.id.currentBalView);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -89,19 +92,21 @@ public class PaymentActivity extends AppCompatActivity {
                         }
                     }
                 });
-        Toast.makeText(this, "fare: "+fare, Toast.LENGTH_SHORT).show();
+
         // get the current balance of the rider
         firebaseFirestore
                 .collection("users")
                 .document(riderEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot snapshot = task.getResult();
                             if (snapshot!=null && snapshot.exists()){
                                 currentBal = (double)snapshot.get("QR_bucks");
+                                currentBalView.setText(Double.toString(currentBal));
                             } else {
                                 Log.i(TAG,"document does not exist");
                             }
@@ -109,15 +114,18 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 });
 
-        // charge from riders balance
-        firebaseFirestore
-                .collection("users")
-                .document(riderEmail)
-                .update("QR_bucks",currentBal - fare);
 
+
+
+
+    }
+
+    public void generateButton(View view) {
         QR_Image = findViewById(R.id.imageView5);
         ratingButton = findViewById(R.id.rating_button);
         writer = new QRCodeWriter();
+        fare = Double.parseDouble(fareView.getText().toString());
+        currentBal = Double.parseDouble(currentBalView.getText().toString());
         try {
             BitMatrix bitMatrix = writer.encode(Double.toString(fare), BarcodeFormat.QR_CODE,500,500,null);
             int height = bitMatrix.getHeight();
@@ -140,6 +148,11 @@ public class PaymentActivity extends AppCompatActivity {
             Toast.makeText(this, "Unable to generate QR-code", Toast.LENGTH_SHORT).show();
             we.printStackTrace();
         }
+        // charge from riders balance
+        firebaseFirestore
+                .collection("users")
+                .document(riderEmail)
+                .update("QR_bucks",currentBal - fare);
     }
 
     public void goToRating(View view) {
