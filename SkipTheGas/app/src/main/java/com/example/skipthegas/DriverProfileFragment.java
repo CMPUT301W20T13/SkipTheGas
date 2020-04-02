@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 
 /**
  * This is a class which implements a fragment displaying a driver's profile
+ * NEED TO DELETE
  */
 public class DriverProfileFragment extends DialogFragment {
     public interface OnFragmentInteractionListener {

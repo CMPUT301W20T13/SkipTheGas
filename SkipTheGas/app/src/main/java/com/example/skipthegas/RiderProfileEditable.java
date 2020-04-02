@@ -82,7 +82,7 @@ public class RiderProfileEditable extends AppCompatActivity {
      *      Changes screens from the rider profile (editable) to the rider profile (read-only)
      */
     public void cancel(View view) {
-        Intent intent = new Intent(this, RiderProfileActivity.class);
+        Intent intent = new Intent(this, RiderDrawerProfileFragment.class);
         startActivity(intent);
     }
 
@@ -102,7 +102,7 @@ public class RiderProfileEditable extends AppCompatActivity {
         phoneEdit = findViewById(R.id.editText5);
         qrDisplay = findViewById(R.id.editText6);
 
-        Intent intent = new Intent(this, RiderProfileActivity.class);
+        Intent intent = new Intent(this, RiderDrawerProfileFragment.class);
         startActivity(intent);
 
 //        // Cloud database initiation
