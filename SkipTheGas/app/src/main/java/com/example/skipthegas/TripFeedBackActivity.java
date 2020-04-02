@@ -31,7 +31,6 @@ public class TripFeedBackActivity extends AppCompatActivity {
 
     TextView goodRatingCntView;
     TextView badRatingCntView;
-    TextView driverNameView;
     TextView rideFareView;
 
     FirebaseFirestore firebaseFirestore;
@@ -57,7 +56,6 @@ public class TripFeedBackActivity extends AppCompatActivity {
         yourDriverEmail = intent.getStringExtra("your_driver_email");
         fare = intent.getDoubleExtra("fare",25.0);
         Log.i(TAG, yourDriverEmail);
-        Toast.makeText(this, "Your driver email:" + yourDriverEmail, Toast.LENGTH_SHORT).show();
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -65,10 +63,22 @@ public class TripFeedBackActivity extends AppCompatActivity {
         badRating = findViewById(R.id.imageView2); // Bad rating ToggleButton
         goodRatingCntView = findViewById(R.id.textView33);
         badRatingCntView = findViewById(R.id.textView34);
-        driverNameView = findViewById(R.id.textView28);
         rideFareView = findViewById(R.id.textView29);
         rideFareView.setText(fare + " QR");
 
+        firebaseFirestore
+                .collection("users")
+                .document(yourDriverEmail)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        if (documentSnapshot!=null){
+                            yourDriverName = (String) documentSnapshot.get("username");
+                        } else {
+                            Log.d(TAG,"no such document");
+                        }
+                    }
+                });
 
         firebaseFirestore
                 .collection("users")
@@ -81,17 +91,16 @@ public class TripFeedBackActivity extends AppCompatActivity {
                            return;
                        }
                        if (documentSnapshot!=null && documentSnapshot.exists()) {
-                           yourDriverName = (String) documentSnapshot.get("username");
                            goodCount = (long) documentSnapshot.get("good_rating");
                            badCount = (long) documentSnapshot.get("bad_ratings");
+                           goodRatingCntView.setText(Long.toString(goodCount));
+                           badRatingCntView.setText(Long.toString(badCount));
                        } else {
                            Log.i(TAG,"document does not exist");
                        }
                     }
                 });
-        goodRatingCntView.setText(Long.toString(goodCount));
-        badRatingCntView.setText(Long.toString(badCount));
-        driverNameView.setText(yourDriverName);
+
     }
 
     // Good rating ToggleButton
