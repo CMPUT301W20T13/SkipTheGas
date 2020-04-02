@@ -128,7 +128,10 @@ public class YourRideRequestActivity extends AppCompatActivity {
 
     }
 
-
+    public String getDriverName() {
+        String driverName = String.valueOf(driver.getText());
+        return driverName;
+    }
 
     /**
      * This displays to the screen that a ride has been cancelled if the user selects "ok" on the
