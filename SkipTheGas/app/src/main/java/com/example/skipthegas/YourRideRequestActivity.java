@@ -43,7 +43,7 @@ public class YourRideRequestActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     String requestID;
     String riderName, riderEmail, riderPhone;
-    String driver_name, driver_email, driver_phone;
+    String driver_name, driver_email, driver_phone, driverGood, driverBad;
 
     /**
      * onCreate method for YourRideRequestActivity class
@@ -93,7 +93,7 @@ public class YourRideRequestActivity extends AppCompatActivity {
                             driver_phone = driverPhone;
                             driver.setText(driverName);
                             driver.setOnClickListener((v)-> {
-                                new UserContactInfoFragment().show(getSupportFragmentManager(), "View Contact Info");
+                                new DriverContactInfoFragment().show(getSupportFragmentManager(), "View Contact Info");
                             });
                         }
                         fare.setText(req_fare);
@@ -105,6 +105,18 @@ public class YourRideRequestActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+//        firebaseFirestore = firebaseFirestore.getInstance();
+//        firebaseFirestore
+//                .collection("users")
+//                .document(driver_email)
+//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                    @Override
+//                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+//                        driverGood = (String) documentSnapshot.getData().get("good_ratings");
+//                        driverBad = (String) documentSnapshot.getData().get("bad_ratings");
+//                    }
+//                });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +156,14 @@ public class YourRideRequestActivity extends AppCompatActivity {
 
     public String getDriverPhone() {
         return driver_phone;
+    }
+
+    public String getDriverGoodRating() {
+        return driverGood;
+    }
+
+    public String getDriverBadRating() {
+        return driverBad;
     }
 
     /**

@@ -20,6 +20,9 @@ import java.util.ArrayList;
 public class CustomList extends ArrayAdapter<Ride> {
     private ArrayList<Ride> rides;
     private Context context;
+    String username;
+    String email;
+    String phone;
 
     CustomList(Context context, ArrayList<Ride> rides){
         super(context, 0, rides);
@@ -50,6 +53,10 @@ public class CustomList extends ArrayAdapter<Ride> {
         //TextView rideDate = view.findViewById(R.id.date_text);
         TextView ridePrice = view.findViewById(R.id.price_text);
 
+        username = ride.getRiderName();
+        email = ride.getRiderEmail();
+        phone = ride.getRiderPhone();
+
         riderName.setText(ride.getRiderName());
         //driverName.setText(ride.getDriver());
         startLoc.setText(ride.getOriginAddress());
@@ -58,10 +65,11 @@ public class CustomList extends ArrayAdapter<Ride> {
         ridePrice.setText(ride.getFare());
 
         riderName.setOnClickListener((v)-> {
-            Intent profile = new Intent(getContext(), RiderProfileActivity.class);
-            context.startActivity(profile);
+            Intent contactInfo = new Intent(getContext(), UserContactInfoFragment.class);
+            context.startActivity(contactInfo);
         });
 
         return view;
     }
+
 }
