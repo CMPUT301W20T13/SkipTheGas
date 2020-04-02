@@ -114,6 +114,7 @@ public class RiderProfileEditable extends AppCompatActivity {
         emailDisplay = findViewById(R.id.editText4);
         phoneEdit = findViewById(R.id.editText5);
         qrDisplay = findViewById(R.id.editText6);
+
         Toast.makeText(this, "Edit Saved Successfully", Toast.LENGTH_SHORT).show();
         finish();
         //Intent intent = new Intent(this, RiderProfileActivity.class);

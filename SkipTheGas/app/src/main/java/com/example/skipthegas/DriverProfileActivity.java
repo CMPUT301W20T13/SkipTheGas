@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * This is a class that governs the driver profile screen
+ * NEED TO DELETE
  */
 public class DriverProfileActivity extends AppCompatActivity {
     /**

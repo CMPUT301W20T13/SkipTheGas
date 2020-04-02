@@ -68,9 +68,6 @@ public class YourRideRequestActivity extends AppCompatActivity {
         status = findViewById(R.id.statusTextView);
         backButton = findViewById(R.id.back_button);
         cancelButton = findViewById(R.id.verificationButton);
-//        driver.setOnClickListener((v)-> {
-//            new DriverProfileFragment().show(getSupportFragmentManager(), "View Profile");
-//        });
 
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -89,6 +86,9 @@ public class YourRideRequestActivity extends AppCompatActivity {
                         start.setText(originAddress);
                         if (driverName != null) {
                             driver.setText(driverName);
+                            driver.setOnClickListener((v)-> {
+                                new DriverProfileFragment().show(getSupportFragmentManager(), "View Profile");
+                            });
                         }
                         fare.setText(req_fare);
                         if(accepted){
