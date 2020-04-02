@@ -78,6 +78,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     FirebaseFirestore firebaseFirestore;
 
+    Intent scannerIntent = new Intent(getApplicationContext(),DriverPaymentScannerActivity.class);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,7 +169,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                                         .collection("all_requests")
                                         .document(requestID)
                                         .update("is_driver_completed",true);
-                                Intent scannerIntent = new Intent(getApplicationContext(), DriverPaymentScannerActivity.class);
                                 startActivity(scannerIntent);
                             }
                         }).create().show();
@@ -219,13 +220,22 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        GeoPoint start = documentSnapshot.getGeoPoint("ride_origin");
-                        GeoPoint end = documentSnapshot.getGeoPoint("ride_destination");
-                        MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
-                        MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
-                        mMap.addMarker(startLocation);
-                        mMap.addMarker(endLocation);
-                        setCamera(start, end);
+                        if (e!=null){
+                            Log.d(TAG,"Error occurred "+e.getMessage());
+                            return;
+                        }
+                        if (documentSnapshot!=null&&documentSnapshot.exists()){
+                            GeoPoint start = documentSnapshot.getGeoPoint("ride_origin");
+                            GeoPoint end = documentSnapshot.getGeoPoint("ride_destination");
+                            MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
+                            MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
+                            mMap.addMarker(startLocation);
+                            mMap.addMarker(endLocation);
+                            setCamera(start, end);
+                        } else {
+                            Log.i(TAG,"Document does not exist");
+                        }
+
                     }
                 });
 

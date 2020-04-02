@@ -82,8 +82,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
     public String userEmail;
     String requestID;
 
-
-
+    Intent paymentIntent = new Intent(getApplicationContext(),PaymentActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +129,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                 if (accepted && !confirmed) {
                                     viewRequestButton.setEnabled(true);
                                     confirmButton.setEnabled(true);
+                                    confirmButton.setTextColor(Color.WHITE);
                                     String driverAcceptedText = "Driver accepted your request. Please confirm.";
                                     driverAcceptedTextView.setText(driverAcceptedText);
                                     String driverName = doc.getString("driver_name");
@@ -146,7 +146,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                     String driverAcceptedText = "Driver accepted your request.";
                                     driverAcceptedTextView.setText(driverAcceptedText);
                                     confirmButton.setEnabled(false);
-                                    confirmButton.setTextColor(Color.WHITE);
+                                    confirmButton.setTextColor(Color.BLACK);
                                     completeButton.setEnabled(true);
                                     completeButton.setTextColor(Color.WHITE);
                                 }
@@ -185,7 +185,6 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                         .collection("all_requests")
                                         .document(requestID)
                                         .update("is_rider_completed",true);
-                                Intent paymentIntent = new Intent(getApplicationContext(),PaymentActivity.class);
                                 paymentIntent.putExtra("request_Id",requestID);
                                 startActivity(paymentIntent);
                             }
