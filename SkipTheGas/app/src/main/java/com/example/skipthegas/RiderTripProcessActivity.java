@@ -66,6 +66,8 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
     private static final String TAG = "RiderProcessActivity";
     private static final int REQUEST_CALL = 1;
 
+    private boolean count = true;
+
     Button viewRequestButton;
     Button confirmButton;
     Button completeButton;
@@ -142,7 +144,10 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                     driverPhoneTextView.setText(driverPhone);
 
                                     //  Notification
-                                    notification();
+                                    if (count) {
+                                        notification();
+                                        count = false;
+                                    }
                                 }
                                 if (accepted && confirmed) {
                                     String driverAcceptedText = "Driver accepted your request.";
