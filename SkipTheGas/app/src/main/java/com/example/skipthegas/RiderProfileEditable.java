@@ -83,6 +83,7 @@ public class RiderProfileEditable extends AppCompatActivity {
             public void onClick(View v) {
                 firebaseFirestore = FirebaseFirestore.getInstance();
                 firebaseFirestore.collection("users").document(email).update("phone", phoneEdit.getText().toString());
+                firebaseFirestore.collection("users").document(email).update("username", usernameDisplay.getText().toString());
                 submitEdit(v);
             }
         });
