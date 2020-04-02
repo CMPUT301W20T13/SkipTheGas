@@ -93,7 +93,7 @@ public class YourRideRequestActivity extends AppCompatActivity {
                             driver_phone = driverPhone;
                             driver.setText(driverName);
                             driver.setOnClickListener((v)-> {
-                                new DriverProfileFragment().show(getSupportFragmentManager(), "View Profile");
+                                new UserContactInfoFragment().show(getSupportFragmentManager(), "View Contact Info");
                             });
                         }
                         fare.setText(req_fare);

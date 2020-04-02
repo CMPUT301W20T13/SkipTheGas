@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,28 +52,29 @@ public class DriverProfileFragment extends DialogFragment {
 
     /**
      * onCreateDialog method for DriverProfileFragment fragment
+     *
      * @param savedInstanceState
      * @return
      */
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        //View view = LayoutInflater.from(getActivity()).inflate(R.layout.driver_profile_fragment_layout, null);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.driver_profile_fragment_layout, null);
 
         YourRideRequestActivity activity = (YourRideRequestActivity) getActivity();
         String driverName = activity.getDriverName();
         String driverEmail = activity.getDriverEmail();
         String driverPhone = activity.getDriverPhone();
 
-//        driverNameTextView = getActivity().findViewById(R.id.username_textView);
-//        driverEmailTextView = getActivity().findViewById(R.id.email_textView);
-//        driverPhoneTextView = getActivity().findViewById(R.id.phone_textView);
-//        driverProfileHeader = getActivity().findViewById(R.id.textView8);
+        driverNameTextView = getActivity().findViewById(R.id.username_textView);
+        driverEmailTextView = getActivity().findViewById(R.id.email_textView);
+        driverPhoneTextView = getActivity().findViewById(R.id.phone_textView);
+        driverProfileHeader = getActivity().findViewById(R.id.textView8);
 //        driverNameTextView.setText(driverName);
 //        driverEmailTextView.setText(driverEmail);
 //        driverPhoneTextView.setText(driverPhone);
-//        driverGoodRating = getActivity().findViewById(R.id.textView10);
-//        driverBadRating = getActivity().findViewById(R.id.textView11);
+        driverGoodRating = getActivity().findViewById(R.id.textView10);
+        driverBadRating = getActivity().findViewById(R.id.textView11);
 
         // get current user info from firebase
 //        firebaseFirestore = FirebaseFirestore.getInstance();
@@ -106,24 +108,26 @@ public class DriverProfileFragment extends DialogFragment {
 //                        driverBadRating.setText(bad);
 //                    }
 //                });
-        String msg1 = "Driver's name: ";
-        String msg2 = "Driver's email: ";
-        String msg3 = "Driver's phone: ";
+//        String msg1 = "Driver's name: ";
+//        String msg2 = "Driver's email: ";
+//        String msg3 = "Driver's phone: ";
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
-                //.setView(view)
+                .setView(view)
                 .setTitle(driverName + "'s Contact Information")
-                .setMessage(msg1 + driverName + "\n" + msg2 + driverEmail + "\n" + msg3 + driverPhone)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                .setMessage(msg1 + driverName + "\n" + msg2 + driverEmail + "\n" + msg3 + driverPhone)
+                .setPositiveButton("View Driver's Profile", new DialogInterface.OnClickListener() {
                     /**
-                     * onClick method that opens driver profile when OK button is clicked
+                     * onClick method that opens driver profile when button is clicked
                      * @param dialogInterface
                      * @param i
                      */
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         Toast.makeText(getActivity(), "Opening Driver Profile", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getActivity(), RiderTripProcessActivity.class);
+                        startActivity(intent);
                     }
                 }).create();
     }
