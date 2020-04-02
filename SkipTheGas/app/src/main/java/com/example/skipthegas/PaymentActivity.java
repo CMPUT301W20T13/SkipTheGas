@@ -28,6 +28,8 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
+import java.util.Locale;
+
 import javax.annotation.Nullable;
 
 
@@ -44,9 +46,11 @@ public class PaymentActivity extends AppCompatActivity {
     FirebaseUser currentUser;
     ImageView QR_Image;
     Button ratingButton;
+    Button tipButton;
     QRCodeWriter writer;
     TextView fareView;
     TextView currentBalView;
+    TextView tipEditText;
 
     String requestID;
     String riderEmail;
@@ -69,6 +73,9 @@ public class PaymentActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
+
+        tipEditText = findViewById(R.id.tip_edit_text);
+        tipButton = findViewById(R.id.add_tip_button);
 
         Intent intent = getIntent();
         requestID = intent.getStringExtra("request_Id");
@@ -112,13 +119,29 @@ public class PaymentActivity extends AppCompatActivity {
                             DocumentSnapshot snapshot = task.getResult();
                             if (snapshot!=null && snapshot.exists()){
                                 currentBal = (double)snapshot.get("QR_bucks");
-                                currentBalView.setText(Double.toString(currentBal));
+                                currentBalView.setText(String.format(Locale.CANADA,"%.2f",(currentBal)));
                             } else {
                                 Log.i(TAG,"document does not exist");
                             }
                         }
                     }
                 });
+        tipButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onClick(View view) {
+                String tip = tipEditText.getText().toString();
+                if (tip.length()==0){
+                    Toast.makeText(PaymentActivity.this, "in valid", Toast.LENGTH_SHORT).show();
+                } else {
+                    double tipDouble = Double.parseDouble(tip);
+                    fare = Double.parseDouble(fareView.getText().toString());
+                    fare +=tipDouble;
+                    fareView.setText(String.format(Locale.CANADA,"%.2f",fare));
+                }
+                tipEditText.setText("");
+            }
+        });
 
     }
 
