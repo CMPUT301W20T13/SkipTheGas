@@ -82,7 +82,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
     public String userEmail;
     String requestID;
 
-    Intent paymentIntent = new Intent(getApplicationContext(),PaymentActivity.class);
+    Intent paymentIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +90,8 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
         setContentView(R.layout.activity_rider_trip_process);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         initMap();
+
+        paymentIntent = new Intent(getApplicationContext(),PaymentActivity.class);
 
         viewRequestButton = findViewById(R.id.rider_process_view_request_button);
         confirmButton = findViewById(R.id.rider_process_confirm_button);

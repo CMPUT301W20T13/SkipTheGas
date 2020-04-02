@@ -78,13 +78,13 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     FirebaseFirestore firebaseFirestore;
 
-    Intent scannerIntent = new Intent(getApplicationContext(),DriverPaymentScannerActivity.class);
+    Intent scannerIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_trip_process);
-
+        scannerIntent = new Intent(getApplicationContext(),DriverPaymentScannerActivity.class);
         riderPhoneTextView = findViewById(R.id.driver_process_rider_phone_TextView);
         completeButton = findViewById(R.id.driver_complete_button);
         riderStartAddressTextView = findViewById(R.id.driver_process_start_location_TextView);
