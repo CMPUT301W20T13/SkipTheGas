@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +44,7 @@ public class PaymentActivity extends AppCompatActivity {
     ImageView QR_Image;
     Button ratingButton;
     QRCodeWriter writer;
+    TextView fareView;
 
     String requestID;
     String riderEmail;
@@ -56,6 +58,7 @@ public class PaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.payment_layout);
 
+        fareView = findViewById(R.id.ride_fare);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -77,12 +80,16 @@ public class PaymentActivity extends AppCompatActivity {
                             return;
                         }
                         if (documentSnapshot != null && documentSnapshot.exists()) {
-                            fare = (double) documentSnapshot.get("est_fare");
+                            String strFare = (String) documentSnapshot.get("est_fare");
+                            assert strFare != null;
+                            Log.d(TAG,strFare);
+                            fareView.setText(strFare);
                         } else {
                             Log.i(TAG,"Document does not exist");
                         }
                     }
                 });
+        Toast.makeText(this, "fare: "+fare, Toast.LENGTH_SHORT).show();
         // get the current balance of the rider
         firebaseFirestore
                 .collection("users")
