@@ -40,6 +40,9 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
         firebaseAuth = FirebaseAuth.getInstance();
         userEmail = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getEmail();
 
+        Intent intent = getIntent();
+        currentBal = intent.getDoubleExtra("current_balance", 300.0);
+
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
 
@@ -144,18 +147,18 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
                     scannerView.resumeCameraPreview(DriverPaymentScannerActivity.this);
                 })
                 .setPositiveButton("Accept", (dialogInterface, i) -> {
-                    firebaseFirestore.collection("users").document(userEmail)
-                            .addSnapshotListener((documentSnapshot, e) -> {
-                                if (e != null) {
-                                    Log.i(TAG,"get op failed");
-                                    return;
-                                }
-                                if (documentSnapshot != null && documentSnapshot.exists()) {
-                                    currentBal = (double)documentSnapshot.get("QR_bucks");
-                                } else {
-                                    Log.i(TAG,"Current data: null");
-                                }
-                            });
+//                    firebaseFirestore.collection("users").document(userEmail)
+//                            .addSnapshotListener((documentSnapshot, e) -> {
+//                                if (e != null) {
+//                                    Log.i(TAG,"get op failed");
+//                                    return;
+//                                }
+//                                if (documentSnapshot != null && documentSnapshot.exists()) {
+//                                    currentBal = (double)documentSnapshot.get("QR_bucks");
+//                                } else {
+//                                    Log.i(TAG,"Current data: null");
+//                                }
+//                            });
                     firebaseFirestore
                             .collection("users")
                             .document(userEmail)
