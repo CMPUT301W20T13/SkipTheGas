@@ -38,6 +38,7 @@ public class TripFeedBackActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     String requestID;
     String yourDriverEmail;
+    String yourDriverName;
     String TAG = "TripFeedBackActivity:";
     double fare;
     long goodCount,badCount;
@@ -68,25 +69,6 @@ public class TripFeedBackActivity extends AppCompatActivity {
         rideFareView = findViewById(R.id.textView29);
         rideFareView.setText(fare + " QR");
 
-//        firebaseFirestore
-//                .collection("all_requests")
-//                .document(requestID)
-//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-//                        if (e != null) {
-//                            Log.d(TAG,"Error occurred " + e.getMessage());
-//                            return;
-//                        }
-//                        if (documentSnapshot!=null && documentSnapshot.exists()) {
-//                            // Get drivers Email from request Info
-//                            yourDriverEmail = (String) documentSnapshot.get("driver_email");
-//                            Log.i(TAG, yourDriverEmail);
-//                        } else {
-//                            Log.i(TAG,"document does not exist");
-//                        }
-//                    }
-//                });
 
         firebaseFirestore
                 .collection("users")
@@ -99,6 +81,7 @@ public class TripFeedBackActivity extends AppCompatActivity {
                            return;
                        }
                        if (documentSnapshot!=null && documentSnapshot.exists()) {
+                           yourDriverName = (String) documentSnapshot.get("username");
                            goodCount = (long) documentSnapshot.get("good_rating");
                            badCount = (long) documentSnapshot.get("bad_ratings");
                        } else {
@@ -108,6 +91,7 @@ public class TripFeedBackActivity extends AppCompatActivity {
                 });
         goodRatingCntView.setText(Long.toString(goodCount));
         badRatingCntView.setText(Long.toString(badCount));
+        driverNameView.setText(yourDriverName);
     }
 
     // Good rating ToggleButton

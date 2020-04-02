@@ -2,6 +2,7 @@ package com.example.skipthegas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class DriverDrawerProfileFragment extends Fragment {
     String driverName;
     String driverPhone;
     String driverEmail;
+    String TAG = "DriverDrawerProfileFragment";
     double QRBucks;
     long goodRating;
     long badRating;
@@ -99,23 +101,33 @@ public class DriverDrawerProfileFragment extends Fragment {
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        driverName = documentSnapshot.getString("username");
-                        driverPhone = documentSnapshot.getString("phone");
-                        QRBucks = (double) documentSnapshot.getData().get("QR_bucks");
-                        goodRating = (long) documentSnapshot.getData().get("good_rating");
-                        badRating = (long) documentSnapshot.getData().get("bad_ratings");
-                        String QR = String.valueOf(QRBucks);
-                        String good = String.valueOf(goodRating);
-                        String bad = String.valueOf(badRating);
+                        if (e!=null) {
+                            Log.i(TAG,"Error:"+e.getMessage());
+                            return;
+                        }
 
-                        String header = driverName + "'s Profile";
-                        driverNameEditText.setText(driverName);
-                        driverPhoneEditText.setText(driverPhone);
-                        driverEmailEditText.setText(driverEmail);
-                        driverProfileHeader.setText(header);
-                        driverQRBucks.setText(QR);
-                        driverGoodRating.setText(good);
-                        driverBadRating.setText(bad);
+                        if (documentSnapshot!=null && documentSnapshot.exists()){
+                            driverName = documentSnapshot.getString("username");
+                            driverPhone = documentSnapshot.getString("phone");
+                            QRBucks = (double) documentSnapshot.getData().get("QR_bucks");
+                            goodRating = (long) documentSnapshot.getData().get("good_rating");
+                            badRating = (long) documentSnapshot.getData().get("bad_ratings");
+                            String QR = String.valueOf(QRBucks);
+                            String good = String.valueOf(goodRating);
+                            String bad = String.valueOf(badRating);
+
+                            String header = driverName + "'s Profile";
+                            driverNameEditText.setText(driverName);
+                            driverPhoneEditText.setText(driverPhone);
+                            driverEmailEditText.setText(driverEmail);
+                            driverProfileHeader.setText(header);
+                            driverQRBucks.setText(QR);
+                            driverGoodRating.setText(good);
+                            driverBadRating.setText(bad);
+                        } else {
+                            Log.d(TAG,"No such document");
+                        }
+
                     }
                 });
         editButton.setOnClickListener(new View.OnClickListener() {
