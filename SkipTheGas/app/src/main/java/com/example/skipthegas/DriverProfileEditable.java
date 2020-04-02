@@ -3,8 +3,10 @@ package com.example.skipthegas;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,9 +36,10 @@ public class DriverProfileEditable extends AppCompatActivity {
     FirebaseUser firebaseUser;
 
     EditText driverName;
-    EditText driverEmail;
+    TextView driverEmail;
     EditText driverPhone;
     TextView driverHeader;
+    Button submit_button;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,7 @@ public class DriverProfileEditable extends AppCompatActivity {
         driverEmail = findViewById(R.id.driver_edit_email);
         driverPhone = findViewById(R.id.driver_edit_phone);
         driverHeader = findViewById(R.id.driver_edit_header);
+        submit_button = findViewById(R.id.submitButton);
 
 
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -68,9 +72,15 @@ public class DriverProfileEditable extends AppCompatActivity {
 
                     }
                 });
-
-
-
+        submit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseFirestore = FirebaseFirestore.getInstance();
+                firebaseFirestore.collection("users").document(driverEmailString).update("phone", driverPhone.getText().toString());
+                firebaseFirestore.collection("users").document(driverEmailString).update("username", driverName.getText().toString());
+                submitEdit(v);
+            }
+        });
     }
 
     /**
@@ -80,8 +90,9 @@ public class DriverProfileEditable extends AppCompatActivity {
      *      Changes screens from the driver profile (editable) to the driver profile (read-only)
      */
     public void cancel(View view) {
-        Intent intent = new Intent(this, DriverDrawerActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, DriverDrawerActivity.class);
+        //startActivity(intent);
+        finish();
     }
 
     /**
@@ -92,7 +103,9 @@ public class DriverProfileEditable extends AppCompatActivity {
      *      Changes screens from the driver profile (editable) to the driver profile (read-only)
      */
     public void submitEdit(View view) {
-        Intent intent = new Intent(this, DriverDrawerActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this, DriverDrawerActivity.class);
+        Toast.makeText(this, "Edit Saved Successfully", Toast.LENGTH_SHORT).show();
+        finish();
+        //startActivity(intent);
     }
 }
