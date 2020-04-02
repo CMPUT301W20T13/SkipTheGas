@@ -76,7 +76,7 @@ public class TripFeedBackActivity extends AppCompatActivity {
                         }
                         if (documentSnapshot!=null && documentSnapshot.exists()) {
                             // Get drivers Email from request Info
-                            yourDriverEmail = (String) documentSnapshot.get("driver_name");
+                            yourDriverEmail = (String) documentSnapshot.get("driver_email");
                         } else {
                             Log.i(TAG,"document does not exist");
                         }
