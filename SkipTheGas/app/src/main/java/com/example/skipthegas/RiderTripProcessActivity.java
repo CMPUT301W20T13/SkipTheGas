@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -145,7 +146,9 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                     String driverAcceptedText = "Driver accepted your request.";
                                     driverAcceptedTextView.setText(driverAcceptedText);
                                     confirmButton.setEnabled(false);
+                                    confirmButton.setTextColor(Color.WHITE);
                                     completeButton.setEnabled(true);
+                                    completeButton.setTextColor(Color.WHITE);
                                 }
                                 calculateDirections(startLocation, endLocation);
                             }
