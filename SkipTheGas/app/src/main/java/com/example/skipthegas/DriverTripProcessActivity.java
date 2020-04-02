@@ -64,6 +64,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     private GeoApiContext mGeoApiContext = null;
     public String requestID;
     private static final int REQUEST_CALL = 1;
+    private boolean count = true;
 
     Button completeButton;
     TextView riderPhoneTextView;
@@ -134,7 +135,10 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                                 riderConfirmTextView.setText("Waiting for Rider to confirm.");
                             } else {
                                 riderConfirmTextView.setText("Rider confirmed your request.");
-                                notification();
+                                if (count) {
+                                    notification();
+                                    count = false;
+                                }
                             }
                             if (cancel) {
                                 Toast.makeText(getApplicationContext(), "Driver Canceled Request", Toast.LENGTH_SHORT).show();
