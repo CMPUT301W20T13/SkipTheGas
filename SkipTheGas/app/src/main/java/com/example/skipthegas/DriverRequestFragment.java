@@ -55,6 +55,10 @@ public class DriverRequestFragment extends Fragment {
     private String driverPhone;
     private String driverEmail;
 
+    String rider_name;
+    String rider_email;
+    String rider_phone;
+
     private int p;
     public Ride rides;
 
@@ -141,6 +145,10 @@ public class DriverRequestFragment extends Fragment {
                                 String originAddress = (String) doc.getData().get("origin_address");
                                 String destinationAddress = (String) doc.getData().get("destination_address");
 
+                                rider_name = riderName;
+                                rider_email = riderEmail;
+                                rider_phone = riderPhone;
+
                                 rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, false, false, originAddress, destinationAddress, requestID, false, false));
                             }
                         }
@@ -214,5 +222,17 @@ public class DriverRequestFragment extends Fragment {
 
             }
         });
+    }
+
+    public String getUsername() {
+        return rider_name;
+    }
+
+    public String getEmail() {
+        return rider_email;
+    }
+
+    public String getPhone() {
+        return rider_phone;
     }
 }
