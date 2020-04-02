@@ -119,6 +119,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/rider_process_view_request_button"
             android:text="View Current Request"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/roundedbutton"
             tools:ignore="HardcodedText"
             android:enabled="true"/>
 
@@ -142,6 +144,8 @@
                 android:layout_weight="2"
                 android:enabled="false"
                 android:text="Confirm"
+                android:textColor="#000000"
+                android:background="@drawable/roundedbutton"
                 tools:ignore="HardcodedText" />
 
         </LinearLayout>
@@ -158,6 +162,8 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Complete"
+            android:textColor="#000000"
+            android:background="@drawable/roundedbutton"
             android:enabled="false"
             tools:ignore="HardcodedText" />
 
