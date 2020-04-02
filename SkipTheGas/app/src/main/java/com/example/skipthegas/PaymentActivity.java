@@ -137,6 +137,8 @@ public class PaymentActivity extends AppCompatActivity {
 
     public void goToRating(View view) {
         Intent feedBackIntent = new Intent(getApplicationContext(),TripFeedBackActivity.class);
+        feedBackIntent.putExtra("request_Id",requestID);
+        feedBackIntent.putExtra("fare",fare);
         startActivity(feedBackIntent);
     }
 }

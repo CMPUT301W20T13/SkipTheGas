@@ -3,6 +3,7 @@ package com.example.skipthegas;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -19,12 +20,15 @@ import java.util.Objects;
 
 /**
  * This is a class that governs the rider profile screen
+ * NEED TO DELETE
  */
 public class RiderProfileActivity extends AppCompatActivity {
 
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
-    TextView riderName,riderEmail,riderPhone,header;
+    TextView riderName, riderEmail, riderPhone, riderQR, header;
+//    Button editButton, requestButton, logoutButton;
+    double QRBucks;
 
     /**
      * onCreate method for RiderProfileActivity class
@@ -43,6 +47,12 @@ public class RiderProfileActivity extends AppCompatActivity {
         riderName = findViewById(R.id.rider_name);
         riderEmail = findViewById(R.id.rider_email);
         riderPhone = findViewById(R.id.rider_phone_number);
+        riderQR = findViewById(R.id.account_balance);
+
+//        editButton = findViewById(R.id.editButton);
+//        requestButton = findViewById(R.id.requestButton);
+//        logoutButton = findViewById(R.id.logout_button);
+
         FirebaseUser rider = firebaseAuth.getCurrentUser();
         assert rider != null;
         firebaseFirestore
@@ -57,6 +67,9 @@ public class RiderProfileActivity extends AppCompatActivity {
                             riderName.setText(documentSnapshot.getString("username"));
                             riderEmail.setText(documentSnapshot.getString("email"));
                             riderPhone.setText(documentSnapshot.getString("phone"));
+
+                            QRBucks = (double) documentSnapshot.getData().get("QR_bucks");
+                            riderQR.setText(String.valueOf(QRBucks));
                         }
                     }
                 });

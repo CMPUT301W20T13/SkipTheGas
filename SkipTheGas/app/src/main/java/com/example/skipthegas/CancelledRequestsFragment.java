@@ -56,11 +56,6 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
     private String riderPhone;
     private String riderEmail;
 
-    String[] usernameArray;
-    String[] startLocArray;
-    String[] endLocArray;
-    String[] qrArray;
-
     private int p;
     public Ride requests;
 
@@ -116,7 +111,6 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
         requestList = new ArrayList<>();
         cancelledReqList = getActivity().findViewById(R.id.cancelled_requests_list);
         requestAdapter = new CustomList(getActivity(), requestList);
-        //requestAdapter = new ArrayAdapter<Ride>(getActivity(), R.layout.content, requestList);
 
         cancelledReqList.setAdapter(requestAdapter);
 
@@ -161,37 +155,6 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
 
         Log.v("Ride Info", requestList.toString());
 
-//        for (int i = 0; i < size(requestList); i++) {
-//            Ride req = requestList.get(i);
-//            String username = req.getRiderName();
-//            usernameArray = addElement(i, usernameArray, username);
-//        }
-//        for (int i = 0; i < size(requestList); i++) {
-//            Ride req = requestList.get(i);
-//            String startLoc = req.getOriginAddress();
-//            startLocArray = addElement(i, startLocArray, startLoc);
-//        }
-//        for (int i = 0; i < size(requestList); i++) {
-//            Ride req = requestList.get(i);
-//            String endLoc = req.getDestinationAddress();
-//            endLocArray = addElement(i, endLocArray, endLoc);
-//        }
-//        for (int i = 0; i < size(requestList); i++) {
-//            Ride req = requestList.get(i);
-//            String qr_bucks = req.getFare();
-//            qrArray = addElement(i, qrArray, qr_bucks);
-//        }
-
-        //usernameArray = new String[]{"Nan", "Nan"};
-        //startLocArray = new String[]{"Origin1", "Origin2"};
-        //endLocArray = new String[]{"Destination1", "Destination2"};
-        //qrArray = new String[]{"10", "20"};
-
-        //ReqListAdapter populate = new ReqListAdapter(getActivity(), usernameArray, startLocArray, endLocArray, qrArray);
-
-        //cancelledReqList = getActivity().findViewById(R.id.cancelled_requests_list);
-        //cancelledReqList.setAdapter(populate);
-
     }
 
     @Override
@@ -212,15 +175,4 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
         transaction.commit();
     }
 
-    public static String[] addElement(int n, String[] elementArray, String newElement) {
-        String newArray[] = new String[n + 1];
-
-        // insert the elements from old array into new array
-        for (int i = 0; i < n; i++)
-            newArray[i] = elementArray[i];
-
-        newArray[n] = newElement;
-
-        return newArray;
-    }
 }

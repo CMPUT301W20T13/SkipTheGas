@@ -121,6 +121,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                             MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
                             MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
                             boolean riderConfirm = documentSnapshot.getBoolean("is_confirmed");
+                            boolean cancel = documentSnapshot.getBoolean("is_cancel");
                             riderPhoneTextView.setText(riderPhone);
                             riderStartAddressTextView.setText(startAddress);
                             riderEndAddressTextView.setText(endAddress);
@@ -132,6 +133,12 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                             } else {
                                 riderConfirmTextView.setText("Rider confirmed your request.");
                                 notification();
+                            }
+                            if (cancel) {
+                                Toast.makeText(getApplicationContext(), "Driver Canceled Request", Toast.LENGTH_SHORT).show();
+                                Intent cancelIntent = new Intent(getApplicationContext(), DriverDrawerActivity.class);
+                                startActivity(cancelIntent);
+                                finish();
                             }
                         } else {
                             Log.d(TAG, "Current data: null");
