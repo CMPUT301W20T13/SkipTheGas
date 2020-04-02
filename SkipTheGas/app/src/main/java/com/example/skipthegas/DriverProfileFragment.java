@@ -57,55 +57,64 @@ public class DriverProfileFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.driver_profile_fragment_layout, null);
+        //View view = LayoutInflater.from(getActivity()).inflate(R.layout.driver_profile_fragment_layout, null);
 
-        //YourRideRequestActivity activity = (YourRideRequestActivity) getActivity();
-        //String driverName = activity.getDriverName();
+        YourRideRequestActivity activity = (YourRideRequestActivity) getActivity();
+        String driverName = activity.getDriverName();
+        String driverEmail = activity.getDriverEmail();
+        String driverPhone = activity.getDriverPhone();
 
-        driverNameTextView = getActivity().findViewById(R.id.username_textView);
-        driverPhoneTextView = getActivity().findViewById(R.id.phone_textView);
-        driverEmailTextView = getActivity().findViewById(R.id.email_textView);
-        driverProfileHeader = getActivity().findViewById(R.id.textView8);
-        driverGoodRating = getActivity().findViewById(R.id.textView10);
-        driverBadRating = getActivity().findViewById(R.id.textView11);
+//        driverNameTextView = getActivity().findViewById(R.id.username_textView);
+//        driverEmailTextView = getActivity().findViewById(R.id.email_textView);
+//        driverPhoneTextView = getActivity().findViewById(R.id.phone_textView);
+//        driverProfileHeader = getActivity().findViewById(R.id.textView8);
+//        driverNameTextView.setText(driverName);
+//        driverEmailTextView.setText(driverEmail);
+//        driverPhoneTextView.setText(driverPhone);
+//        driverGoodRating = getActivity().findViewById(R.id.textView10);
+//        driverBadRating = getActivity().findViewById(R.id.textView11);
 
         // get current user info from firebase
-        firebaseFirestore = FirebaseFirestore.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
-        driverEmail = firebaseUser.getEmail();
-        firebaseFirestore
-                .collection("users")
-                .document(Objects.requireNonNull(driverEmail))
-                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    /**
-                     * Method sets the edit text fields in the edit driver profile page
-                     * @param documentSnapshot
-                     * @param e
-                     */
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        driverName = documentSnapshot.getString("username");
-                        driverPhone = documentSnapshot.getString("phone");
-                        goodRating = (long) documentSnapshot.getData().get("good_rating");
-                        badRating = (long) documentSnapshot.getData().get("bad_ratings");
-                        String good = String.valueOf(goodRating);
-                        String bad = String.valueOf(badRating);
-
-                        String header = driverName + "'s Profile";
-                        driverNameTextView.setText(driverName);
-                        driverPhoneTextView.setText(driverPhone);
-                        driverEmailTextView.setText(driverEmail);
-                        driverProfileHeader.setText(header);
-                        driverGoodRating.setText(good);
-                        driverBadRating.setText(bad);
-                    }
-                });
+//        firebaseFirestore = FirebaseFirestore.getInstance();
+//        firebaseAuth = FirebaseAuth.getInstance();
+//        firebaseUser = firebaseAuth.getCurrentUser();
+//        driverEmail = firebaseUser.getEmail();
+//        firebaseFirestore
+//                .collection("users")
+//                .document(Objects.requireNonNull(driverEmail))
+//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//                    /**
+//                     * Method sets the edit text fields in the edit driver profile page
+//                     * @param documentSnapshot
+//                     * @param e
+//                     */
+//                    @Override
+//                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+//                        driverName = documentSnapshot.getString("username");
+//                        driverPhone = documentSnapshot.getString("phone");
+//                        goodRating = (long) documentSnapshot.getData().get("good_rating");
+//                        badRating = (long) documentSnapshot.getData().get("bad_ratings");
+//                        String good = String.valueOf(goodRating);
+//                        String bad = String.valueOf(badRating);
+//
+//                        String header = driverName + "'s Profile";
+//                        driverNameTextView.setText(driverName);
+//                        driverPhoneTextView.setText(driverPhone);
+//                        driverEmailTextView.setText(driverEmail);
+//                        driverProfileHeader.setText(header);
+//                        driverGoodRating.setText(good);
+//                        driverBadRating.setText(bad);
+//                    }
+//                });
+        String msg1 = "Driver's name: ";
+        String msg2 = "Driver's email: ";
+        String msg3 = "Driver's phone: ";
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
-                .setView(view)
-                .setTitle("Fitzhugh Phillifent's Profile")
+                //.setView(view)
+                .setTitle(driverName + "'s Contact Information")
+                .setMessage(msg1 + driverName + "\n" + msg2 + driverEmail + "\n" + msg3 + driverPhone)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     /**
                      * onClick method that opens driver profile when OK button is clicked
