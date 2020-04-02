@@ -43,6 +43,7 @@ public class YourRideRequestActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     String requestID;
     String riderName, riderEmail, riderPhone;
+    String driver_name, driver_email, driver_phone;
 
     /**
      * onCreate method for YourRideRequestActivity class
@@ -80,11 +81,16 @@ public class YourRideRequestActivity extends AppCompatActivity {
                         boolean accepted = (boolean) documentSnapshot.getData().get("is_accepted");
                         String req_fare = (String) documentSnapshot.getData().get("est_fare");
                         String driverName = (String) documentSnapshot.getData().get("driver_name");
+                        String driverPhone = (String) documentSnapshot.getData().get("driver_phone");
+                        String driverEmail = (String) documentSnapshot.getData().get("driver_email");
                         String destinationAddress = (String) documentSnapshot.getData().get("destination_address");
                         String originAddress = (String) documentSnapshot.getData().get("origin_address");
                         end.setText(destinationAddress);
                         start.setText(originAddress);
                         if (driverName != null) {
+                            driver_name = driverName;
+                            driver_email = driverEmail;
+                            driver_phone = driverPhone;
                             driver.setText(driverName);
                             driver.setOnClickListener((v)-> {
                                 new DriverProfileFragment().show(getSupportFragmentManager(), "View Profile");
@@ -129,8 +135,15 @@ public class YourRideRequestActivity extends AppCompatActivity {
     }
 
     public String getDriverName() {
-        String driverName = String.valueOf(driver.getText());
-        return driverName;
+        return driver_name;
+    }
+
+    public String getDriverEmail() {
+        return driver_email;
+    }
+
+    public String getDriverPhone() {
+        return driver_phone;
     }
 
     /**
