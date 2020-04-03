@@ -60,8 +60,6 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
                 break;
             case R.id.nav_request:
                 getSupportFragmentManager().beginTransaction().replace(R.id.driver_fragment_container, new DriverRequestFragment()).commit();
-//                Intent activeRequestIntent = new Intent(this, ActiveRequestsActivity.class);
-//                startActivity(activeRequestIntent);
                 break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.driver_fragment_container, new DriverDrawerProfileFragment()).commit();

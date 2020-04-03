@@ -165,8 +165,6 @@ public class SignUpActivity extends AppCompatActivity {
                             users.put("good_rating", 0);
                             users.put("bad_ratings", 0);
 
-                            /* MORE USER INFO IS NEEDED */
-
                             // Adding set of information to collection users
                             documentReference.set(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -180,8 +178,6 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             });
 
-                            // Direct user to Rider's screen
-//                            startActivity(new Intent(getApplicationContext(), RidersActivity.class));
                             progressBar.setVisibility(View.GONE);
 
                             // start new activity after click on the button and sign up successfully.

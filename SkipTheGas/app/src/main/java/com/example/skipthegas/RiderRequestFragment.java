@@ -87,12 +87,4 @@ public class RiderRequestFragment extends Fragment implements View.OnClickListen
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
-//    private void swapFragment(){
-//        Fragment CancelledRequestsFragment = new Fragment();
-//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.rider_fragment_container, CancelledRequestsFragment);
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-//    }
 }

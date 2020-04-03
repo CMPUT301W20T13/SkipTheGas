@@ -27,6 +27,7 @@ public class VerifyActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent selectionPageIntent = new Intent(getApplicationContext(), SelectionActivity.class);
                 startActivity(selectionPageIntent);
+                finish();
             }
         });
     }

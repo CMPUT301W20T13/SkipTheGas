@@ -27,7 +27,6 @@ public class RiderProfileActivity extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     TextView riderName, riderEmail, riderPhone, riderQR, header;
-//    Button editButton, requestButton, logoutButton;
     double QRBucks;
 
     /**
@@ -48,10 +47,6 @@ public class RiderProfileActivity extends AppCompatActivity {
         riderEmail = findViewById(R.id.rider_email);
         riderPhone = findViewById(R.id.rider_phone_number);
         riderQR = findViewById(R.id.account_balance);
-
-//        editButton = findViewById(R.id.editButton);
-//        requestButton = findViewById(R.id.requestButton);
-//        logoutButton = findViewById(R.id.logout_button);
 
         FirebaseUser rider = firebaseAuth.getCurrentUser();
         assert rider != null;

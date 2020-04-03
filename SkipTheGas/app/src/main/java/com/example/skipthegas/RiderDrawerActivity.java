@@ -36,10 +36,6 @@ public class RiderDrawerActivity extends AppCompatActivity implements Navigation
         riderDrawer = findViewById(R.id.rider_drawer_layout);
         NavigationView rider_navigationView = findViewById(R.id.rider_nav_view);
         rider_navigationView.setNavigationItemSelectedListener(this);
-//        rider_navigationView.getMenu().findItem(R.id.rider_logout).setOnMenuItemClickListener(MenuItem -> {
-//            logout();
-//            return true;
-//        });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, riderDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         riderDrawer.addDrawerListener(toggle);
