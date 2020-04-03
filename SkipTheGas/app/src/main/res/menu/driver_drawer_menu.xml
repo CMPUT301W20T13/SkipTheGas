@@ -27,7 +27,7 @@
         <menu>
             <item
                 android:id="@+id/driver_nav_logout"
-                android:icon="@drawable/ic_menu_profile"
+                android:icon="@drawable/ic_exit_to_app"
                 android:title="Logout"
                 tools:ignore="HardcodedText" />
         </menu>
