@@ -236,9 +236,7 @@ public class RiderActivity extends FragmentActivity implements OnMapReadyCallbac
                     // Estimated ride fare is calculated using a rate of $0.81 per km on top of a minimum fare of $5.25
                     double ride_fare = 5.25 + (ride_dist*0.81);
                     String rounded_fare = twoDecPoints.format(ride_fare);
-//                    Ride ride = new Ride(username, phone, email, origin, destination, rounded_dist,
-//                            rounded_time, rounded_fare, null, null,
-//                            null, false, false, originAddress, destinationAddress, null, false);
+
                     new AlertDialog.Builder(RiderActivity.this)
                             .setTitle("Requested Ride Details")
                             .setMessage(msg1 + rounded_dist + " km" + "\n"

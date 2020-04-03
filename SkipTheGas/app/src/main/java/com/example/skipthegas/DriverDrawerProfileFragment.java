@@ -137,10 +137,5 @@ public class DriverDrawerProfileFragment extends Fragment {
                 startActivity(editProfileIntent);
             }
         });
-
-
-//        driverNameEditText.setText(driverName);
-//        driverPhoneEditText.setText(driverPhone);
-//        driverEmailEditText.setText(driverEmail);
     }
 }

@@ -147,18 +147,6 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
                     scannerView.resumeCameraPreview(DriverPaymentScannerActivity.this);
                 })
                 .setPositiveButton("Accept", (dialogInterface, i) -> {
-//                    firebaseFirestore.collection("users").document(userEmail)
-//                            .addSnapshotListener((documentSnapshot, e) -> {
-//                                if (e != null) {
-//                                    Log.i(TAG,"get op failed");
-//                                    return;
-//                                }
-//                                if (documentSnapshot != null && documentSnapshot.exists()) {
-//                                    currentBal = (double)documentSnapshot.get("QR_bucks");
-//                                } else {
-//                                    Log.i(TAG,"Current data: null");
-//                                }
-//                            });
                     firebaseFirestore
                             .collection("users")
                             .document(userEmail)

@@ -90,8 +90,6 @@ public class DriverProfileEditable extends AppCompatActivity {
      *      Changes screens from the driver profile (editable) to the driver profile (read-only)
      */
     public void cancel(View view) {
-        //Intent intent = new Intent(this, DriverDrawerActivity.class);
-        //startActivity(intent);
         finish();
     }
 

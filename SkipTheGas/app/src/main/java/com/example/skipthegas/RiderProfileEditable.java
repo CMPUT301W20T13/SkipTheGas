@@ -118,19 +118,5 @@ public class RiderProfileEditable extends AppCompatActivity {
 
         Toast.makeText(this, "Edit Saved Successfully", Toast.LENGTH_SHORT).show();
         finish();
-        //Intent intent = new Intent(this, RiderProfileActivity.class);
-        //startActivity(intent);
-
-//        // Cloud database initiation
-//        firebaseFirestore = FirebaseFirestore.getInstance();
-//        firebaseAuth = FirebaseAuth.getInstance();
-//        final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-//        assert firebaseUser != null;
-//        email = firebaseUser.getEmail();
-//
-//        // Updates the user contact info on database
-//        firebaseFirestore.collection("users").document(email).update("phone", phoneEdit.getText());
-//
-//        // Passes updated info back to view-only profile
     }
 }
