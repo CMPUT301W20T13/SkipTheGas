@@ -100,8 +100,11 @@ public class DriverRequestFragment extends Fragment {
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        driverName = documentSnapshot.getString("username");
-                        driverPhone = documentSnapshot.getString("phone");
+                        if (documentSnapshot!=null){
+                            driverName = documentSnapshot.getString("username");
+                            driverPhone = documentSnapshot.getString("phone");
+                        }
+
                     }
                 });
 
