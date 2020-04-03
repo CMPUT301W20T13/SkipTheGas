@@ -127,32 +127,34 @@ public class DriverRequestFragment extends Fragment {
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         rideDataList.clear();
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            String requestID = doc.getId();
-                            boolean accepted = (boolean) doc.getData().get("is_accepted");
-                            boolean cancel = (boolean) doc.getData().get("is_cancel");
-                            if (!accepted && !cancel) {
-                                String riderName = (String) doc.getData().get("rider_name");
-                                String riderPhone = (String) doc.getData().get("rider_phone");
-                                String riderEmail = (String) doc.getData().get("rider_email");
-                                GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
-                                GeoPoint destination = (GeoPoint) doc.getData().get("ride_destination");
-                                String dist = (String) doc.getData().get("est_distance");
-                                String time = (String) doc.getData().get("est_time");
-                                String fare = (String) doc.getData().get("est_fare");
-                                String driverName = (String) doc.getData().get("driver_name");
-                                String driverPhone = (String) doc.getData().get("driver_phone");
-                                String driverEmail = (String) doc.getData().get("driver_email");
+                        if (queryDocumentSnapshots!=null) {
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                String requestID = doc.getId();
+                                boolean accepted = (boolean) doc.getData().get("is_accepted");
+                                boolean cancel = (boolean) doc.getData().get("is_cancel");
+                                if (!accepted && !cancel) {
+                                    String riderName = (String) doc.getData().get("rider_name");
+                                    String riderPhone = (String) doc.getData().get("rider_phone");
+                                    String riderEmail = (String) doc.getData().get("rider_email");
+                                    GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
+                                    GeoPoint destination = (GeoPoint) doc.getData().get("ride_destination");
+                                    String dist = (String) doc.getData().get("est_distance");
+                                    String time = (String) doc.getData().get("est_time");
+                                    String fare = (String) doc.getData().get("est_fare");
+                                    String driverName = (String) doc.getData().get("driver_name");
+                                    String driverPhone = (String) doc.getData().get("driver_phone");
+                                    String driverEmail = (String) doc.getData().get("driver_email");
 //                                boolean accepted = (boolean) doc.getData().get("is_accepted");
 //                                boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
-                                String originAddress = (String) doc.getData().get("origin_address");
-                                String destinationAddress = (String) doc.getData().get("destination_address");
+                                    String originAddress = (String) doc.getData().get("origin_address");
+                                    String destinationAddress = (String) doc.getData().get("destination_address");
 
-                                rider_name = riderName;
-                                rider_email = riderEmail;
-                                rider_phone = riderPhone;
+                                    rider_name = riderName;
+                                    rider_email = riderEmail;
+                                    rider_phone = riderPhone;
 
-                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, false, false, originAddress, destinationAddress, requestID, false, false));
+                                    rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, false, false, originAddress, destinationAddress, requestID, false, false));
+                                }
                             }
                         }
                         rideAdapter.notifyDataSetChanged();
