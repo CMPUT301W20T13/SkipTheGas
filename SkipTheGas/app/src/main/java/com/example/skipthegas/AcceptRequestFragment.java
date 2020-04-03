@@ -95,8 +95,6 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        LayoutInflater layoutInflater = getActivity().getLayoutInflater();
-//        View view = layoutInflater.inflate(R.layout.accept_request_layout, container, false);
 
         if (view != null) {
             ViewGroup parent = (ViewGroup) view.getParent();
@@ -110,8 +108,6 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
         } catch (InflateException e) {
             Toast.makeText(getActivity(), "Fragment Success", Toast.LENGTH_SHORT).show();
         }
-//        View view =  inflater.inflate(R.layout.accept_request_layout, container, false);
-
 
         Bundle bundle = getArguments();
         if (bundle != null) {

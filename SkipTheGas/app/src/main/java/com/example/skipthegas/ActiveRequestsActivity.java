@@ -1,5 +1,6 @@
 package com.example.skipthegas;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -32,6 +33,7 @@ public class ActiveRequestsActivity extends AppCompatActivity {
      * onCreate method for ActiveRequestsActivity class
      * @param savedInstanceState
      */
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,21 +45,11 @@ public class ActiveRequestsActivity extends AppCompatActivity {
 
         ridesList = findViewById(R.id.rides_list);
 
-//        String []riders ={"Grersch"};
-//        String []drivers ={""};
-//        String []startLocs ={"University of Alberta"};
-//        String []endLocs ={"Dairy Queen"};
-//        Date []dates ={new Date(2020, 3, 7)};
-//        Integer []prices ={131};
-
         rideDataList = new ArrayList<>();
 
         rideAdapter = new ArrayAdapter<>(this, R.layout.content, rideDataList);
 
 
-//        for (int i=0;i<riders.length;i++){
-//            rideDataList.add(new Ride(riders[i], drivers[i], startLocs[i], endLocs[i], dates[i], prices[i]));
-//        }
 
         rideAdapter = new CustomList(this, rideDataList);
         ridesList.setAdapter(rideAdapter);

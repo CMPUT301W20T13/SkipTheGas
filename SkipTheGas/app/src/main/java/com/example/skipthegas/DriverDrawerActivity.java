@@ -50,7 +50,7 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
     /**
      * Method is called when navigation item is selected in the DriverDrawerActivity class
      * @param menuItem
-     * @return
+     * @return void
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
