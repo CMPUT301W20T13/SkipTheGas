@@ -89,7 +89,9 @@ public class DriverDrawerProfileFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        driverEmail = firebaseUser.getEmail();
+        if (firebaseUser!=null) {
+            driverEmail = firebaseUser.getEmail();
+        }
         firebaseFirestore
                 .collection("users")
                 .document(Objects.requireNonNull(driverEmail))
