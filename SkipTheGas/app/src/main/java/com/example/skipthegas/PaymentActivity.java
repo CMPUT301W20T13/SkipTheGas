@@ -185,5 +185,6 @@ public class PaymentActivity extends AppCompatActivity {
         feedBackIntent.putExtra("request_Id",requestID);
         feedBackIntent.putExtra("fare",fare);
         startActivity(feedBackIntent);
+        finish();
     }
 }

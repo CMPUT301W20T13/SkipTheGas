@@ -109,8 +109,10 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        assert firebaseUser != null;
-        userEmail = firebaseUser.getEmail();
+        if (firebaseUser != null){
+            userEmail = firebaseUser.getEmail();
+        }
+
         firebaseFirestore
                 .collection("all_requests")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -202,6 +204,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                                         .update("is_rider_completed",true);
                                 paymentIntent.putExtra("request_Id",requestID);
                                 startActivity(paymentIntent);
+                                finish();
                             }
                         }).create().show();
             }
@@ -264,21 +267,30 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                            boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
-                            boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
-                            boolean canceled = (boolean) doc.getData().get("is_cancel");
-                            String riderEmail = (String) doc.getData().get("rider_email");
-                            if (!isDriverCompleted && !isRiderCompleted && !canceled && mapUserEmail.equals(riderEmail)) {
-                                GeoPoint start = doc.getGeoPoint("ride_origin");
-                                GeoPoint end = doc.getGeoPoint("ride_destination");
-                                MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
-                                MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
-                                mMap.addMarker(startLocation);
-                                mMap.addMarker(endLocation);
-                                setCamera(start, end);
-                            }
+                        if (e!=null){
+                            Log.d(TAG,"Error occurred");
+                            return;
                         }
+                        if (queryDocumentSnapshots != null) {
+                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                                boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                                boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
+                                boolean canceled = (boolean) doc.getData().get("is_cancel");
+                                String riderEmail = (String) doc.getData().get("rider_email");
+                                if (!isDriverCompleted && !isRiderCompleted && !canceled && mapUserEmail.equals(riderEmail)) {
+                                    GeoPoint start = doc.getGeoPoint("ride_origin");
+                                    GeoPoint end = doc.getGeoPoint("ride_destination");
+                                    MarkerOptions startLocation = new MarkerOptions().position(new LatLng(start.getLatitude(), start.getLongitude())).title("Start Location");
+                                    MarkerOptions endLocation = new MarkerOptions().position(new LatLng(end.getLatitude(), end.getLongitude())).title("End location");
+                                    mMap.addMarker(startLocation);
+                                    mMap.addMarker(endLocation);
+                                    setCamera(start, end);
+                                }
+                            }
+                        } else {
+                            Log.w(TAG,"no such document");
+                        }
+
                     }
                 });
 
