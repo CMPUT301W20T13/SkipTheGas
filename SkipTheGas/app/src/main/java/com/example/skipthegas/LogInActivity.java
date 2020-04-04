@@ -134,6 +134,10 @@ public class LogInActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 // Extract email address
                                 String mail = emailField.getText().toString();
+                                if (mail.length()==0){
+                                    Toast.makeText(LogInActivity.this, "Enter a valid email", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 firebaseAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     /**
                                      * Displays toast when password reset email is successfully sent

@@ -73,7 +73,6 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
         }
 
         driverDrawer.closeDrawer(GravityCompat.START);
-
         return true;
     }
 

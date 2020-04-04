@@ -176,6 +176,7 @@ public class SignUpActivity extends AppCompatActivity {
                             users.put("good_rating", 0);
                             users.put("bad_ratings", 0);
 
+                            // Adding set of information to collection users
                             documentReference.set(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 /**
                                  * onSuccess method for adding set of information to collection users in firebase db

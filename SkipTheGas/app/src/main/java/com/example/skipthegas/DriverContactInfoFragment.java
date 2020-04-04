@@ -24,6 +24,7 @@ public class DriverContactInfoFragment extends DialogFragment {
         String driverEmail = activity.getDriverEmail();
         String driverPhone = activity.getDriverPhone();
 
+
         String msg1 = "Driver's name: ";
         String msg2 = "Driver's email: ";
         String msg3 = "Driver's phone: ";

@@ -169,6 +169,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                     }
                 });
 
+
         postRequestButton.setOnClickListener(new View.OnClickListener() {
             /**
              * Method invoked when the post request button is clicked
