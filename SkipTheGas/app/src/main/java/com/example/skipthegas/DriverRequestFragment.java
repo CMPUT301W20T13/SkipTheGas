@@ -84,7 +84,9 @@ public class DriverRequestFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        driverEmail = firebaseUser.getEmail();
+        if (firebaseUser!=null) {
+            driverEmail = firebaseUser.getEmail();
+        }
         firebaseFirestore
                 .collection("users")
                 .document(Objects.requireNonNull(driverEmail))
@@ -96,7 +98,7 @@ public class DriverRequestFragment extends Fragment {
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        if (documentSnapshot!=null){
+                        if (documentSnapshot!=null&&documentSnapshot.exists()){
                             driverName = documentSnapshot.getString("username");
                             driverPhone = documentSnapshot.getString("phone");
                         }

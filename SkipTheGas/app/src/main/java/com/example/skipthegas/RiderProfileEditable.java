@@ -3,6 +3,7 @@ package com.example.skipthegas;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +36,8 @@ public class RiderProfileEditable extends AppCompatActivity {
     String email;
     double qr_bucks;
     Button submit_button;
+
+    String TAG = "RiderProfileEditable";
 
     /**
      * onCreate method for RiderProfileEditable
@@ -71,16 +74,22 @@ public class RiderProfileEditable extends AppCompatActivity {
                      */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        assert documentSnapshot != null;
-                        email = documentSnapshot.getString("email");
-                        phone = documentSnapshot.getString("phone");
-                        username = documentSnapshot.getString("username");
-                        qr_bucks = (double) documentSnapshot.getData().get("QR_bucks");
-                        usernameDisplay.setText(username);
-                        emailDisplay.setText(email);
-                        phoneEdit.setText(phone);
-                        qrDisplay.setText(String.valueOf(qr_bucks));
-
+                        if (e!=null){
+                            Log.i(TAG,"Error:"+e.getMessage());
+                            return;
+                        }
+                        if (documentSnapshot!=null && documentSnapshot.exists()) {
+                            email = documentSnapshot.getString("email");
+                            phone = documentSnapshot.getString("phone");
+                            username = documentSnapshot.getString("username");
+                            qr_bucks = (double) documentSnapshot.getData().get("QR_bucks");
+                            usernameDisplay.setText(username);
+                            emailDisplay.setText(email);
+                            phoneEdit.setText(phone);
+                            qrDisplay.setText(String.valueOf(qr_bucks));
+                        } else {
+                            Log.d(TAG,"no such document");
+                        }
                     }
                 });
 

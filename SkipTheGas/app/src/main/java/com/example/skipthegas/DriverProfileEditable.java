@@ -2,6 +2,7 @@ package com.example.skipthegas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,8 @@ public class DriverProfileEditable extends AppCompatActivity {
     TextView driverHeader;
     Button submit_button;
 
+    String TAG = "DriverProfileEditable";
+
     /**
      * onCreate method for DriverProfileEditable
      * Populates the driver info into the edit text boxes for the user to edit
@@ -58,7 +61,9 @@ public class DriverProfileEditable extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        driverEmailString = firebaseUser.getEmail();
+        if (firebaseUser!=null){
+            driverEmailString = firebaseUser.getEmail();
+        }
         firebaseFirestore
                 .collection("users")
                 .document(Objects.requireNonNull(driverEmailString))
@@ -70,14 +75,21 @@ public class DriverProfileEditable extends AppCompatActivity {
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        driverNameString = documentSnapshot.getString("username");
-                        driverPhoneString = documentSnapshot.getString("phone");
-                        String header = driverNameString + "'s Profile";
-                        driverName.setText(driverNameString);
-                        driverPhone.setText(driverPhoneString);
-                        driverEmail.setText(driverEmailString);
-                        driverHeader.setText(header);
-
+                        if (e!=null) {
+                            Log.d(TAG,"Error:"+e.getMessage());
+                            return;
+                        }
+                        if (documentSnapshot!=null&&documentSnapshot.exists()){
+                            driverNameString = documentSnapshot.getString("username");
+                            driverPhoneString = documentSnapshot.getString("phone");
+                            String header = driverNameString + "'s Profile";
+                            driverName.setText(driverNameString);
+                            driverPhone.setText(driverPhoneString);
+                            driverEmail.setText(driverEmailString);
+                            driverHeader.setText(header);
+                        } else {
+                            Log.i(TAG,"no such document");
+                        }
                     }
                 });
 
