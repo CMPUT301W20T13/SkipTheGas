@@ -137,7 +137,9 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        userEmail = firebaseUser.getEmail();
+        if (firebaseUser!=null){
+            userEmail = firebaseUser.getEmail();
+        }
 
         // UI initiation
         postRequestButton = view.findViewById(R.id.post_request_button);
