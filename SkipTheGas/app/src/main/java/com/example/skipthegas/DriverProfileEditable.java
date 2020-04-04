@@ -23,10 +23,7 @@ import java.util.Objects;
  * This is a class that governs the editable view of the driver profile screen
  */
 public class DriverProfileEditable extends AppCompatActivity {
-    /**
-     * onCreate method DriverProfileEditable class
-     * @param savedInstanceState
-     */
+
     private String driverEmailString;
     private String driverNameString;
     private String driverPhoneString;
@@ -40,6 +37,12 @@ public class DriverProfileEditable extends AppCompatActivity {
     EditText driverPhone;
     TextView driverHeader;
     Button submit_button;
+
+    /**
+     * onCreate method for DriverProfileEditable
+     * Populates the driver info into the edit text boxes for the user to edit
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +63,11 @@ public class DriverProfileEditable extends AppCompatActivity {
                 .collection("users")
                 .document(Objects.requireNonNull(driverEmailString))
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    /**
+                     * Method fetches the editable driver data from the firebase database
+                     * @param documentSnapshot
+                     * @param e
+                     */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         driverNameString = documentSnapshot.getString("username");
@@ -72,7 +80,13 @@ public class DriverProfileEditable extends AppCompatActivity {
 
                     }
                 });
+
         submit_button.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Method saves the changed data in the firebase database
+             * Returns the user back to the driver profile screen
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 firebaseFirestore = FirebaseFirestore.getInstance();
@@ -87,7 +101,6 @@ public class DriverProfileEditable extends AppCompatActivity {
      * This cancels edit mode and does not save changes to the profile, returning the user back
      * to the read-only driver profile screen upon a button click
      * @param view
-     *      Changes screens from the driver profile (editable) to the driver profile (read-only)
      */
     public void cancel(View view) {
         finish();
@@ -98,12 +111,9 @@ public class DriverProfileEditable extends AppCompatActivity {
      * the user to the read-only driver profile screen with the new edited changes, upon a button
      * click
      * @param view
-     *      Changes screens from the driver profile (editable) to the driver profile (read-only)
      */
     public void submitEdit(View view) {
-        //Intent intent = new Intent(this, DriverDrawerActivity.class);
         Toast.makeText(this, "Edit Saved Successfully", Toast.LENGTH_SHORT).show();
         finish();
-        //startActivity(intent);
     }
 }

@@ -10,6 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * This class implements the dialog fragment that displays driver's contact info
+ * Invoked when the driver's username is clicked on in the YourRideRequestActivity class
+ */
 public class DriverContactInfoFragment extends DialogFragment {
 
     @NonNull

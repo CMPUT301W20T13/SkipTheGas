@@ -16,7 +16,8 @@ public class SelectionActivity extends AppCompatActivity {
     Button driverSelectButton;
 
     /**
-     * onCreate method for SelectionActivity class
+     * onCreate method for SelectionActivity
+     * Retrieves and displays the associated layout file
      * @param savedInstanceState
      */
     @Override
@@ -29,6 +30,7 @@ public class SelectionActivity extends AppCompatActivity {
 
         riderSelectButton.setOnClickListener(new View.OnClickListener() {
             /**
+             * Method invoked when the rider button is clicked
              * onCLick method for entering Rider account
              * @param v
              */
@@ -42,6 +44,7 @@ public class SelectionActivity extends AppCompatActivity {
 
         driverSelectButton.setOnClickListener(new View.OnClickListener() {
             /**
+             * Method invoked when the driver button is clicked
              * onCLick method for entering Driver account
              * @param v
              */

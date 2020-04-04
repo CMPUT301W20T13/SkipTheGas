@@ -26,8 +26,8 @@ import java.util.Objects;
 import javax.annotation.Nullable;
 
 /**
- * This is a class which governs the "your ride request" screen, where riders can view details
- * regarding the ride request they have submitted
+ * This is a class which governs the rider's current ride request
+ * Allows riders to view details regarding the most recent ride request they submitted
  */
 public class YourRideRequestActivity extends AppCompatActivity {
     TextView start;
@@ -39,25 +39,18 @@ public class YourRideRequestActivity extends AppCompatActivity {
     Button cancelButton;
 
     FirebaseFirestore firebaseFirestore;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
     String requestID;
-    String riderName, riderEmail, riderPhone;
     String driver_name, driver_email, driver_phone, driverGood, driverBad;
 
     /**
-     * onCreate method for YourRideRequestActivity class
+     * onCreate method for YourRideRequestActivity
+     * Retrieves and displays the associated layout file
      * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.your_ride_request_layout);
-
-//        final Button cancelVerify = findViewById(R.id.verificationButton);
-//        cancelVerify.setOnClickListener((v)->{
-//            new CancelFragment().show(getSupportFragmentManager(), "Cancel Request");
-//        });
 
         Intent intent = getIntent();
         requestID = Objects.requireNonNull(intent.getExtras()).getString("request_id");
@@ -76,6 +69,11 @@ public class YourRideRequestActivity extends AppCompatActivity {
                 .collection("all_requests")
                 .document(requestID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    /**
+                     * Method fetches the request-related information from the firebase database
+                     * @param documentSnapshot
+                     * @param e
+                     */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         boolean accepted = (boolean) documentSnapshot.getData().get("is_accepted");
@@ -106,19 +104,12 @@ public class YourRideRequestActivity extends AppCompatActivity {
                     }
                 });
 
-//        firebaseFirestore = firebaseFirestore.getInstance();
-//        firebaseFirestore
-//                .collection("users")
-//                .document(driver_email)
-//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-//                        driverGood = (String) documentSnapshot.getData().get("good_ratings");
-//                        driverBad = (String) documentSnapshot.getData().get("bad_ratings");
-//                    }
-//                });
-
         backButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Method invoked when the back button is clicked
+             * Takes the user back to the previous page
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 finish();
@@ -126,6 +117,12 @@ public class YourRideRequestActivity extends AppCompatActivity {
         });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Method invoked when the cancel button is clicked
+             * Allows the user to cancel the current request
+             * On click displays a dialog box asking for ride cancellation confirmation
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(YourRideRequestActivity.this)
@@ -133,9 +130,16 @@ public class YourRideRequestActivity extends AppCompatActivity {
                         .setMessage("Are you sure to cancel your request?")
                         .setNegativeButton("Back", null)
                         .setPositiveButton("Cancel", new DialogInterface.OnClickListener() {
+                            /**
+                             * Method invoked when the "Cancel" button in the dialog box is clicked
+                             * Updates the firebase by setting the "is_cancel" field for the ride request
+                             * @param dialog
+                             * @param which
+                             */
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 firebaseFirestore.collection("all_requests").document(requestID).update("is_cancel", true);
+                                onCancelPressed();
                                 Intent intent = new Intent(getApplicationContext(), RiderDrawerActivity.class);
                                 startActivity(intent);
                                 finish();
@@ -146,31 +150,38 @@ public class YourRideRequestActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * getter method which passes the driver's name to DriverContactInfoFragment
+     * Allows the driver info to be displayed in a dialog box when the driver's name is clicked
+     * @return driver_name
+     */
     public String getDriverName() {
         return driver_name;
     }
 
+    /**
+     * getter method which passes the driver's email to DriverContactInfoFragment
+     * Allows the driver info to be displayed in a dialog box when the driver's name is clicked
+     * @return driver_email
+     */
     public String getDriverEmail() {
         return driver_email;
     }
 
+    /**
+     * getter method which passes the driver's email to DriverContactInfoFragment
+     * Allows the driver info to be displayed in a dialog box when the driver's name is clicked
+     * @return driver_phone
+     */
     public String getDriverPhone() {
         return driver_phone;
     }
 
-    public String getDriverGoodRating() {
-        return driverGood;
-    }
-
-    public String getDriverBadRating() {
-        return driverBad;
-    }
-
     /**
-     * This displays to the screen that a ride has been cancelled if the user selects "ok" on the
-     * cancel ride fragment
+     * This displays to the screen that a ride has been cancelled
+     * if the user selects "Cancel" on the cancel ride dialog box
      */
-    public void onOkPressed(){
+    public void onCancelPressed(){
         Toast.makeText(this, "Ride Canceled", Toast.LENGTH_SHORT).show();
     }
 
