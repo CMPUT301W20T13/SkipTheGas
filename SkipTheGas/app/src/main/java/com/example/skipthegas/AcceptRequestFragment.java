@@ -75,22 +75,14 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
     private GeoApiContext mGeoApiContext = null;
 
-    private Ride rides;
-
     FirebaseFirestore firebaseFirestore;
 
-
-
-    public interface OnFragmentInteractionListener {
-        void onOkPressed();
-    }
-
     /**
-     * onCreateView method for AcceptRequestFragment fragment
+     * onCreateView method for AcceptRequestFragment that inflates and displays the associated layout view
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return view
      */
     @Nullable
     @Override
@@ -133,12 +125,11 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
         return view;
     }
 
-
     /**
-     * onCreateDialog method for AcceptRequestFragment fragment
+     * onCreateDialog method for AcceptRequestFragment that creates the dialog which shows the ride request on a map
      * Allows driver to accept ride request
      * @param savedInstanceState
-     * @return
+     * @return dialog_builder
      */
     @NonNull
     @Override
@@ -154,7 +145,6 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
         } catch (InflateException e) {
             Toast.makeText(getActivity(), "Bundle is null", Toast.LENGTH_SHORT).show();
         }
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder
@@ -185,6 +175,10 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
                 }).create();
     }
 
+    /**
+     * Sets up the map camera and allows one to select start/end locations on a map
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -193,7 +187,9 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
         setCamera();
     }
 
-
+    /**
+     * Initializes the map and displays it
+     */
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.driver_map_accept_fragment);
         assert mapFragment != null;
@@ -207,15 +203,22 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
         }
     }
 
+    /**
+     * Allows the camera to move to show the start and end locations
+     */
     private void setCamera() {
         LatLngBounds.Builder builder = new LatLngBounds.Builder().include(new LatLng(startLat, startLng)).include(new LatLng(endLat, endLng));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0));
     }
 
-    // calculate the direction between two points
-    // Code taken from CodingWithMitch and modified by Jun
-    // https://www.youtube.com/watch?v=xl0GwkLNpNI&list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi&index=20
+    /**
+     * Calculate the direction between two points
+     * Code taken from CodingWithMitch and modified by Jun
+     * https://www.youtube.com/watch?v=xl0GwkLNpNI&list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi&index=20
+     * @param startLocation
+     * @param endLocation
+     */
     private void calculateDirections(MarkerOptions startLocation, MarkerOptions endLocation){
         Log.d(TAG, "calculateDirections: calculating directions.");
 
@@ -236,6 +239,10 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
         Log.d(TAG, "calculateDirections: destination: " + destination.toString());
         directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
+            /**
+             * onResult method for directions calculations
+             * @param result
+             */
             @Override
             public void onResult(DirectionsResult result) {
                 Log.d(TAG, "calculateDirections: routes: " + result.routes[0].toString());
@@ -245,16 +252,26 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
                 addPolyline(result);
             }
 
+            /**
+             * onFailure method that throws an exception message
+             * @param e
+             */
             @Override
             public void onFailure(Throwable e) {
                 Log.e(TAG, "onFailure: " + e.getMessage() );
-
             }
         });
     }
 
+    /**
+     * Method adds polyline between the start & end locations along the directions
+     * @param result
+     */
     private void addPolyline (final DirectionsResult result) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
+            /**
+             * Method runs a polyline along the route calculated by the directions function
+             */
             @Override
             public void run() {
                 Log.d(TAG, "run: result routes: " + result.routes.length);
