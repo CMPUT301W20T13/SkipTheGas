@@ -37,8 +37,7 @@ public class RiderProfileEditable extends AppCompatActivity {
     Button submit_button;
 
     /**
-     * onCreate method for RiderProfileEditable
-     * Populates the rider info into the edit text boxes for the user to edit
+     * onCreate method for RiderProfileEditable class
      * @param savedInstanceState
      */
     @Override
@@ -58,17 +57,13 @@ public class RiderProfileEditable extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
+        // Retrieve user information from cloud store
         assert firebaseUser != null;
         email = firebaseUser.getEmail();
         firebaseFirestore
                 .collection("users")
                 .document(email)
                 .addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-                    /**
-                     * Method fetches the editable rider data from the firebase database
-                     * @param documentSnapshot
-                     * @param e
-                     */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         assert documentSnapshot != null;
@@ -83,13 +78,7 @@ public class RiderProfileEditable extends AppCompatActivity {
 
                     }
                 });
-
         submit_button.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Method saves the changed data in the firebase database
-             * Returns the user back to the driver profile screen
-             * @param v
-             */
             @Override
             public void onClick(View v) {
                 firebaseFirestore = FirebaseFirestore.getInstance();
@@ -105,6 +94,7 @@ public class RiderProfileEditable extends AppCompatActivity {
      * This cancels edit mode and does not save changes to the profile, returning the user back
      * to the read-only rider profile screen upon a button click
      * @param view
+     *      Changes screens from the rider profile (editable) to the rider profile (read-only)
      */
     public void cancel(View view) {
         finish();
@@ -115,10 +105,18 @@ public class RiderProfileEditable extends AppCompatActivity {
      * the user to the read-only rider profile screen with the new edited changes, upon a button
      * click
      * @param view
+     * Changes screens from the rider profile (editable) to the rider profile (read-only)
+     *
+     * Need to finish implementing firebase update of the new edited fields
      */
     public void submitEdit(View view) {
+
+        usernameDisplay = findViewById(R.id.editText3);
+        emailDisplay = findViewById(R.id.editText4);
+        phoneEdit = findViewById(R.id.editText5);
+        qrDisplay = findViewById(R.id.editText6);
+
         Toast.makeText(this, "Edit Saved Successfully", Toast.LENGTH_SHORT).show();
         finish();
     }
-
 }

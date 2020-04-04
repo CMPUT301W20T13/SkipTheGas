@@ -56,7 +56,7 @@ public class DriverDrawerProfileFragment extends Fragment {
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return view
+     * @return
      */
     @Nullable
     @Override
@@ -67,8 +67,7 @@ public class DriverDrawerProfileFragment extends Fragment {
     }
 
     /**
-     * onActivityCreated method for DriverDrawerProfileFragment class
-     * Sets the appropriate info in the textviews in the layout file
+     * onActivityCreated method for DriverDrawerProfileFragment fragment
      * @param savedInstanceState
      */
     @Override
@@ -133,20 +132,12 @@ public class DriverDrawerProfileFragment extends Fragment {
 
                     }
                 });
-
-
         editButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Method is invoked when the edit button is clicked
-             * Takes the user to the edit driver profile page
-             * @param v
-             */
             @Override
             public void onClick(View v) {
                 Intent editProfileIntent = new Intent(getActivity(), DriverProfileEditable.class);
                 startActivity(editProfileIntent);
             }
         });
-
     }
 }

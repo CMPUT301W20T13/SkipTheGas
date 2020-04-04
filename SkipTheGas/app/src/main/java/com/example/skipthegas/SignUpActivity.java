@@ -45,8 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
     String userID;
 
     /**
-     * onCreate method for the SignUpActivity
-     * Retrieves and displays the associated layout file
+     * onCreate method for the SignUpActivity class
      * @param savedInstanceState
      */
     @Override
@@ -78,16 +77,16 @@ public class SignUpActivity extends AppCompatActivity {
             /**
              * This performs validation checks on a user's entered sign up information
              * @param username
-             * This is the user's entered username
+             *      This is the user's entered email address
              * @param password
-             * This is the user's entered password
+             *      This is the user's entered password
              * @param email
-             * This is this user's entered email address
+             *      This is this user's entered email
              * @param phone
-             * This is the user's entered phone number
+             *      This is the user's entered phone number
              * @return
-             * Either an error is returned, or the user is brought back to the
-             * email verification page if validation was successful
+             *      Either an error is returned, or the user is brought back to the login page if
+             *      validation was successful
              */
             public void onClick(View view) {
                 final String username = usernameField.getText().toString();
@@ -125,11 +124,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                 // Register the user
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
                     /**
                      * This registers the user in the firebase as a new user for the app
-                     * @param task
                      */
-                    @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if (task.isSuccessful()) { // Create user success
@@ -137,21 +135,12 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                             assert firebaseUser != null;
                             firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                /**
-                                 * onSuccess method for verification email sent
-                                 * @param aVoid
-                                 */
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     // If verification email is successfully sent
                                     Toast.makeText(SignUpActivity.this, "Verification Email sent.", Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
-                                /**
-                                 * onFailure method for verification email not sent
-                                 * Throws exception
-                                 * @param e
-                                 */
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     // If verification email is not sent
@@ -178,27 +167,17 @@ public class SignUpActivity extends AppCompatActivity {
 
                             // Adding set of information to collection users
                             documentReference.set(users).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                /**
-                                 * onSuccess method for adding set of information to collection users in firebase db
-                                 * @param aVoid
-                                 */
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Log.d("Message","Data addition success: information created for" + userID);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
-                                /**
-                                 * onFailure method for when information is not added to collection users in firebase db
-                                 * Throws exception
-                                 * @param e
-                                 */
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     Log.d("Message", "Data addition failure: unable to create info" + e.getMessage());
                                 }
                             });
 
-                            // Direct user to Rider's screen
                             progressBar.setVisibility(View.GONE);
 
                             // start new activity after click on the button and sign up successfully.
@@ -220,7 +199,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     /**
      * Function checks if the email entered in the registerEmailField is valid
-     * Regex expression for validation modified by Nan
+     * Uses regex for validation
      * regex expression referenced from :
      * https://www.tutorialspoint.com/validate-email-address-in-java
      * @param email
@@ -233,7 +212,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     /**
      * Function checks if the phone number entered in the phoneNumField is valid
-     * Regex expression for validation modified by Nan
+     * Uses regex for validation
      * regex expression referenced from :
      * https://www.journaldev.com/641/regular-expression-phone-number-validation-in-java
      * @param phoneNumber
