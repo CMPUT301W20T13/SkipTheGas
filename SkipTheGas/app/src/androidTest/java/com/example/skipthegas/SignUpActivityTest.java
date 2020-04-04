@@ -62,22 +62,6 @@ public class SignUpActivityTest {
     }
 
     /**
-     * This test checks to see if the user sign up was successful
-     * Once user hits the "Register" button in this activity,
-     * the program should redirect them to the VerifyActivity
-     */
-    @Test
-    public void signUpSuccess(){
-        solo.assertCurrentActivity("Wrong Activity", SignUpActivity.class);
-        solo.enterText((EditText)solo.getView(R.id.username_register_field), "Julie");
-        solo.enterText((EditText)solo.getView(R.id.email_register_field), "test1@gmail.com");
-        solo.enterText((EditText)solo.getView(R.id.password_register_field), "helloworld");
-        solo.enterText((EditText)solo.getView(R.id.phone_register_field), "5875850075");
-        solo.clickOnButton("Register");
-        solo.assertCurrentActivity("Wrong Activity", VerifyActivity.class);
-    }
-
-    /**
      * This test checks the password field during Sign up
      * If the value entered is too short, a toast should be posted
      */
