@@ -24,6 +24,10 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission.CAMERA;
 
+/**
+ * The class allows the driver to receive payment after ride completion
+ * Driver can receive payment by scanning the QR code on the rider's phone
+ */
 public class DriverPaymentScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private static final int REQUEST_CAMERA = 1;
     private static ZXingScannerView scannerView;
@@ -33,6 +37,11 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
     FirebaseAuth firebaseAuth;
     String userEmail;
 
+    /**
+     * onCreate method for the DriverPaymentScannerActivity
+     * Fetches driver's current balance from the database
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,18 +68,31 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
         }
     }
 
+    /**
+     * Method checks is permission is granted for the app to use the device camera
+     * @return permission_status
+     */
     public boolean checkPermission() {
 
         return (ContextCompat.checkSelfPermission(DriverPaymentScannerActivity.this, CAMERA)== PackageManager.PERMISSION_GRANTED);
 
     }
 
+    /**
+     * Method invoked if permission hasn't already been granted for the app to use the device camera
+     * This method requests permission from the device for camera use
+     */
     public void requestPermission() {
 
         ActivityCompat.requestPermissions(this, new String[]{CAMERA},REQUEST_CAMERA);
 
     }
 
+    /**
+     * Displays a dialog box
+     * @param message
+     * @param listener
+     */
     public void displayAlertDialog(String message, DialogInterface.OnClickListener listener) {
         new AlertDialog.Builder(DriverPaymentScannerActivity.this)
                 .setMessage(message)
@@ -79,6 +101,12 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
                 .create().show();
     }
 
+    /**
+     * Method determines what to do once the access permissions for the camera is either granted or denied
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -110,6 +138,9 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
         }
     }
 
+    /**
+     * Method that dictates how the scanner behave on resume
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -127,13 +158,23 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
         }
     }
 
+    /**
+     * Camera scanner is stopped on destroy
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
         scannerView.stopCamera();
     }
 
-    @Override // interface :--> ZXingScannerView.ResultHandler
+    /**
+     * Method scans the rider's QR code
+     * Once the scan is successful, a dialog box is shown with the payment received
+     * Allows the driver to turn down/cancel offered payment if desired
+     * interface :--> ZXingScannerView.ResultHandler
+     * @param result
+     */
+    @Override
     public void handleResult(final Result result) {
         String scanResult = result.getText();
 
@@ -147,18 +188,6 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
                     scannerView.resumeCameraPreview(DriverPaymentScannerActivity.this);
                 })
                 .setPositiveButton("Accept", (dialogInterface, i) -> {
-//                    firebaseFirestore.collection("users").document(userEmail)
-//                            .addSnapshotListener((documentSnapshot, e) -> {
-//                                if (e != null) {
-//                                    Log.i(TAG,"get op failed");
-//                                    return;
-//                                }
-//                                if (documentSnapshot != null && documentSnapshot.exists()) {
-//                                    currentBal = (double)documentSnapshot.get("QR_bucks");
-//                                } else {
-//                                    Log.i(TAG,"Current data: null");
-//                                }
-//                            });
                     firebaseFirestore
                             .collection("users")
                             .document(userEmail)

@@ -10,6 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+/**
+ * This class implements the dialog fragment that displays driver's contact info
+ * Invoked when the driver's username is clicked on in the YourRideRequestActivity class
+ */
 public class DriverContactInfoFragment extends DialogFragment {
 
     @NonNull
@@ -19,28 +23,10 @@ public class DriverContactInfoFragment extends DialogFragment {
         String driverName = activity.getDriverName();
         String driverEmail = activity.getDriverEmail();
         String driverPhone = activity.getDriverPhone();
-//        String driverGood = activity.getDriverGoodRating();
-//        String driverBad = activity.getDriverBadRating();
-
-//        firebaseFirestore = firebaseFirestore.getInstance();
-//        firebaseFirestore
-//                .collection("users")
-//                .document(driverEmail)
-//                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-//                        int goodRating = (int) documentSnapshot.get("good_ratings");
-//                        int badRating = (int) documentSnapshot.get("bad_ratings");
-//                        driverGood = String.valueOf(goodRating);
-//                        driverBad = String.valueOf(badRating);
-//                    }
-//                });
 
         String msg1 = "Driver's name: ";
         String msg2 = "Driver's email: ";
         String msg3 = "Driver's phone: ";
-//        String msg4 = "Good Ratings: ";
-//        String msg5 = "Bad Ratings: ";
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         return builder

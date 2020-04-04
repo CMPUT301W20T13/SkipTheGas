@@ -22,7 +22,8 @@ public class RiderDrawerActivity extends AppCompatActivity implements Navigation
     private DrawerLayout riderDrawer;
 
     /**
-     * onCreate method for RiderDrawerActivity class
+     * onCreate method for RiderDrawerActivity
+     * Retrieves and displays associated layout file
      * @param savedInstanceState
      */
     @Override
@@ -36,10 +37,6 @@ public class RiderDrawerActivity extends AppCompatActivity implements Navigation
         riderDrawer = findViewById(R.id.rider_drawer_layout);
         NavigationView rider_navigationView = findViewById(R.id.rider_nav_view);
         rider_navigationView.setNavigationItemSelectedListener(this);
-//        rider_navigationView.getMenu().findItem(R.id.rider_logout).setOnMenuItemClickListener(MenuItem -> {
-//            logout();
-//            return true;
-//        });
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, riderDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         riderDrawer.addDrawerListener(toggle);
@@ -55,7 +52,7 @@ public class RiderDrawerActivity extends AppCompatActivity implements Navigation
      * Method is called when the navigation items inside the drawer menu are selected
      * For RiderDrawerActivity class
      * @param menuItem
-     * @return
+     * @return true
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

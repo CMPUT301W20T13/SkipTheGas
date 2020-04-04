@@ -41,8 +41,10 @@ public class TripFeedBackActivity extends AppCompatActivity {
     String TAG = "TripFeedBackActivity:";
     double fare;
     long goodCount,badCount;
+
     /**
-     * onCreate method for TripFeedBackActivity class
+     * onCreate method for TripFeedBackActivity
+     * Retrieves and displays the associated layout file
      * @param savedInstanceState
      */
     @SuppressLint("SetTextI18n")
@@ -70,6 +72,11 @@ public class TripFeedBackActivity extends AppCompatActivity {
                 .collection("users")
                 .document(yourDriverEmail)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    /**
+                     * Method fetches the driver's name from the firebase database
+                     * @param documentSnapshot
+                     * @param e
+                     */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         if (documentSnapshot!=null){
@@ -84,6 +91,12 @@ public class TripFeedBackActivity extends AppCompatActivity {
                 .collection("users")
                 .document(yourDriverEmail)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    /**
+                     * Method fetches the driver's rating information from the firebase database
+                     * Also sets the rating information to the text view fields
+                     * @param documentSnapshot
+                     * @param e
+                     */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                        if (e != null) {

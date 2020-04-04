@@ -14,6 +14,7 @@ public class VerifyActivity extends AppCompatActivity {
 
     /**
      * onCreate method for VerifyActivity
+     * Retrieves and displays the associated layout file
      * @param savedInstanceState
      */
     @Override
@@ -23,6 +24,11 @@ public class VerifyActivity extends AppCompatActivity {
 
         continueButton = findViewById(R.id.verify_continue_button);
         continueButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Method invoked when the continue button is clicked
+             * Redirects to the Selection Activity page
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Intent selectionPageIntent = new Intent(getApplicationContext(), SelectionActivity.class);
