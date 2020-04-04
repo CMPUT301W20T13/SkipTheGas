@@ -22,7 +22,8 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
     private DrawerLayout driverDrawer;
 
     /**
-     * onCreate method for DriverDrawerActivity class
+     * onCreate method for DriverDrawerActivity
+     * Fetches the associated view and initializes the different parts of the drawer menu fragment
      * @param savedInstanceState
      */
     @Override
@@ -50,7 +51,7 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
     /**
      * Method is called when navigation item is selected in the DriverDrawerActivity class
      * @param menuItem
-     * @return void
+     * @return true
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -72,7 +73,6 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
         }
 
         driverDrawer.closeDrawer(GravityCompat.START);
-
         return true;
     }
 
@@ -90,7 +90,7 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
 
     /**
      * This logs out a user upon a button click
-     * Changes screens from the rider profile view to the login screen
+     * Changes screens from the driver account to the login screen
      */
     public void logout() {
         FirebaseAuth.getInstance().signOut();

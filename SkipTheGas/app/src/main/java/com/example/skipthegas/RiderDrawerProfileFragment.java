@@ -47,11 +47,12 @@ public class RiderDrawerProfileFragment extends Fragment {
     String TAG = "RiderDrawerProfileFragment:";
 
     /**
-     * onCreateView method for RiderDrawerProfileFragment fragment
+     * onCreateView method for RiderDrawerProfileFragment
+     * Inflates the associated layout view and displays it
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return view
      */
     @Nullable
     @Override
@@ -61,7 +62,7 @@ public class RiderDrawerProfileFragment extends Fragment {
     }
 
     /**
-     * onActivityCreated method for DriverDrawerProfileFragment fragment
+     * onActivityCreated method for RiderDrawerProfileFragment
      * Get rider's information from firebase and display it on profile
      * @param savedInstanceState
      */
@@ -88,7 +89,7 @@ public class RiderDrawerProfileFragment extends Fragment {
                 .document(Objects.requireNonNull(riderEmail))
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     /**
-                     * Method sets the edit text fields in the edit rider profile page
+                     * Method sets the text view fields in the rider profile page
                      * @param documentSnapshot
                      * @param e
                      */
@@ -114,6 +115,11 @@ public class RiderDrawerProfileFragment extends Fragment {
                     }
                 });
         editButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Method is invoked when the edit button is clicked
+             * Redirects to the edit profile page for rider
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Intent editProfileIntent = new Intent(getActivity(), RiderProfileEditable.class);

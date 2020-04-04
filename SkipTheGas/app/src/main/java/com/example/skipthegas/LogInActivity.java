@@ -36,7 +36,9 @@ public class LogInActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
 
     /**
-     * onCreate method for LogInActivity class
+     * onCreate method for LogInActivity
+     * Allows user to input log in info into edit text boxes in layout file
+     * Has a password reset option
      * @param savedInstanceState
      */
     @Override
@@ -61,7 +63,7 @@ public class LogInActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             /**
-             * This checks for valid login in formation and allows the user to enter if validated
+             * This checks for valid login in formation and allows the user to enter if validation is successful
              */
             @Override
             public void onClick(View view) {
@@ -86,7 +88,8 @@ public class LogInActivity extends AppCompatActivity {
 
                 firebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     /**
-                     * This brings the user to the corresponding profile screen if validation was successful
+                     * The onComplete method decides what to do once user clicks log in button
+                     * Depending on whether validation is successful or not, user is either redirected to selection page or is denied access
                      */
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
