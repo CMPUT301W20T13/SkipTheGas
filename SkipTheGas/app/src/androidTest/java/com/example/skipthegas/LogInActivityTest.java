@@ -26,6 +26,7 @@ public class LogInActivityTest {
     @Rule
     public ActivityTestRule<LogInActivity> rule =
             new ActivityTestRule<>(LogInActivity.class, true, true);
+
     /**
      * Runs before all tests and creates solo instance
      * @throws Exception
@@ -34,6 +35,7 @@ public class LogInActivityTest {
     public void setUp() throws Exception{
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
     }
+
     /**
      * Gets the activity
      * @throws Exception
@@ -49,8 +51,8 @@ public class LogInActivityTest {
     @Test
     public void logInSuccess(){
         solo.assertCurrentActivity("Wrong Activity", LogInActivity.class);
-        solo.enterText((EditText)solo.getView(R.id.email_login_field), "brightonius@gmail.com");
-        solo.enterText((EditText)solo.getView(R.id.password_login_field), "testpass");
+        solo.enterText((EditText)solo.getView(R.id.email_login_field), "nan.p2198@gmail.com");
+        solo.enterText((EditText)solo.getView(R.id.password_login_field), "logintest");
         solo.clickOnButton("Log In");
         solo.assertCurrentActivity("Wrong Activity", SelectionActivity.class);
     }
