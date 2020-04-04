@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
     Button signUpBtn;
 
     /**
-     * onCreate method for MainActivity
-     * Retrieves and displays the associated layout file
+     * onCreate method for MainActivity class
      * @param savedInstanceState
      */
     @Override
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             /**
-             * This will bring the user to the sign up screen
+             * This will bring the user to the sign in screen
              */
             @Override
             public void onClick(View view) {
@@ -53,5 +52,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

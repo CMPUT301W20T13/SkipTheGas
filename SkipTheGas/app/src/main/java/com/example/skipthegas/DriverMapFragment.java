@@ -63,7 +63,7 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return view
+     * @return
      */
     @Nullable
     @Override
@@ -78,7 +78,7 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
 
 
     /**
-     * Initializes the map and displays it
+     * initialize maps
      */
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.driver_map);
@@ -88,8 +88,8 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
     }
 
     /**
-     * Sets up the map camera and allows one to select start/end locations on a map
-     * Set my current location to true
+     * On Maps Activity
+     * Set my location to true
      * @param googleMap
      */
     @Override
@@ -117,12 +117,6 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
         firebaseFirestore
                 .collection("all_requests")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    /**
-                     * Fetches the ride requests that are currently open and displays them on the map
-                     * So driver can view the start locations of all the current open requests relative to his location
-                     * @param queryDocumentSnapshots
-                     * @param e
-                     */
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         if (e != null) {
@@ -152,7 +146,7 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
     }
 
     /**
-     * Get the device's current location for driver
+     * Get devices current location.
      */
     private void getDeviceLocation() {
         Log.d(TAG, "getDeviceLocation: getting the devices location");
@@ -162,10 +156,6 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
         try {
             final Task location = mFusedLocationProviderClient.getLastLocation();
             location.addOnCompleteListener(new OnCompleteListener() {
-                /**
-                 * onComplete method for finding current location
-                 * @param task
-                 */
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
@@ -187,7 +177,7 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
     }
 
     /**
-     * Moves Camera to current location
+     * Move Camera to current location
      * @param latLng
      * @param zoom
      */

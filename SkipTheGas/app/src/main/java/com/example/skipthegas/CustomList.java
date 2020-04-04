@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 /**
- * This is a class which implements a custom list used with the Ride object to display relevant ride data
+ * This is a class which implements a custom list used with the Ride object to store ride data
  */
 public class CustomList extends ArrayAdapter<Ride> {
     private ArrayList<Ride> rides;
@@ -32,11 +32,10 @@ public class CustomList extends ArrayAdapter<Ride> {
 
     /**
      * getView method for CustomList class
-     * Inflates the associated content layout file and sets the data to the appropriate fields
      * @param position
      * @param convertView
      * @param parent
-     * @return view
+     * @return
      */
     @SuppressLint("SetTextI18n")
     @NonNull
@@ -48,8 +47,10 @@ public class CustomList extends ArrayAdapter<Ride> {
         }
         Ride ride = rides.get(position);
         TextView riderName = view.findViewById(R.id.rider_text);
+        //TextView driverName = view.findViewById(R.id.driver_text);
         TextView startLoc = view.findViewById(R.id.start_loc_text);
         TextView endLoc = view.findViewById(R.id.end_loc_text);
+        //TextView rideDate = view.findViewById(R.id.date_text);
         TextView ridePrice = view.findViewById(R.id.price_text);
 
         username = ride.getRiderName();
@@ -57,9 +58,16 @@ public class CustomList extends ArrayAdapter<Ride> {
         phone = ride.getRiderPhone();
 
         riderName.setText(ride.getRiderName());
+        //driverName.setText(ride.getDriver());
         startLoc.setText(ride.getOriginAddress());
         endLoc.setText(ride.getDestinationAddress());
+        //rideDate.setText(ride.getDate().toString());
         ridePrice.setText(ride.getFare());
+
+        riderName.setOnClickListener((v)-> {
+            Intent contactInfo = new Intent(getContext(), UserContactInfoFragment.class);
+            context.startActivity(contactInfo);
+        });
 
         return view;
     }

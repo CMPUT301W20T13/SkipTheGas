@@ -391,7 +391,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
         String message = "Notification";
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(getApplicationContext(), "notify_001");
-        Intent ii = new Intent(getApplicationContext(), RiderTripProcessActivity.class);
+        Intent ii = new Intent(getApplicationContext(), RiderActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(RiderTripProcessActivity.this, 0, ii, 0);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();

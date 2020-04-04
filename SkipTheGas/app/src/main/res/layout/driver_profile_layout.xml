@@ -7,11 +7,12 @@
     tools:context=".DriverProfileActivity">
 
     <TextView
-        android:id="@+id/driver_profile_header"
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-black"
+        android:text="Quandrius Quest's Profile"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,7 @@
         android:text="Edit Profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_profile_header"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
         android:onClick="edit" />
 
     <TextView
@@ -38,7 +39,7 @@
         android:layout_marginEnd="16dp"
         android:text="Username:"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/driver_profile_user_name_textView"
+        app:layout_constraintEnd_toStartOf="@+id/editText3"
         app:layout_constraintTop_toBottomOf="@+id/editButton" />
 
     <TextView
@@ -49,7 +50,7 @@
         android:layout_marginEnd="16dp"
         android:text="Email:"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/driver_profile_email_TextView"
+        app:layout_constraintEnd_toStartOf="@+id/editText4"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
@@ -60,7 +61,7 @@
         android:layout_marginEnd="16dp"
         android:text="Phone Number:"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/driver_profile_phone_TextView"
+        app:layout_constraintEnd_toStartOf="@+id/editText5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
@@ -71,14 +72,14 @@
         android:layout_marginEnd="16dp"
         android:text="QR Bucks:"
         android:textSize="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/driver_profile_QRbucks_TextView"
+        app:layout_constraintEnd_toStartOf="@+id/editText6"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="32dp"
         android:text="Driver Score:"
         android:textSize="20dp"
@@ -86,96 +87,120 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
-        android:id="@+id/driver_profile_user_name_textView"
+        android:id="@+id/editText3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="Quandrius Quest"
+        android:text="Quandrius Quest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editButton" />
 
     <TextView
-        android:id="@+id/driver_profile_email_TextView"
+        android:id="@+id/editText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:hint="qq@frozensun.temple"
+        android:text="qq@frozensun.temple"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_profile_user_name_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/editText3" />
 
     <TextView
-        android:id="@+id/driver_profile_phone_TextView"
+        android:id="@+id/editText5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="phone"
-        android:hint="780-122-1087"
+        android:text="780-122-1087"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_profile_email_TextView" />
+        app:layout_constraintTop_toBottomOf="@+id/editText4" />
 
     <TextView
-        android:id="@+id/driver_profile_QRbucks_TextView"
+        android:id="@+id/editText6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="number"
         android:text="100"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_profile_phone_TextView" />
+        app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
+    <Button
+        android:id="@+id/browseRequestsButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="240dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Browse Active Requests"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        android:onClick="browseRequests" />
 
-    <TextView
-        android:id="@+id/driver_profile_good_rating_TextView"
+    <Button
+        android:id="@+id/logOutButton"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="74dp"
+        android:background="@drawable/roundedbutton"
+        android:onClick="logOut"
+        android:text="Log Out"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/browseRequestsButton" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:text="50"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/driver_profile_bad_rating_TextView"
-        app:layout_constraintTop_toBottomOf="@+id/driver_profile_QRbucks_TextView" />
+        app:layout_constraintEnd_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/editText6" />
 
     <TextView
-        android:id="@+id/driver_profile_bad_rating_TextView"
+        android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:text="50"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/driver_profile_QRbucks_TextView" />
+        app:layout_constraintTop_toBottomOf="@+id/editText6" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="37dp"
         android:layout_height="51dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toStartOf="@+id/driver_profile_good_rating_TextView"
-        app:layout_constraintTop_toBottomOf="@+id/driver_profile_QRbucks_TextView"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toBottomOf="@+id/editText6"
         app:srcCompat="@drawable/thumbs_up" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="38dp"
         android:layout_height="33dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toStartOf="@+id/driver_profile_bad_rating_TextView"
-        app:layout_constraintTop_toBottomOf="@+id/driver_profile_QRbucks_TextView"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/editText6"
         app:srcCompat="@drawable/thumbs_down" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
