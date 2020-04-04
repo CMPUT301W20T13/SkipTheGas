@@ -22,8 +22,7 @@ public class RiderDrawerActivity extends AppCompatActivity implements Navigation
     private DrawerLayout riderDrawer;
 
     /**
-     * onCreate method for RiderDrawerActivity
-     * Retrieves and displays associated layout file
+     * onCreate method for RiderDrawerActivity class
      * @param savedInstanceState
      */
     @Override
@@ -52,7 +51,7 @@ public class RiderDrawerActivity extends AppCompatActivity implements Navigation
      * Method is called when the navigation items inside the drawer menu are selected
      * For RiderDrawerActivity class
      * @param menuItem
-     * @return true
+     * @return
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

@@ -90,13 +90,23 @@ import java.util.Locale;
  */
 public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap mMap;
+    int LOCATION_REQUEST_CODE = 1;
+    Polyline line;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
+    String userId;
+    String username;
+    String phone;
+    String email;
     private View mapView;
 
     private static final String TAG = "RiderMapFragment";
     private GeoApiContext mGeoApiContext = null;
 
+    private boolean mLocationPermissionGranted = false;
+
+    private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
+    private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 9001;
     private static final float DEFAULT_ZOOM = 15f;
 
@@ -120,11 +130,10 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
 
     /**
      * onCreateView method for the Rider map fragment
-     * Retrieves and displays the map in fragment view, along with other rider layout functionality
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return view
+     * @return
      */
     @Nullable
     @Override
@@ -144,15 +153,13 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         clearMapButton = view.findViewById(R.id.clear_map_button);
         searchEditText = view.findViewById(R.id.rider_map_search_edit_text);
 
+
+        // Retrieve user information from firebase
+        
         firebaseFirestore
                 .collection("users")
                 .document(userEmail)
                 .addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>() {
-                    /**
-                     * Method retrieves rider information from firebase
-                     * @param documentSnapshot
-                     * @param e
-                     */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         if (e != null) {
@@ -171,11 +178,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
 
 
         postRequestButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Method invoked when the post request button is clicked
-             * Shows relevant information about ride request in a pop-up dialog box
-             * @param v
-             */
             @Override
             public void onClick(View v) {
                 String msg1 = "Estimated ride distance: ";
@@ -207,13 +209,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                                 .setMessage(msg1 + estDistance + "\n" + msg2 + estTime + "\n" + msg3 + estFare + "QR bucks")
                                 .setNegativeButton("Cancel", null)
                                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                                    /**
-                                     * Method invoked when the "Confirm" button in the dialog box is clicked
-                                     * Confirms ride requests and posts it to the database
-                                     * Makes the request visible to drivers through the Active Requests page
-                                     * @param dialog
-                                     * @param which
-                                     */
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         HashMap<String, Object> requestData = new HashMap<>();
@@ -240,10 +235,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                                                 .collection("all_requests")
                                                 .add(requestData)
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                    /**
-                                                     * Method is invoked if the ride request was posted successfully
-                                                     * @param documentReference
-                                                     */
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
                                                         Log.i(TAG, "post success");
@@ -251,11 +242,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
-                                                    /**
-                                                     * Method is invoked if the ride request post was unsuccessful
-                                                     * Throws an exception
-                                                     * @param e
-                                                     */
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
                                                         Log.i(TAG, "pst failed"+e.getMessage());
@@ -273,11 +259,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         });
 
         clearMapButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Method is invoked when the clear map button is clicked
-             * Clears the map of any pins or polyline
-             * @param v
-             */
             @Override
             public void onClick(View v) {
                 clearMap();
@@ -303,7 +284,8 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     /**
-     * onMapReady method to set start/end locations in rider map fragment
+     * onMapReady method to set current location in rider mao fragment
+     * Sets 'my current location' button to the bottom right corner
      * @param googleMap
      */
     @Override
@@ -327,12 +309,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         }
 
         mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            /**
-             * Method is invoked when any point on the map is clicked
-             * A origin/destination pin is placed at the clicked location
-             * When the map is clicked for a third time, the previous are pins are cleared from the map
-             * @param latLng
-             */
             @Override
             public void onMapClick(LatLng latLng) {
                 if (locationMarkerList.size() >= 2) {
@@ -361,7 +337,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
 
     /**
      * Get devices current location for rider map fragment
-     * Sets current location using 'my current location' button to the bottom right corner
      */
     private void getDeviceLocation() {
         Log.d(TAG, "getDeviceLocation: getting the devices location");
@@ -371,10 +346,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         try {
             final Task location = mFusedLocationProviderClient.getLastLocation();
             location.addOnCompleteListener(new OnCompleteListener() {
-                /**
-                 * onComplete method for finding current location
-                 * @param task
-                 */
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
@@ -405,7 +376,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     /**
-     * Method gets device permission to get current location
+     * Get device permission to get current location
      * @param requestCode
      * @param permissions
      * @param grantResults
@@ -421,13 +392,10 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
-    /**
-     * Calculate the direction between two points
-     * Code taken from CodingWithMitch and modified by Jun
-     * https://www.youtube.com/watch?v=xl0GwkLNpNI&list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi&index=20
-     * @param startLocation
-     * @param endLocation
-     */
+
+    // calculate the direction between two points
+    // Code taken from CodingWithMitch and modified by Jun
+    // https://www.youtube.com/watch?v=xl0GwkLNpNI&list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi&index=20
     private void calculateDirections(MarkerOptions startLocation, MarkerOptions endLocation){
         Log.d(TAG, "calculateDirections: calculating directions.");
 
@@ -449,10 +417,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
 
         Log.d(TAG, "calculateDirections: destination: " + destination.toString());
         directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
-            /**
-             * onResult method for directions calculations
-             * @param result
-             */
             @Override
             public void onResult(DirectionsResult result) {
                 Log.d(TAG, "calculateDirections: routes: " + result.routes[0].toString());
@@ -464,10 +428,6 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
                 addPolyline(result);
             }
 
-            /**
-             * onFailure method that throws an exception message
-             * @param e
-             */
             @Override
             public void onFailure(Throwable e) {
                 Log.e(TAG, "onFailure: " + e.getMessage() );
@@ -476,15 +436,9 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-    /**
-     * Method adds polyline between the start & end locations along the directions
-     * @param result
-     */
+    // Add polyline to the map
     private void addPolyline (final DirectionsResult result) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
-            /**
-             * Method runs a polyline along the route calculated by the directions function
-             */
             @Override
             public void run() {
                 Log.d(TAG, "run: result routes: " + result.routes.length);
@@ -513,18 +467,14 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     /**
-     * Method clears the map of any pins or lines
+     * Method clears the map
      */
     public void clearMap(){
         locationMarkerList.clear();
         mMap.clear();
     }
 
-    /**
-     * Method gets the location address from GeoPoint
-     * @param geoPoint
-     * @return returnAddress
-     */
+    // get location address from GeoPoint
     public String getGeoAddress(GeoPoint geoPoint) {
         Geocoder geocoder;
         List<Address> addresses;
@@ -542,23 +492,15 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         return returnAddress;
     }
 
-    /**
-     * Method initializes the search bar
-     */
+    // initializing search bar
     private void initSearch() {
         Log.d(TAG, "init: initializing");
 
         searchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            /**
-             * Method executes the method for searching the location entered in search bar
-             * @param v
-             * @param actionId
-             * @param keyEvent
-             * @return
-             */
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent keyEvent) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE || keyEvent.getAction() == keyEvent.ACTION_DOWN || keyEvent.getAction() == keyEvent.KEYCODE_ENTER) {
+                    // execute method for searching
                     geoLocate();
                     searchEditText.getText().clear();
                 }
@@ -567,9 +509,7 @@ public class RiderMapFragment extends Fragment implements OnMapReadyCallback {
         });
     }
 
-    /**
-     * Method searches the map using the geo location
-     */
+    // search geo location
     private void geoLocate() {
         Log.d(TAG, "geoLocate: geolocating");
 

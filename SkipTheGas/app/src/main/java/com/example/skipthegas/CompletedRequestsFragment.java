@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * This fragment displays the rider's completed requests in list view
+ * This fragment displays the rider's cancelled requests in list view
  */
 public class CompletedRequestsFragment extends Fragment implements View.OnClickListener {
 
@@ -60,12 +60,11 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
     String TAG = "CompletedRequestsFragment";
 
     /**
-     * onCreateView method for CompletedRequestsFragment
-     * Inflates the layout view associated with it and enables the back button
+     * onCreateView method for CancelledRequestsFragment class
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return view
+     * @return
      */
     @Nullable
     @Override
@@ -128,7 +127,7 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
                 .collection("all_requests")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     /**
-                     * Method retrieves completed requests data from firebase database
+                     * Method retrieves cancelled requests data from firebase database
                      * @param queryDocumentSnapshots
                      * @param e
                      */
@@ -174,11 +173,6 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
 
     }
 
-    /**
-     * Method initializes the back button
-     * Sets it to go back to the previous page (RiderRequestFragment)
-     * @param v
-     */
     @Override
     public void onClick(View v) {
         Fragment fragment = null;
@@ -188,11 +182,7 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
         }
     }
 
-    /**
-     * Method replaces the Cancelled Requests fragment with the Ride Requests fragment
-     * @param fragment
-     */
-    public void replaceFragment(Fragment fragment) {
+    private void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.rider_fragment_container, fragment);
         transaction.addToBackStack(null);

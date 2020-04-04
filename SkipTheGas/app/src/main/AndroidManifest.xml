@@ -66,22 +66,21 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".AcceptRequestFragment" />
-        <activity android:name=".CancelledRequestsFragment" />
-        <activity android:name=".CompletedRequestsFragment" />
-        <activity android:name=".DriverContactInfoFragment" />
-        <activity android:name=".DriverDrawerProfileFragment" />
-        <activity android:name=".DriverMapFragment" />
-        <activity android:name=".DriverProfileEditable" />
-        <activity android:name=".DriverRequestFragment" />
-        <activity android:name=".PaymentActivity" />
+        <activity android:name=".RiderProfileActivity" />
+        <activity android:name=".YourActiveRidesActivity" />
+        <activity android:name=".DriverProfileActivity" />
+        <activity android:name=".RideConfirmedActivity" />
+        <activity android:name=".RiderActivity" />
+        <activity android:name=".RequestRideActivity" />
         <activity android:name=".RiderDrawerProfileFragment" />
-        <activity android:name=".RiderMapFragment" />
-        <activity android:name=".RiderProfileEditable" />
-        <activity android:name=".RiderRequestFragment" />
-        <activity android:name=".TripFeedBackActivity" />
         <activity android:name=".YourRideRequestActivity" />
-
+        <activity android:name=".TripFeedBackActivity" />
+        <activity android:name=".PaymentActivity" />
+        <activity android:name=".DriverProfileFragment" />
+        <activity android:name=".PayAcceptedActivity" />
+        <activity android:name=".ActiveRequestsActivity" />
+        <activity android:name=".DriverProfileEditable" />
+        <activity android:name=".RiderProfileEditable" />
         <activity
             android:name=".DriverDrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
