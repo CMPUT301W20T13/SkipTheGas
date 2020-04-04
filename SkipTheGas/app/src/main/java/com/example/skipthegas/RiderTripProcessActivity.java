@@ -83,6 +83,7 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
 
     public String userEmail;
     String requestID;
+    String mapUserEmail;
 
     Intent paymentIntent;
 
@@ -259,8 +260,9 @@ public class RiderTripProcessActivity extends FragmentActivity implements OnMapR
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        assert firebaseUser != null;
-        String mapUserEmail = firebaseUser.getEmail();
+        if (firebaseUser != null) {
+            mapUserEmail = firebaseUser.getEmail();
+        }
 
         firebaseFirestore
                 .collection("all_requests")
