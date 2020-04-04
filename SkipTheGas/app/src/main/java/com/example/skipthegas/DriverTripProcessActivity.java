@@ -62,10 +62,6 @@ import java.util.Objects;
 
 import javax.annotation.Nullable;
 
-/**
- * This class displays the relevant information for the ride request that is currently being served by the driver
- * Driver is able to confirm and complete the currently open ride from this activity
- */
 public class DriverTripProcessActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -91,13 +87,9 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
 
+
     Intent scannerIntent;
 
-    /**
-     * onCreate method for the DriverTripProcessActivity
-     * Retrieves the associated layout file and displays it
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +106,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
         Intent intent = getIntent();
         requestID = Objects.requireNonNull(intent.getExtras()).getString("request_id");
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         initMap();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
@@ -127,10 +119,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                 .collection("users")
                 .document(userEmail).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    /**
-                     * onComplete method for facilitating the payment process
-                     * @param task
-                     */
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
@@ -151,12 +139,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                 .collection("all_requests")
                 .document(requestID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    /**
-                     * Method fetches the relevant ride information from firebase including rider info and start/end locations
-                     * Also sets this data to the textviews in the layout file
-                     * @param documentSnapshot
-                     * @param e
-                     */
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -205,10 +187,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                 });
 
         phoneCallIcon.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Method allows users to make a phone call when the phone call icon is clicked
-             * @param view
-             */
             @Override
             public void onClick(View view) {
                 makePhoneCall();
@@ -217,23 +195,12 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
 
         completeButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Method is called when the complete button is clicked
-             * Displays a dialog box asking for ride completion confirmation
-             * @param v
-             */
             @Override
             public void onClick(View v) {
                 new AlertDialog.Builder(DriverTripProcessActivity.this)
                         .setTitle("Complete")
                         .setNegativeButton("No",null)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            /**
-                             * Method is called when the "Yes" button is clicked in the dialog box confirming ride completion for the driver
-                             * The firebase database is updated with the relevant information
-                             * @param dialogInterface
-                             * @param i
-                             */
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 firebaseFirestore
@@ -248,10 +215,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         });
     }
 
-    /**
-     * Method allows the driver to call the rider's phone
-     * Directs the user to the phone app
-     */
     public void makePhoneCall(){
         String number = riderPhoneTextView.getText().toString();
         if (number.trim().length() > 0) {
@@ -273,12 +236,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         }
     }
 
-    /**
-     * Method determines what to do once the access permissions for the phone app is either granted or denied
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
-     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -291,10 +248,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         }
     }
 
-    /**
-     * Method is invoked once the map is ready for use by the application
-     * @param googleMap
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -304,11 +257,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                 .collection("all_requests")
                 .document(requestID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    /**
-                     * Adds the start and end locations to the map along with the directions polyline
-                     * @param documentSnapshot
-                     * @param e
-                     */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         if (e!=null){
@@ -332,9 +280,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     }
 
-    /**
-     * Initializes the map and displays it
-     */
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.driver_trip_process_map);
         mapFragment.getMapAsync(this);
@@ -346,24 +291,15 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         }
     }
 
-    /**
-     * Allows the camera to move to show the start and end locations
-     * @param start
-     * @param end
-     */
     private void setCamera(GeoPoint start, GeoPoint end) {
         LatLngBounds.Builder builder = new LatLngBounds.Builder().include(new LatLng(start.getLatitude(), start.getLongitude())).include(new LatLng(end.getLatitude(), end.getLongitude()));
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0));
     }
 
-    /**
-     * Calculate the direction between two points
-     * Code taken from CodingWithMitch and modified by Jun
-     * https://www.youtube.com/watch?v=xl0GwkLNpNI&list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi&index=20
-     * @param startLocation
-     * @param endLocation
-     */
+    // calculate the direction between two points
+    // Code taken from CodingWithMitch and modified by Jun
+    // https://www.youtube.com/watch?v=xl0GwkLNpNI&list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi&index=20
     private void calculateDirections(MarkerOptions startLocation, MarkerOptions endLocation){
         Log.d(TAG, "calculateDirections: calculating directions.");
 
@@ -384,10 +320,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
         Log.d(TAG, "calculateDirections: destination: " + destination.toString());
         directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
-            /**
-             * onResult method for directions calculations
-             * @param result
-             */
             @Override
             public void onResult(DirectionsResult result) {
                 Log.d(TAG, "calculateDirections: routes: " + result.routes[0].toString());
@@ -397,10 +329,6 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                 addPolyline(result);
             }
 
-            /**
-             * onFailure method that throws an exception message
-             * @param e
-             */
             @Override
             public void onFailure(Throwable e) {
                 Log.e(TAG, "onFailure: " + e.getMessage() );
@@ -409,15 +337,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         });
     }
 
-    /**
-     * Method adds polyline between the start & end locations along the directions
-     * @param result
-     */
     private void addPolyline (final DirectionsResult result) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
-            /**
-             * Method runs a polyline along the route calculated by the directions function
-             */
             @Override
             public void run() {
                 Log.d(TAG, "run: result routes: " + result.routes.length);
@@ -445,18 +366,15 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         });
     }
 
-
-    /**
-     * Sends a notification if users request is accepted
-     * Code taken from https://stackoverflow.com/questions/16045722/android-notification-is-not-showing
-     * Author / user = Md Imran Choudhury
-     */
+    //sends a notification if users request is accepted
+    //Code taken from https://stackoverflow.com/questions/16045722/android-notification-is-not-showing
+    //Author / user = Md Imran Choudhury
     private void notification() {
         NotificationManager mNotificationManager;
         String message = "Notification";
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(getApplicationContext(), "notify_001");
-        Intent ii = new Intent(getApplicationContext(), DriverTripProcessActivity.class);
+        Intent ii = new Intent(getApplicationContext(), RiderActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(DriverTripProcessActivity.this, 0, ii, 0);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();

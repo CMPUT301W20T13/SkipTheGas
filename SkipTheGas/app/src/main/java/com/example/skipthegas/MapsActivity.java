@@ -18,8 +18,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     /**
-     * onCreate method for MapsActivity
-     * Initializes the map and notifies the program when it is ready to be used
+     * onCreate method for MapsActivity class
      * @param savedInstanceState
      */
     @Override

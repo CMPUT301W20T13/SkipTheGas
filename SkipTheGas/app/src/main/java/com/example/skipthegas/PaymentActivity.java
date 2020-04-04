@@ -37,7 +37,10 @@ import javax.annotation.Nullable;
  * This a class that governs the payment screen, where a QR code is generated for payment transfer
  */
 public class PaymentActivity extends AppCompatActivity {
-
+    /**
+     * onCreate method for PaymentActivity class
+     * @param savedInstanceState
+     */
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
@@ -58,11 +61,6 @@ public class PaymentActivity extends AppCompatActivity {
 
     Intent feedBackIntent;
 
-    /**
-     * onCreate method for PaymentActivity
-     * Retrieves and displays the associated layout file
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,11 +87,6 @@ public class PaymentActivity extends AppCompatActivity {
                 .collection("all_requests")
                 .document(requestID)
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
-                    /**
-                     * Retrieves payment-related data from the firebase database
-                     * @param documentSnapshot
-                     * @param e
-                     */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                         if (e!=null) {
@@ -113,15 +106,12 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 });
 
+        // get the current balance of the rider
         firebaseFirestore
                 .collection("users")
                 .document(riderEmail)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                    /**
-                     * onComplete method gets the current balance of the rider from the database
-                     * @param task
-                     */
                     @SuppressLint("SetTextI18n")
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -137,11 +127,6 @@ public class PaymentActivity extends AppCompatActivity {
                     }
                 });
         tipButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Method is invoked when the tip button is clicked
-             * If its a valid tip amount, it is added to the rider's payment amount
-             * @param view
-             */
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
@@ -160,11 +145,6 @@ public class PaymentActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * Method generates the QR code on the rider's phone
-     * Accounts for the ride fare and any tip amount added by the rider
-     * @param view
-     */
     public void generateButton(View view) {
         QR_Image = findViewById(R.id.imageView5);
         ratingButton = findViewById(R.id.rating_button);
@@ -200,15 +180,10 @@ public class PaymentActivity extends AppCompatActivity {
                 .update("QR_bucks",currentBal - fare);
     }
 
-    /**
-     * Method redirects the rider to the driver ratings page after completion of the payment process
-     * @param view
-     */
     public void goToRating(View view) {
         Log.i(TAG,"request Id:"+requestID);
         feedBackIntent.putExtra("request_Id",requestID);
         feedBackIntent.putExtra("fare",fare);
         startActivity(feedBackIntent);
-        finish();
     }
 }

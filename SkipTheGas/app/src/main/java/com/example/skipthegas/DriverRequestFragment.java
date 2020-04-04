@@ -39,7 +39,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * This is a class that displays the active requests visible to the driver
+ * This is a class that displays the active requests of the driver
  */
 public class DriverRequestFragment extends Fragment {
 
@@ -55,16 +55,20 @@ public class DriverRequestFragment extends Fragment {
     private String driverPhone;
     private String driverEmail;
 
+    String rider_name;
+    String rider_email;
+    String rider_phone;
+
     private int p;
     public Ride rides;
 
+
     /**
-     * onCreateView method for DriverRequestFragment
-     * Inflates the associated layout file and displays it
+     * onCreateView method for DriverRequestFragment fragment
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return view
+     * @return
      */
     @Nullable
     @Override
@@ -96,11 +100,8 @@ public class DriverRequestFragment extends Fragment {
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        if (documentSnapshot!=null){
-                            driverName = documentSnapshot.getString("username");
-                            driverPhone = documentSnapshot.getString("phone");
-                        }
-
+                        driverName = documentSnapshot.getString("username");
+                        driverPhone = documentSnapshot.getString("phone");
                     }
                 });
 
@@ -117,35 +118,38 @@ public class DriverRequestFragment extends Fragment {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     /**
                      * Method retrieves posted ride request data from firebase database
-                     * Only fetches ride requests that haven't been cancelled or accepted
                      * @param queryDocumentSnapshots
                      * @param e
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         rideDataList.clear();
-                        if (queryDocumentSnapshots!=null) {
-                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                String requestID = doc.getId();
-                                boolean accepted = (boolean) doc.getData().get("is_accepted");
-                                boolean cancel = (boolean) doc.getData().get("is_cancel");
-                                if (!accepted && !cancel) {
-                                    String riderName = (String) doc.getData().get("rider_name");
-                                    String riderPhone = (String) doc.getData().get("rider_phone");
-                                    String riderEmail = (String) doc.getData().get("rider_email");
-                                    GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
-                                    GeoPoint destination = (GeoPoint) doc.getData().get("ride_destination");
-                                    String dist = (String) doc.getData().get("est_distance");
-                                    String time = (String) doc.getData().get("est_time");
-                                    String fare = (String) doc.getData().get("est_fare");
-                                    String driverName = (String) doc.getData().get("driver_name");
-                                    String driverPhone = (String) doc.getData().get("driver_phone");
-                                    String driverEmail = (String) doc.getData().get("driver_email");
-                                    String originAddress = (String) doc.getData().get("origin_address");
-                                    String destinationAddress = (String) doc.getData().get("destination_address");
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            String requestID = doc.getId();
+                            boolean accepted = (boolean) doc.getData().get("is_accepted");
+                            boolean cancel = (boolean) doc.getData().get("is_cancel");
+                            if (!accepted && !cancel) {
+                                String riderName = (String) doc.getData().get("rider_name");
+                                String riderPhone = (String) doc.getData().get("rider_phone");
+                                String riderEmail = (String) doc.getData().get("rider_email");
+                                GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
+                                GeoPoint destination = (GeoPoint) doc.getData().get("ride_destination");
+                                String dist = (String) doc.getData().get("est_distance");
+                                String time = (String) doc.getData().get("est_time");
+                                String fare = (String) doc.getData().get("est_fare");
+                                String driverName = (String) doc.getData().get("driver_name");
+                                String driverPhone = (String) doc.getData().get("driver_phone");
+                                String driverEmail = (String) doc.getData().get("driver_email");
+//                                boolean accepted = (boolean) doc.getData().get("is_accepted");
+//                                boolean isDriverCompleted = (boolean) doc.getData().get("is_compete");
+                                String originAddress = (String) doc.getData().get("origin_address");
+                                String destinationAddress = (String) doc.getData().get("destination_address");
 
-                                    rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, false, false, originAddress, destinationAddress, requestID, false, false));
-                                }
+                                rider_name = riderName;
+                                rider_email = riderEmail;
+                                rider_phone = riderPhone;
+
+                                rideDataList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, false, false, originAddress, destinationAddress, requestID, false, false));
                             }
                         }
                         rideAdapter.notifyDataSetChanged();
@@ -153,12 +157,19 @@ public class DriverRequestFragment extends Fragment {
                 });
 
 
+//        final ListView openFragment = getActivity().findViewById(R.id.request_list);
+//        openFragment.setOnItemClickListener((adapterView, v, i, L)->{
+//            new AcceptRequestFragment().show(getFragmentManager(), "Accept Request");
+//        });
+
+
+
         Log.v("Ride Info", ridesList.toString());
 
         final ListView openFragment = getActivity().findViewById(R.id.request_list);
         openFragment.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             /**
-             * Method is invoked when a ride request is selected from the list view on the Active Requests page
+             * Method is invoked when request option is selected in drawer menu
              * @param parent
              * @param view
              * @param position
@@ -179,6 +190,7 @@ public class DriverRequestFragment extends Fragment {
                 double startLog = startLocation.getLongitude();
                 double endLat = endLocation.getLatitude();
                 double endLog = endLocation.getLongitude();
+                //Toast.makeText(getActivity(), "user name is"+userName, Toast.LENGTH_SHORT).show();
                 Bundle bundle = new Bundle();
                 AcceptRequestFragment acceptRequestFragment = new AcceptRequestFragment();
                 bundle.putString("user_name", userName);
@@ -192,11 +204,35 @@ public class DriverRequestFragment extends Fragment {
                 bundle.putDouble("end_lng", endLog);
                 bundle.putString("request_id", request_ID);
 
+
                 acceptRequestFragment.setArguments(bundle);
                 acceptRequestFragment.show(getFragmentManager(), "Accept Request");
+//                new AlertDialog.Builder(getActivity())
+//                        .setTitle("Request Information")
+//                        .setMessage("Uername: " + userName + "\n\n" + "Start Location:" + start + "\n\nEnd Location: " + end + "\n\nEstimated Fare: " + fare )
+//                        .setNegativeButton("Cancel",null)
+//                        .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                Toast.makeText(getContext(), "Try" + driverName + "!!!", Toast.LENGTH_SHORT).show();
+//
+//
+//                            }
+//                        }).create().show();
 
             }
         });
     }
 
+    public String getUsername() {
+        return rider_name;
+    }
+
+    public String getEmail() {
+        return rider_email;
+    }
+
+    public String getPhone() {
+        return rider_phone;
+    }
 }

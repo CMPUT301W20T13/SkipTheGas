@@ -37,22 +37,21 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * This fragment displays the rider's requests
- * Allows for selecton between completed and cancelled requests
+ * This fragment displays the rider's past and active requests
+ * STILL NEED TO COMPLETE IMPLEMENTATION
  */
 public class RiderRequestFragment extends Fragment implements View.OnClickListener {
 
+    Button rider_current_request;
     Button rider_completed_requests;
     Button rider_cancelled_requests;
 
     /**
-     * onCreateView method for the RiderRequestFragment
-     * Retrieves and displays the associated layout file
      * Initializes the buttons in the rider request fragment
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return view
+     * @return
      */
     @Nullable
     @Override
@@ -68,11 +67,6 @@ public class RiderRequestFragment extends Fragment implements View.OnClickListen
         return view;
     }
 
-    /**
-     * Method initializes the completed requests and the cancelled requests button
-     * On click will direct to respective requests page
-     * @param v
-     */
     @Override
     public void onClick(View v) {
         Fragment fragment = null;
@@ -87,10 +81,6 @@ public class RiderRequestFragment extends Fragment implements View.OnClickListen
         }
     }
 
-    /**
-     * Method replaces the Rider Request fragment with either the Completed or the Cancelled Requests page
-     * @param fragment
-     */
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.rider_fragment_container, fragment);
@@ -98,4 +88,11 @@ public class RiderRequestFragment extends Fragment implements View.OnClickListen
         transaction.commit();
     }
 
+//    private void swapFragment(){
+//        Fragment CancelledRequestsFragment = new Fragment();
+//        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        fragmentTransaction.replace(R.id.rider_fragment_container, CancelledRequestsFragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+//    }
 }

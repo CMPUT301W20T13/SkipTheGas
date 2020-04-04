@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * This fragment displays the rider's completed requests in list view
+ * This fragment displays the rider's cancelled requests in list view
  */
 public class CompletedRequestsFragment extends Fragment implements View.OnClickListener {
 
@@ -57,15 +57,12 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
 
     Button back_button;
 
-    String TAG = "CompletedRequestsFragment";
-
     /**
-     * onCreateView method for CompletedRequestsFragment
-     * Inflates the layout view associated with it and enables the back button
+     * onCreateView method for CancelledRequestsFragment class
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return view
+     * @return
      */
     @Nullable
     @Override
@@ -88,9 +85,7 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser!=null) {
-            riderEmail = firebaseUser.getEmail();
-        }
+        riderEmail = firebaseUser.getEmail();
         firebaseFirestore
                 .collection("users")
                 .document(Objects.requireNonNull(riderEmail))
@@ -102,17 +97,8 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        if (e!=null){
-                            Log.w(TAG,"Error:"+e.getMessage());
-                            return;
-                        }
-                        if (documentSnapshot!=null&&documentSnapshot.exists()) {
-                            riderName = documentSnapshot.getString("username");
-                            riderPhone = documentSnapshot.getString("phone");
-                        } else {
-                            Log.i(TAG,"no such document");
-                        }
-
+                        riderName = documentSnapshot.getString("username");
+                        riderPhone = documentSnapshot.getString("phone");
                     }
                 });
 
@@ -128,41 +114,35 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
                 .collection("all_requests")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     /**
-                     * Method retrieves completed requests data from firebase database
+                     * Method retrieves cancelled requests data from firebase database
                      * @param queryDocumentSnapshots
                      * @param e
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                         requestList.clear();
-                        if (e!=null) {
-                            Log.d(TAG,"Error:"+e.getMessage());
-                            return;
-                        }
-                        if (queryDocumentSnapshots!=null){
-                            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                                String requestID = doc.getId();
-                                String req_riderName = (String) doc.getData().get("rider_name");
-                                boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
-                                boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
-                                if (req_riderName.equals(riderName) && isDriverCompleted && isRiderCompleted) {
-                                    //String riderName = (String) doc.getData().get("rider_name");
-                                    String riderPhone = (String) doc.getData().get("rider_phone");
-                                    String riderEmail = (String) doc.getData().get("rider_email");
-                                    GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
-                                    GeoPoint destination = (GeoPoint) doc.getData().get("ride_destination");
-                                    String dist = (String) doc.getData().get("est_distance");
-                                    String time = (String) doc.getData().get("est_time");
-                                    String fare = (String) doc.getData().get("est_fare");
-                                    String driverName = (String) doc.getData().get("driver_name");
-                                    String driverPhone = (String) doc.getData().get("driver_phone");
-                                    String driverEmail = (String) doc.getData().get("driver_email");
-                                    //boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
-                                    String originAddress = (String) doc.getData().get("origin_address");
-                                    String destinationAddress = (String) doc.getData().get("destination_address");
+                        for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                            String requestID = doc.getId();
+                            String req_riderName = (String) doc.getData().get("rider_name");
+                            boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                            boolean isRiderCompleted = (boolean) doc.getData().get("is_rider_completed");
+                            if (req_riderName.equals(riderName) && isDriverCompleted && isRiderCompleted) {
+                                //String riderName = (String) doc.getData().get("rider_name");
+                                String riderPhone = (String) doc.getData().get("rider_phone");
+                                String riderEmail = (String) doc.getData().get("rider_email");
+                                GeoPoint origin = (GeoPoint) doc.getData().get("ride_origin");
+                                GeoPoint destination = (GeoPoint) doc.getData().get("ride_destination");
+                                String dist = (String) doc.getData().get("est_distance");
+                                String time = (String) doc.getData().get("est_time");
+                                String fare = (String) doc.getData().get("est_fare");
+                                String driverName = (String) doc.getData().get("driver_name");
+                                String driverPhone = (String) doc.getData().get("driver_phone");
+                                String driverEmail = (String) doc.getData().get("driver_email");
+                                //boolean isDriverCompleted = (boolean) doc.getData().get("is_driver_completed");
+                                String originAddress = (String) doc.getData().get("origin_address");
+                                String destinationAddress = (String) doc.getData().get("destination_address");
 
-                                    requestList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, true, true, originAddress, destinationAddress, requestID, false, false));
-                                }
+                                requestList.add(new Ride(riderName, riderPhone, riderEmail, origin, destination, dist, time, fare, driverName, driverPhone, driverEmail, false, true, true, originAddress, destinationAddress, requestID, false, false));
                             }
                         }
                         requestAdapter.notifyDataSetChanged();
@@ -174,24 +154,17 @@ public class CompletedRequestsFragment extends Fragment implements View.OnClickL
 
     }
 
-    /**
-     * Method initializes the back button
-     * Sets it to go back to the previous page (RiderRequestFragment)
-     * @param v
-     */
     @Override
     public void onClick(View v) {
         Fragment fragment = null;
-        if (v.getId() == R.id.button3) {
-            fragment = new RiderRequestFragment();
-            replaceFragment(fragment);
+        switch (v.getId()) {
+            case R.id.button3:
+                fragment = new RiderRequestFragment();
+                replaceFragment(fragment);
+                break;
         }
     }
 
-    /**
-     * Method replaces the Cancelled Requests fragment with the Ride Requests fragment
-     * @param fragment
-     */
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.rider_fragment_container, fragment);
