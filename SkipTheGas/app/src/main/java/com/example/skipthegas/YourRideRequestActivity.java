@@ -1,9 +1,11 @@
 package com.example.skipthegas;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,15 +13,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.GeoPoint;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Objects;
 
@@ -40,8 +37,8 @@ public class YourRideRequestActivity extends AppCompatActivity {
 
     FirebaseFirestore firebaseFirestore;
     String requestID;
-    String driver_name, driver_email, driver_phone, driverGood, driverBad;
-
+    String driver_name, driver_email, driver_phone;
+    String TAG = "YourRideRequestActivity";
     /**
      * onCreate method for YourRideRequestActivity
      * Retrieves and displays the associated layout file
@@ -74,32 +71,41 @@ public class YourRideRequestActivity extends AppCompatActivity {
                      * @param documentSnapshot
                      * @param e
                      */
+                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        boolean accepted = (boolean) documentSnapshot.getData().get("is_accepted");
-                        String req_fare = (String) documentSnapshot.getData().get("est_fare");
-                        String driverName = (String) documentSnapshot.getData().get("driver_name");
-                        String driverPhone = (String) documentSnapshot.getData().get("driver_phone");
-                        String driverEmail = (String) documentSnapshot.getData().get("driver_email");
-                        String destinationAddress = (String) documentSnapshot.getData().get("destination_address");
-                        String originAddress = (String) documentSnapshot.getData().get("origin_address");
-                        end.setText(destinationAddress);
-                        start.setText(originAddress);
-                        if (driverName != null) {
-                            driver_name = driverName;
-                            driver_email = driverEmail;
-                            driver_phone = driverPhone;
-                            driver.setText(driverName);
-                            driver.setOnClickListener((v)-> {
-                                new DriverContactInfoFragment().show(getSupportFragmentManager(), "View Contact Info");
-                            });
+                        if (e!=null) {
+                            Log.i(TAG,"Error:"+e.getMessage());
+                            return;
                         }
-                        fare.setText(req_fare);
-                        if(accepted){
-                            status.setText("accepted");
-                        }
-                        else{
-                            status.setText("Not Accepted");
+                        if (documentSnapshot!=null&&documentSnapshot.exists()){
+                            boolean accepted = (boolean) documentSnapshot.getData().get("is_accepted");
+                            String req_fare = (String) documentSnapshot.getData().get("est_fare");
+                            String driverName = (String) documentSnapshot.getData().get("driver_name");
+                            String driverPhone = (String) documentSnapshot.getData().get("driver_phone");
+                            String driverEmail = (String) documentSnapshot.getData().get("driver_email");
+                            String destinationAddress = (String) documentSnapshot.getData().get("destination_address");
+                            String originAddress = (String) documentSnapshot.getData().get("origin_address");
+                            end.setText(destinationAddress);
+                            start.setText(originAddress);
+                            if (driverName != null) {
+                                driver_name = driverName;
+                                driver_email = driverEmail;
+                                driver_phone = driverPhone;
+                                driver.setText(driverName);
+                                driver.setOnClickListener((v)-> {
+                                    new DriverContactInfoFragment().show(getSupportFragmentManager(), "View Contact Info");
+                                });
+                            }
+                            fare.setText(req_fare);
+                            if(accepted){
+                                status.setText("accepted");
+                            }
+                            else{
+                                status.setText("Not Accepted");
+                            }
+                        } else {
+                            Log.d(TAG,"no such document");
                         }
                     }
                 });

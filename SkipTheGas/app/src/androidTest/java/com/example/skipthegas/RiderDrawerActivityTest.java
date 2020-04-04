@@ -52,6 +52,132 @@ public class RiderDrawerActivityTest {
     }
 
     /**
+     * Test checks the Profile Menu Item in hamburger menu
+     * Also checks the Edit Profile button in the profile page
+     */
+    @Test
+    public void openEditProfile() {
+        solo.clickOnImageButton(0);
+        solo.sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+        solo.clickOnMenuItem("Profile");
+        solo.clickOnButton("Edit Profile");
+        solo.assertCurrentActivity("Wrong Activity", RiderProfileEditable.class);
+    }
+
+    /**
+     * Test checks the Ride Requests Menu Item in hamburger menu
+     */
+    @Test
+    public void openRequests() {
+        solo.clickOnImageButton(0);
+        solo.sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+        solo.clickOnMenuItem("Ride Requests");
+        solo.waitForText("View Ride Requests");
+    }
+
+    /**
+     * Test checks the navigation to the Completed Requests page
+     */
+    @Test
+    public void openCompletedRequests() {
+        solo.clickOnImageButton(0);
+        solo.sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+        solo.clickOnMenuItem("Ride Requests");
+        solo.clickOnButton("Completed Requests");
+        solo.waitForText("Completed Requests");
+    }
+
+    /**
+     * Test checks the navigation to the Cancelled Requests page
+     */
+    @Test
+    public void openCancelledRequests() {
+        solo.clickOnImageButton(0);
+        solo.sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+        solo.clickOnMenuItem("Ride Requests");
+        solo.clickOnButton("Cancelled Requests");
+        solo.waitForText("Cancelled Requests");
+    }
+
+    /**
+     * Test checks the Logout Menu Item in hamburger menu
+     */
+    @Test
+    public void logout() {
+        solo.clickOnImageButton(0);
+        solo.sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+        solo.clickOnMenuItem("Logout");
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+    }
+
+    /**
+     * This test checks the click on Map twice
+     * Should create two markers and draw polyline between them
+     */
+    @Test
+    public void clickOnScreen() {
+        solo.assertCurrentActivity("Wrong Activity", RiderDrawerActivity.class);
+        solo.clickOnScreen(400, 405);
+        solo.clickOnScreen(402, 403);
+        solo.drag(400, 410, 405, 415, 12);
+        solo.sleep(20);
+        solo.clickOnScreen(401, 406);
+        solo.clickOnScreen(402, 403);
+        solo.assertCurrentActivity("Wrong Activity", RiderDrawerActivity.class);
+    }
+
+    /**
+     * This test checks the functionality behind the post request button
+     * Post a request after selecting start & end locations on the map
+     */
+    @Test
+    public void postRequestSuccess() {
+        solo.assertCurrentActivity("Wrong Activity", RiderDrawerActivity.class);
+        solo.clickOnScreen(400, 405);
+        solo.clickOnScreen(402, 403);
+        solo.drag(400, 410, 405, 415, 12);
+        solo.sleep(20);
+        solo.clickOnScreen(401, 406);
+        //solo.clickOnScreen(402, 403);
+        solo.sleep(500);
+        solo.clickOnButton("POST Request");
+        solo.clickOnButton("Confirm");
+        solo.waitForText("Can post request");
+        solo.assertCurrentActivity("Wrong Activity", RiderTripProcessActivity.class);
+    }
+
+    /**
+     * This test checks the functionality behind the post request button
+     * Post a request after selecting start & end locations on the map
+     */
+    @Test
+    public void postRequestFail() {
+        solo.assertCurrentActivity("Wrong Activity", RiderDrawerActivity.class);
+        solo.clickOnScreen(400, 405);
+        solo.clickOnScreen(402, 403);
+        solo.sleep(500);
+        solo.clickOnButton("POST Request");
+        solo.waitForText("At least 2 points needed.");
+        solo.assertCurrentActivity("Wrong Activity", RiderDrawerActivity.class);
+    }
+
+    /**
+     * This test checks the clear map button
+     */
+    @Test
+    public void clearMap() {
+        solo.assertCurrentActivity("Wrong Activity", RiderDrawerActivity.class);
+        solo.clickOnScreen(400, 405);
+        solo.clickOnScreen(402, 403);
+        solo.drag(400, 410, 405, 415, 12);
+        solo.sleep(20);
+        solo.clickOnScreen(401, 406);
+        solo.clickOnScreen(402, 403);
+        solo.clickOnButton("Clear Map");
+        solo.assertCurrentActivity("Wrong Activity", RiderDrawerActivity.class);
+    }
+
+    /**
      * Close activity after each test
      * @throws Exception
      */

@@ -50,7 +50,7 @@ public class DriverDrawerActivityTest {
     }
 
     /**
-     * check navigation bar
+     * This test checks the proper function of the navigation bar
      */
     @Test
     public void checkNavigation() {
@@ -58,7 +58,32 @@ public class DriverDrawerActivityTest {
         solo.sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
     }
 
+    /**
+     * Test checks the Profile Menu Item in hamburger menu
+     * Also checks the Edit Profile button in the profile page
+     */
+    @Test
+    public void openProfile() {
+        solo.clickOnImageButton(0);
+        solo.sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+        //solo.clickOnMenuItem("Profile");
+    }
 
+    /**
+     * Test checks the Logout Menu Item in hamburger menu
+     */
+    @Test
+    public void logout() {
+        solo.clickOnImageButton(0);
+        solo.sendKey(KeyEvent.KEYCODE_DPAD_DOWN);
+        solo.clickOnMenuItem("Logout");
+        solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
+    }
+
+    /**
+     * Close activity after each test
+     * @throws Exception
+     */
     @After
     public void tearDown() throws Exception {
         solo.finishOpenedActivities();
