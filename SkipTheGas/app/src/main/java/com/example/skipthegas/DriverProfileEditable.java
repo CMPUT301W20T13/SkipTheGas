@@ -1,6 +1,5 @@
 package com.example.skipthegas;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;

@@ -61,7 +61,7 @@ public class PaymentActivity extends AppCompatActivity {
     /**
      * onCreate method for PaymentActivity
      * Retrieves and displays the associated layout file
-     * @param savedInstanceState
+     * @param savedInstanceState saved Instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +91,8 @@ public class PaymentActivity extends AppCompatActivity {
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     /**
                      * Retrieves payment-related data from the firebase database
-                     * @param documentSnapshot
-                     * @param e
+                     * @param documentSnapshot reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -120,7 +120,7 @@ public class PaymentActivity extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     /**
                      * onComplete method gets the current balance of the rider from the database
-                     * @param task
+                     * @param task task
                      */
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -140,7 +140,7 @@ public class PaymentActivity extends AppCompatActivity {
             /**
              * Method is invoked when the tip button is clicked
              * If its a valid tip amount, it is added to the rider's payment amount
-             * @param view
+             * @param view view clicked on
              */
             @SuppressLint("SetTextI18n")
             @Override
@@ -151,7 +151,7 @@ public class PaymentActivity extends AppCompatActivity {
                 } else {
                     double tipDouble = Double.parseDouble(tip);
                     fare = Double.parseDouble(fareView.getText().toString());
-                    fare +=tipDouble;
+                    fare += tipDouble;
                     fareView.setText(String.format(Locale.CANADA,"%.2f",fare));
                 }
                 tipEditText.setText("");
@@ -163,7 +163,7 @@ public class PaymentActivity extends AppCompatActivity {
     /**
      * Method generates the QR code on the rider's phone
      * Accounts for the ride fare and any tip amount added by the rider
-     * @param view
+     * @param view view clicked on
      */
     public void generateButton(View view) {
         QR_Image = findViewById(R.id.imageView5);
@@ -202,7 +202,7 @@ public class PaymentActivity extends AppCompatActivity {
 
     /**
      * Method redirects the rider to the driver ratings page after completion of the payment process
-     * @param view
+     * @param view view clicked on
      */
     public void goToRating(View view) {
         Log.i(TAG,"request Id:"+requestID);

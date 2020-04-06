@@ -15,7 +15,7 @@ public class VerifyActivity extends AppCompatActivity {
     /**
      * onCreate method for VerifyActivity
      * Retrieves and displays the associated layout file
-     * @param savedInstanceState
+     * @param savedInstanceState saved Instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class VerifyActivity extends AppCompatActivity {
             /**
              * Method invoked when the continue button is clicked
              * Redirects to the Selection Activity page
-             * @param v
+             * @param v view clicked on
              */
             @Override
             public void onClick(View v) {

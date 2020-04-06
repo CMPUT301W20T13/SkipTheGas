@@ -1,7 +1,5 @@
 package com.example.skipthegas;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.firestore.GeoPoint;
 /**
  * This is a class that stores and contains getter methods for all attributes of a request
@@ -54,7 +52,7 @@ public class Ride {
 
     /**
      * getter method for Rider Name
-     * @return
+     * @return string
      */
     String getRiderName() {
         return this.riderName;
@@ -62,7 +60,7 @@ public class Ride {
 
     /**
      * getter method for Rider Phone
-     * @return
+     * @return string
      */
     String getRiderPhone() {
         return this.riderPhone;
@@ -70,7 +68,7 @@ public class Ride {
 
     /**
      * getter method for Rider Email
-     * @return
+     * @return string
      */
     String getRiderEmail() {
         return this.riderEmail;
@@ -78,7 +76,7 @@ public class Ride {
 
     /**
      * getter method for Driver Name
-     * @return
+     * @return string
      */
     String getDriverName() {
         return this.driverName;
@@ -86,7 +84,7 @@ public class Ride {
 
     /**
      * getter method for Driver Phone
-     * @return
+     * @return string
      */
     String getDriverPhone() {
         return this.driverPhone;
@@ -94,7 +92,7 @@ public class Ride {
 
     /**
      * getter method for Driver Email
-     * @return
+     * @return string
      */
     String getDriverEmail() {
         return this.driverEmail;
@@ -102,7 +100,7 @@ public class Ride {
 
     /**
      * getter method for Origin location
-     * @return
+     * @return GeoPoint
      */
     GeoPoint getOrigin() {
         return this.origin;
@@ -110,7 +108,7 @@ public class Ride {
 
     /**
      * getter method for Destination location
-     * @return
+     * @return GeoPoint
      */
     GeoPoint getDestination() {
         return this.destination;
@@ -118,7 +116,7 @@ public class Ride {
 
     /**
      * getter method for Distance between start & end locations
-     * @return
+     * @return string
      */
     String getDist() {
         return this.dist;
@@ -126,7 +124,7 @@ public class Ride {
 
     /**
      * getter method for TIme required for request completion
-     * @return
+     * @return string
      */
     String getTime() {
         return this.time;
@@ -134,7 +132,7 @@ public class Ride {
 
     /**
      * getter method for Request fare
-     * @return
+     * @return string
      */
     String getFare() {
         return this.fare;
@@ -142,7 +140,7 @@ public class Ride {
 
     /**
      * getter method for is_accepted boolean
-     * @return
+     * @return bool
      */
     boolean getAccepted() {
         return this.accepted;
@@ -150,7 +148,7 @@ public class Ride {
 
     /**
      * getter method for is_driver_completed boolean
-     * @return
+     * @return bool
      */
     boolean getIsDriverCompleted() {
         return this.isDriverCompleted;
@@ -158,7 +156,7 @@ public class Ride {
 
     /**
      * getter method for is_rider_completed boolean
-     * @return
+     * @return bool
      */
     boolean getIsRiderCompleted() {
         return this.isRiderCompleted;
@@ -166,7 +164,7 @@ public class Ride {
 
     /**
      * getter method for Origin location address
-     * @return
+     * @return string
      */
     String getOriginAddress() {
         return this.originAddress;
@@ -174,7 +172,7 @@ public class Ride {
 
     /**
      * getter method for Destination location address
-     * @return
+     * @return string
      */
     String getDestinationAddress() {
         return this.destinationAddress;
@@ -182,7 +180,7 @@ public class Ride {
 
     /**
      * getter method for the Request ID
-     * @return
+     * @return string
      */
     String getRequestID() {
         return this.requestID;
@@ -190,7 +188,7 @@ public class Ride {
 
     /**
      * getter method for is_confirmed boolean
-     * @return
+     * @return string
      */
     boolean getIsConfirmed() {
         return this.isConfirmed;
@@ -198,7 +196,7 @@ public class Ride {
 
     /**
      * getter method for is_cancelled boolean
-     * @return
+     * @return string
      */
     boolean getIsCanceled() {
         return this.isCanceled;

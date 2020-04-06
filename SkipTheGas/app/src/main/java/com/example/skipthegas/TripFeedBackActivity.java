@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -45,7 +44,7 @@ public class TripFeedBackActivity extends AppCompatActivity {
     /**
      * onCreate method for TripFeedBackActivity
      * Retrieves and displays the associated layout file
-     * @param savedInstanceState
+     * @param savedInstanceState saved Instance
      */
     @SuppressLint("SetTextI18n")
     @Override
@@ -74,8 +73,8 @@ public class TripFeedBackActivity extends AppCompatActivity {
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     /**
                      * Method fetches the driver's name from the firebase database
-                     * @param documentSnapshot
-                     * @param e
+                     * @param documentSnapshot reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -94,8 +93,8 @@ public class TripFeedBackActivity extends AppCompatActivity {
                     /**
                      * Method fetches the driver's rating information from the firebase database
                      * Also sets the rating information to the text view fields
-                     * @param documentSnapshot
-                     * @param e
+                     * @param documentSnapshot reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {

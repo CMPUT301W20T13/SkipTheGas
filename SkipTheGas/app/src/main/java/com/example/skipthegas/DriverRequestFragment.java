@@ -1,28 +1,22 @@
 package com.example.skipthegas;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.os.Bundle;
-import android.os.Parcelable;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.maps.model.LatLng;
+
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -33,9 +27,9 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.Objects;
 
 /**
@@ -120,8 +114,8 @@ public class DriverRequestFragment extends Fragment {
                     /**
                      * Method retrieves posted ride request data from firebase database
                      * Only fetches ride requests that haven't been cancelled or accepted
-                     * @param queryDocumentSnapshots
-                     * @param e
+                     * @param queryDocumentSnapshots reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {

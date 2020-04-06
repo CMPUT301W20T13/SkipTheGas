@@ -40,7 +40,7 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
     /**
      * onCreate method for the DriverPaymentScannerActivity
      * Fetches driver's current balance from the database
-     * @param savedInstanceState
+     * @param savedInstanceState saved Instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,8 +90,8 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
 
     /**
      * Displays a dialog box
-     * @param message
-     * @param listener
+     * @param message message
+     * @param listener listener
      */
     public void displayAlertDialog(String message, DialogInterface.OnClickListener listener) {
         new AlertDialog.Builder(DriverPaymentScannerActivity.this)
@@ -103,9 +103,9 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
 
     /**
      * Method determines what to do once the access permissions for the camera is either granted or denied
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * @param requestCode request code
+     * @param permissions permission
+     * @param grantResults result
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -163,6 +163,7 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
      */
     @Override
     protected void onDestroy() {
+        Log.d(TAG,"Scanner interrupted");
         super.onDestroy();
         scannerView.stopCamera();
     }
@@ -172,7 +173,7 @@ public class DriverPaymentScannerActivity extends AppCompatActivity implements Z
      * Once the scan is successful, a dialog box is shown with the payment received
      * Allows the driver to turn down/cancel offered payment if desired
      * interface :--> ZXingScannerView.ResultHandler
-     * @param result
+     * @param result result
      */
     @Override
     public void handleResult(final Result result) {

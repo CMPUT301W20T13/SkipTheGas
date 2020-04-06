@@ -296,7 +296,7 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
                         ));
                     }
                     Polyline polyline = mMap.addPolyline(new PolylineOptions().addAll(newDecodedPath));
-                    polyline.setColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                    polyline.setColor(ContextCompat.getColor(Objects.requireNonNull(getActivity()), R.color.colorPrimary));
                 }
             }
         });
