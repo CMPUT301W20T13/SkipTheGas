@@ -75,6 +75,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     private boolean count = true;
 
     Button completeButton;
+    Button viewRequestButton;
     TextView riderPhoneTextView;
     TextView riderStartAddressTextView;
     TextView riderEndAddressTextView;
@@ -105,6 +106,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         scannerIntent = new Intent(getApplicationContext(),DriverPaymentScannerActivity.class);
         riderPhoneTextView = findViewById(R.id.driver_process_rider_phone_TextView);
         completeButton = findViewById(R.id.driver_complete_button);
+        viewRequestButton = findViewById(R.id.driver_process_view_request_button);
         riderStartAddressTextView = findViewById(R.id.driver_process_start_location_TextView);
         riderEndAddressTextView = findViewById(R.id.driver_process_end_location_TextView);
         riderNameTextView = findViewById(R.id.driver_process_rider_name_TextView);
@@ -215,6 +217,18 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
             }
         });
 
+        viewRequestButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Method allows drivers to view the request they just accepted
+             * @param view
+            */
+            @Override
+            public void onClick(View view) {
+                Intent viewIntent = new Intent(getApplicationContext(),YourRideAcceptedActivity.class);
+                viewIntent.putExtra("request_Id",requestID);
+                startActivity(viewIntent);
+            }
+        });
 
         completeButton.setOnClickListener(new View.OnClickListener() {
             /**

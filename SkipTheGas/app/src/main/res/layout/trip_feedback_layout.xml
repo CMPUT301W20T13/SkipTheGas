@@ -13,10 +13,11 @@
         android:layout_marginTop="32dp"
         android:fontFamily="sans-serif-black"
         android:text="Trip Feedback"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView12"
@@ -25,23 +26,24 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="50dp"
         android:text="Total Fare Price:"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:ignore="HardcodedText" />
 
     <Button
         android:id="@+id/button4"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="201dp"
         android:layout_height="41dp"
-        android:layout_marginTop="32dp"
         android:background="@drawable/roundedbutton"
-        android:text="Submit Rating"
         android:onClick="onClickReturn"
+        android:text="Submit Rating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView33" />
+        app:layout_constraintTop_toBottomOf="@+id/textView33"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView29"
@@ -51,7 +53,8 @@
         android:layout_marginTop="50dp"
         android:text="106 QR"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView30"
@@ -62,7 +65,8 @@
         android:text="Rate Your Driver Please"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView33"
@@ -70,10 +74,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
         android:text="34"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/textView30"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/textView34"
@@ -81,10 +86,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
         android:text="66"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView30" />
+        app:layout_constraintTop_toBottomOf="@+id/textView30"
+        tools:ignore="HardcodedText" />
 
     <ToggleButton
         android:id="@+id/imageView"

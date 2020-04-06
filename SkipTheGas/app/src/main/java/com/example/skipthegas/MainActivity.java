@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * onCreate method for MainActivity
      * Retrieves and displays the associated layout file
-     * @param savedInstanceState
+     * @param savedInstanceState saved Instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {

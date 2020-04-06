@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.skipthegas">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -11,9 +10,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -22,7 +21,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".YourRideAcceptedActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -37,13 +36,11 @@
 
         <activity
             android:name=".RiderTripProcessActivity"
-            android:label="@string/title_activity_rider_trip_process"></activity>
+            android:label="@string/title_activity_rider_trip_process" />
         <activity android:name=".DriverPaymentScannerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DriverTripProcessActivity">
-                
-            </meta-data>
+                android:value=".DriverTripProcessActivity"></meta-data>
         </activity>
         <activity
             android:name=".DriverTripProcessActivity"
@@ -81,7 +78,6 @@
         <activity android:name=".RiderRequestFragment" />
         <activity android:name=".TripFeedBackActivity" />
         <activity android:name=".YourRideRequestActivity" />
-
         <activity
             android:name=".DriverDrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />

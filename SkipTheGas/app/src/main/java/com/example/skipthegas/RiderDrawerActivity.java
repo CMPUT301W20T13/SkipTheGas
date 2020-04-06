@@ -24,7 +24,7 @@ public class RiderDrawerActivity extends AppCompatActivity implements Navigation
     /**
      * onCreate method for RiderDrawerActivity
      * Retrieves and displays associated layout file
-     * @param savedInstanceState
+     * @param savedInstanceState saved Instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class RiderDrawerActivity extends AppCompatActivity implements Navigation
     /**
      * Method is called when the navigation items inside the drawer menu are selected
      * For RiderDrawerActivity class
-     * @param menuItem
+     * @param menuItem  items in menu
      * @return true
      */
     @Override

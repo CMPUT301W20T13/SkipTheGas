@@ -47,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
     /**
      * onCreate method for the SignUpActivity
      * Retrieves and displays the associated layout file
-     * @param savedInstanceState
+     * @param savedInstanceState saved Instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
                 firebaseAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     /**
                      * This registers the user in the firebase as a new user for the app
-                     * @param task
+                     * @param task task
                      */
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -139,7 +139,7 @@ public class SignUpActivity extends AppCompatActivity {
                             firebaseUser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 /**
                                  * onSuccess method for verification email sent
-                                 * @param aVoid
+                                 * @param aVoid VarArgs
                                  */
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -150,7 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 /**
                                  * onFailure method for verification email not sent
                                  * Throws exception
-                                 * @param e
+                                 * @param e exception
                                  */
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
@@ -180,7 +180,7 @@ public class SignUpActivity extends AppCompatActivity {
                             documentReference.set(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 /**
                                  * onSuccess method for adding set of information to collection users in firebase db
-                                 * @param aVoid
+                                 * @param aVoid VarArgs
                                  */
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -190,7 +190,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 /**
                                  * onFailure method for when information is not added to collection users in firebase db
                                  * Throws exception
-                                 * @param e
+                                 * @param e exception
                                  */
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
@@ -223,8 +223,8 @@ public class SignUpActivity extends AppCompatActivity {
      * Regex expression for validation modified by Nan
      * regex expression referenced from :
      * https://www.tutorialspoint.com/validate-email-address-in-java
-     * @param email
-     * @return
+     * @param email email
+     * @return boolean
      */
     static boolean emailValidation(String email) {
         String regexForEmail = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
@@ -236,8 +236,8 @@ public class SignUpActivity extends AppCompatActivity {
      * Regex expression for validation modified by Nan
      * regex expression referenced from :
      * https://www.journaldev.com/641/regular-expression-phone-number-validation-in-java
-     * @param phoneNumber
-     * @return
+     * @param phoneNumber register phone number
+     * @return boolean
      */
     static boolean phoneNumValidation(String phoneNumber) {
         String regexForPhone = "\\d{10}";

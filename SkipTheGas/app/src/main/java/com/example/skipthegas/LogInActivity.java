@@ -39,7 +39,7 @@ public class LogInActivity extends AppCompatActivity {
      * onCreate method for LogInActivity
      * Allows user to input log in info into edit text boxes in layout file
      * Has a password reset option
-     * @param savedInstanceState
+     * @param savedInstanceState saved Instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class LogInActivity extends AppCompatActivity {
         passwordReset.setOnClickListener(new View.OnClickListener() {
             /**
              * Method is invoked when password reset is clicked on
-             * @param view
+             * @param view view clicked on
              */
             @Override
             public void onClick(View view) {
@@ -127,8 +127,8 @@ public class LogInActivity extends AppCompatActivity {
                             /**
                              * Confirms password reset request
                              * Sends an email to user to reset password
-                             * @param dialogInterface
-                             * @param i
+                             * @param dialogInterface interface
+                             * @param i index
                              */
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -141,7 +141,7 @@ public class LogInActivity extends AppCompatActivity {
                                 firebaseAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     /**
                                      * Displays toast when password reset email is successfully sent
-                                     * @param aVoid
+                                     * @param aVoid VarArgs
                                      */
                                     @Override
                                     public void onSuccess(Void aVoid) {
@@ -150,7 +150,7 @@ public class LogInActivity extends AppCompatActivity {
                                 }).addOnFailureListener(new OnFailureListener() {
                                     /**
                                      * Displays email when password reset email fails to send
-                                     * @param e
+                                     * @param e exception
                                      */
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
