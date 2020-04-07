@@ -33,9 +33,9 @@ public class CustomList extends ArrayAdapter<Ride> {
     /**
      * getView method for CustomList class
      * Inflates the associated content layout file and sets the data to the appropriate fields
-     * @param position
-     * @param convertView
-     * @param parent
+     * @param position index
+     * @param convertView view
+     * @param parent parent
      * @return view
      */
     @SuppressLint("SetTextI18n")

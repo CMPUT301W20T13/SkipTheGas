@@ -60,9 +60,9 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
 
     /**
      * onCreateView method for DriverMapFragment fragment
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * @param inflater menu inflater
+     * @param container menu container
+     * @param savedInstanceState savedInstanceState
      * @return view
      */
     @Nullable
@@ -90,7 +90,7 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
     /**
      * Sets up the map camera and allows one to select start/end locations on a map
      * Set my current location to true
-     * @param googleMap
+     * @param googleMap map
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -120,8 +120,8 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
                     /**
                      * Fetches the ride requests that are currently open and displays them on the map
                      * So driver can view the start locations of all the current open requests relative to his location
-                     * @param queryDocumentSnapshots
-                     * @param e
+                     * @param queryDocumentSnapshots reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -164,7 +164,7 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
             location.addOnCompleteListener(new OnCompleteListener() {
                 /**
                  * onComplete method for finding current location
-                 * @param task
+                 * @param task task
                  */
                 @Override
                 public void onComplete(@NonNull Task task) {
@@ -188,8 +188,8 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
 
     /**
      * Moves Camera to current location
-     * @param latLng
-     * @param zoom
+     * @param latLng lat & long
+     * @param zoom zoom factor
      */
     private void moveCamera(LatLng latLng, float zoom) {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
@@ -197,9 +197,9 @@ public class DriverMapFragment extends Fragment implements OnMapReadyCallback{
 
     /**
      * Get device permission to get current location
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * @param requestCode request code
+     * @param permissions user permission
+     * @param grantResults grant result
      */
     @SuppressLint("MissingPermission")
     @Override

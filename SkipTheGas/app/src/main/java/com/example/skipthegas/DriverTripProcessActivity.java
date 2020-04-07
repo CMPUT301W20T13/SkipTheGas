@@ -97,7 +97,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
     /**
      * onCreate method for the DriverTripProcessActivity
      * Retrieves the associated layout file and displays it
-     * @param savedInstanceState
+     * @param savedInstanceState saved InstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +131,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     /**
                      * onComplete method for facilitating the payment process
-                     * @param task
+                     * @param task task
                      */
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -156,8 +156,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                     /**
                      * Method fetches the relevant ride information from firebase including rider info and start/end locations
                      * Also sets this data to the textviews in the layout file
-                     * @param documentSnapshot
-                     * @param e
+                     * @param documentSnapshot reference
+                     * @param e exception
                      */
                     @SuppressLint("SetTextI18n")
                     @Override
@@ -209,7 +209,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         phoneCallIcon.setOnClickListener(new View.OnClickListener() {
             /**
              * Method allows users to make a phone call when the phone call icon is clicked
-             * @param view
+             * @param view view clicked
              */
             @Override
             public void onClick(View view) {
@@ -220,7 +220,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         viewRequestButton.setOnClickListener(new View.OnClickListener() {
             /**
              * Method allows drivers to view the request they just accepted
-             * @param view
+             * @param view view clicked
             */
             @Override
             public void onClick(View view) {
@@ -234,7 +234,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
             /**
              * Method is called when the complete button is clicked
              * Displays a dialog box asking for ride completion confirmation
-             * @param v
+             * @param v view clicked
              */
             @Override
             public void onClick(View v) {
@@ -245,8 +245,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                             /**
                              * Method is called when the "Yes" button is clicked in the dialog box confirming ride completion for the driver
                              * The firebase database is updated with the relevant information
-                             * @param dialogInterface
-                             * @param i
+                             * @param dialogInterface interface
+                             * @param i index
                              */
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -289,9 +289,9 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     /**
      * Method determines what to do once the access permissions for the phone app is either granted or denied
-     * @param requestCode
-     * @param permissions
-     * @param grantResults
+     * @param requestCode request code
+     * @param permissions user permission
+     * @param grantResults granted result
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -307,7 +307,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     /**
      * Method is invoked once the map is ready for use by the application
-     * @param googleMap
+     * @param googleMap map
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -320,8 +320,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     /**
                      * Adds the start and end locations to the map along with the directions polyline
-                     * @param documentSnapshot
-                     * @param e
+                     * @param documentSnapshot reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -362,8 +362,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     /**
      * Allows the camera to move to show the start and end locations
-     * @param start
-     * @param end
+     * @param start start point
+     * @param end end point
      */
     private void setCamera(GeoPoint start, GeoPoint end) {
         LatLngBounds.Builder builder = new LatLngBounds.Builder().include(new LatLng(start.getLatitude(), start.getLongitude())).include(new LatLng(end.getLatitude(), end.getLongitude()));
@@ -375,8 +375,8 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
      * Calculate the direction between two points
      * Code taken from CodingWithMitch and modified by Jun
      * https://www.youtube.com/watch?v=xl0GwkLNpNI&list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi&index=20
-     * @param startLocation
-     * @param endLocation
+     * @param startLocation start
+     * @param endLocation end
      */
     private void calculateDirections(MarkerOptions startLocation, MarkerOptions endLocation){
         Log.d(TAG, "calculateDirections: calculating directions.");
@@ -400,7 +400,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
         directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
             /**
              * onResult method for directions calculations
-             * @param result
+             * @param result result
              */
             @Override
             public void onResult(DirectionsResult result) {
@@ -413,7 +413,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
             /**
              * onFailure method that throws an exception message
-             * @param e
+             * @param e exception
              */
             @Override
             public void onFailure(Throwable e) {
@@ -425,7 +425,7 @@ public class DriverTripProcessActivity extends FragmentActivity implements OnMap
 
     /**
      * Method adds polyline between the start & end locations along the directions
-     * @param result
+     * @param result result
      */
     private void addPolyline (final DirectionsResult result) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {

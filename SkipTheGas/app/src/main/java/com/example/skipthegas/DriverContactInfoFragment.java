@@ -36,8 +36,8 @@ public class DriverContactInfoFragment extends DialogFragment {
                 .setPositiveButton("Close", new DialogInterface.OnClickListener() {
                     /**
                      * onClick method that opens driver profile when button is clicked
-                     * @param dialogInterface
-                     * @param i
+                     * @param dialogInterface interface
+                     * @param i index
                      */
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

@@ -82,9 +82,9 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
     /**
      * onCreateView method for AcceptRequestFragment that inflates and displays the associated layout view
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * @param inflater menu inflater
+     * @param container menu container
+     * @param savedInstanceState saved instance
      * @return view
      */
     @Nullable
@@ -131,7 +131,7 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
     /**
      * onCreateDialog method for AcceptRequestFragment that creates the dialog which shows the ride request on a map
      * Allows driver to accept ride request
-     * @param savedInstanceState
+     * @param savedInstanceState saved Instance
      * @return dialog_builder
      */
     @NonNull
@@ -180,7 +180,7 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
     /**
      * Sets up the map camera and allows one to select start/end locations on a map
-     * @param googleMap
+     * @param googleMap map
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -219,8 +219,8 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
      * Calculate the direction between two points
      * Code taken from CodingWithMitch and modified by Jun
      * https://www.youtube.com/watch?v=xl0GwkLNpNI&list=PLgCYzUzKIBE-SZUrVOsbYMzH7tPigT3gi&index=20
-     * @param startLocation
-     * @param endLocation
+     * @param startLocation start
+     * @param endLocation end
      */
     private void calculateDirections(MarkerOptions startLocation, MarkerOptions endLocation){
         Log.d(TAG, "calculateDirections: calculating directions.");
@@ -244,7 +244,7 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
         directions.destination(destination).setCallback(new PendingResult.Callback<DirectionsResult>() {
             /**
              * onResult method for directions calculations
-             * @param result
+             * @param result result
              */
             @Override
             public void onResult(DirectionsResult result) {
@@ -257,7 +257,7 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
             /**
              * onFailure method that throws an exception message
-             * @param e
+             * @param e exception
              */
             @Override
             public void onFailure(Throwable e) {
@@ -268,7 +268,7 @@ public class AcceptRequestFragment extends DialogFragment implements OnMapReadyC
 
     /**
      * Method adds polyline between the start & end locations along the directions
-     * @param result
+     * @param result result
      */
     private void addPolyline (final DirectionsResult result) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {

@@ -24,7 +24,7 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
     /**
      * onCreate method for DriverDrawerActivity
      * Fetches the associated view and initializes the different parts of the drawer menu fragment
-     * @param savedInstanceState
+     * @param savedInstanceState saved instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +50,8 @@ public class DriverDrawerActivity extends AppCompatActivity implements Navigatio
 
     /**
      * Method is called when navigation item is selected in the DriverDrawerActivity class
-     * @param menuItem
-     * @return true
+     * @param menuItem item in menu
+     * @return bool
      */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

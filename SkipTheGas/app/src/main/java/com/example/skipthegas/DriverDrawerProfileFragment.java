@@ -53,9 +53,9 @@ public class DriverDrawerProfileFragment extends Fragment {
 
     /**
      * onCreateView method for DriverDrawerProfileFragment fragment
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * @param inflater menu inflater
+     * @param container menu container
+     * @param savedInstanceState saved instance
      * @return view
      */
     @Nullable
@@ -69,7 +69,7 @@ public class DriverDrawerProfileFragment extends Fragment {
     /**
      * onActivityCreated method for DriverDrawerProfileFragment class
      * Sets the appropriate info in the textviews in the layout file
-     * @param savedInstanceState
+     * @param savedInstanceState saved instance
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -99,8 +99,8 @@ public class DriverDrawerProfileFragment extends Fragment {
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     /**
                      * Method sets the edit text fields in the edit driver profile page
-                     * @param documentSnapshot
-                     * @param e
+                     * @param documentSnapshot reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -139,7 +139,7 @@ public class DriverDrawerProfileFragment extends Fragment {
             /**
              * Method is invoked when the edit button is clicked
              * Takes the user to the edit driver profile page
-             * @param v
+             * @param v view clicked
              */
             @Override
             public void onClick(View v) {
