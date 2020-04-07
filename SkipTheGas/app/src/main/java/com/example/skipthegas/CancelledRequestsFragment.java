@@ -60,13 +60,13 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
     public Ride requests;
 
     Button back_button;
-    String TAG = "CancelledRequestsFragment";
+    private String TAG = "CancelledRequestsFragment";
     /**
      * onCreateView method for CancelledRequestsFragment
      * Inflates the layout view associated with it and enables the back button
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
+     * @param inflater menu inflater
+     * @param container menu container
+     * @param savedInstanceState saved instance
      * @return view
      */
     @Nullable
@@ -83,7 +83,7 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
 
     /**
      * Method connects to firebase and retrieves rider info
-     * @param savedInstanceState
+     * @param savedInstanceState saved instance
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -100,8 +100,8 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     /**
                      * Method retrieves rider name and phone from firebase database
-                     * @param documentSnapshot
-                     * @param e
+                     * @param documentSnapshot reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -131,8 +131,8 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     /**
                      * Method retrieves cancelled requests data from firebase database
-                     * @param queryDocumentSnapshots
-                     * @param e
+                     * @param queryDocumentSnapshots reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -179,7 +179,7 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
     /**
      * Method initializes the back button
      * Sets it to go back to the previous page (RiderRequestFragment)
-     * @param v
+     * @param v view clicked
      */
     @Override
     public void onClick(View v) {
@@ -192,7 +192,7 @@ public class CancelledRequestsFragment extends Fragment implements View.OnClickL
 
     /**
      * Method replaces the Cancelled Requests fragment with the Ride Requests fragment
-     * @param fragment
+     * @param fragment fragment
      */
     public void replaceFragment(Fragment fragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();

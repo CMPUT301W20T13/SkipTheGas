@@ -43,7 +43,7 @@ public class DriverProfileEditable extends AppCompatActivity {
     /**
      * onCreate method for DriverProfileEditable
      * Populates the driver info into the edit text boxes for the user to edit
-     * @param savedInstanceState
+     * @param savedInstanceState saved InstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +69,8 @@ public class DriverProfileEditable extends AppCompatActivity {
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     /**
                      * Method fetches the editable driver data from the firebase database
-                     * @param documentSnapshot
-                     * @param e
+                     * @param documentSnapshot reference
+                     * @param e exception
                      */
                     @Override
                     public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -96,7 +96,7 @@ public class DriverProfileEditable extends AppCompatActivity {
             /**
              * Method saves the changed data in the firebase database
              * Returns the user back to the driver profile screen
-             * @param v
+             * @param v view clicked
              */
             @Override
             public void onClick(View v) {
@@ -111,7 +111,7 @@ public class DriverProfileEditable extends AppCompatActivity {
     /**
      * This cancels edit mode and does not save changes to the profile, returning the user back
      * to the read-only driver profile screen upon a button click
-     * @param view
+     * @param view view clicked
      */
     public void cancel(View view) {
         finish();
@@ -121,7 +121,7 @@ public class DriverProfileEditable extends AppCompatActivity {
      * This saves the edits made to the profile screen and updates the driver profile, returning
      * the user to the read-only driver profile screen with the new edited changes, upon a button
      * click
-     * @param view
+     * @param view view clicked
      */
     public void submitEdit(View view) {
         Toast.makeText(this, "Edit Saved Successfully", Toast.LENGTH_SHORT).show();
