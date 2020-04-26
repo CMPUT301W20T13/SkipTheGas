@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.skipthegas">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -20,8 +21,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".YourRideAcceptedActivity"></activity>
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup">
+        <activity android:name=".YourRideAcceptedActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -40,7 +42,8 @@
         <activity android:name=".DriverPaymentScannerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DriverTripProcessActivity"></meta-data>
+                android:value=".DriverTripProcessActivity">
+            </meta-data>
         </activity>
         <activity
             android:name=".DriverTripProcessActivity"
